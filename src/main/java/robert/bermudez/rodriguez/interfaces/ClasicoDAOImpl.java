@@ -93,7 +93,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				clasico.setId(rs.getInt("id"));
 				clasico.setModelo( rs.getString("modelo") );
 				clasico.setMarca( rs.getString("marca") );
-				clasico.setAnio( rs.getInt("anio") );
+				clasico.setAnio( rs.getString("anio") );
 				clasico.setFoto( rs.getString("foto") );
 
 			} // if
@@ -128,7 +128,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				clasico.setId(rs.getInt("id"));
 				clasico.setModelo(rs.getString("modelo"));
 				clasico.setMarca(rs.getString("marca"));
-				clasico.setAnio(rs.getInt("anio"));
+				clasico.setAnio(rs.getString("anio"));
 				clasico.setFoto(rs.getString("foto"));
 				
 				listaClasicos.add(clasico);
@@ -153,23 +153,33 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		
 		try (
 				Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_INSERT);
-				
+				PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+				// RETURN_GENERATED_KEYS es una constante de una clase de Java que sirve para devolver la clave generada por la BBDD.
+
 				) {
 			
 			pst.setString(1, pojo.getModelo());
 			pst.setString(2, pojo.getMarca());
-			pst.setInt(3, pojo.getAnio());
+			pst.setString(3, pojo.getAnio());
 			pst.setString(4, pojo.getFoto());
 			
-			int affectedRows = pst.executeUpdate(SQL_INSERT);
+			int affectedRows = pst.executeUpdate();
 			
-			if (affectedRows != 1) {
-				throw new Exception("No se ha podido guardar debido a un problema.");
+			if (affectedRows == 1) {
 				
-			} // if
+				// Obtener el id generado automáticamente por la BBDD.
+				ResultSet rsKeys = pst.getGeneratedKeys();
+				
+				int id = rsKeys.getInt(1);
+				
+				clasico.setId(id);
+				
+			} else {
+				throw new Exception("No se ha podido guardar el registro " + clasico + " debido a un problema.");
+				
+			} // if-else
 			
-		} // try
+		} // try externo
 		
 		return clasico;
 
@@ -180,8 +190,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	@Override
 	public Clasico update(Clasico pojo) throws Exception {
 		
-		Clasico clasico = new Clasico();
-		
 		try (
 				Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
@@ -190,20 +198,23 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			
 			pst.setString(1, pojo.getModelo());
 			pst.setString(2, pojo.getMarca());
-			pst.setInt(3, pojo.getAnio());
+			pst.setString(3, pojo.getAnio());
 			pst.setString(4, pojo.getFoto());
 			pst.setInt(5, pojo.getId());
 			
 			int affectedRows = pst.executeUpdate();
 			
 			if (affectedRows != 1) {
-				throw new Exception("No se han actualizado correctamente los nuevos datos del clásico.");
+				throw new Exception("No se han actualizado correctamente los datos del clásico.");
 				
 			} // if
 			
+		} catch (Exception e) {
+			throw new Exception("Ha habido un problema al tratar de actualizar los datos.");
+			
 		} // try
 		
-		return clasico;
+		return pojo;
 
 	} // update
 

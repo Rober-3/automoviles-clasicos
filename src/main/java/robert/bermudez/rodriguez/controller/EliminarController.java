@@ -1,8 +1,6 @@
 package robert.bermudez.rodriguez.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,44 +11,52 @@ import robert.bermudez.rodriguez.interfaces.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.Clasico;
 
 /**
- * Servlet implementation class ClasicosController
+ * Servlet implementation class EliminarController
  */
-@WebServlet("/clasicos")
-public class ClasicosController extends HttpServlet {
+@WebServlet("/eliminar")
+public class EliminarController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+    
+	
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// getAll
+		Clasico clasico = new Clasico();
+		String alerta = "";
 		
-		ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
-		
-		ArrayList<Clasico> clasicosAmericanos = new ArrayList<Clasico>();
+		// Recogida de parámetros enviados desde la vista.
+		String paramId = request.getParameter("id");
 		
 		try {
-			clasicosAmericanos = dao.getAll();
+			
+			int id = Integer.parseInt(paramId);
+			ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
+			clasico = dao.delete(id);
+			alerta = "Clásico borrado con éxito";
 			
 		} catch (Exception e) {
+			alerta =  "Ha habido un problema al intentar borrar el clásico: " + e.getMessage();
 			e.printStackTrace();
-			
-		} // try-catch
+		}
 		
-		request.setAttribute("clasicosAmericanos", clasicosAmericanos);
-		
-		request.getRequestDispatcher("clasicos-americanos.jsp").forward(request, response);
-		
+		request.setAttribute("clasico", clasico);
+		request.setAttribute("alerta", alerta);
+		request.getRequestDispatcher("clasicos").forward(request, response);
+	
 	} // doGet
 
+	
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		doGet(request, response);
-		
+	
 	} // doPost
 
 } // class

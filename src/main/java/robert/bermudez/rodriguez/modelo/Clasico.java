@@ -5,7 +5,7 @@ public class Clasico {
 	private int id;
 	private String modelo;
 	private String marca;
-	private int anio;
+	private String anio;
 	private String foto;
 	
 	public Clasico() {
@@ -13,7 +13,7 @@ public class Clasico {
 		this.id = 0;
 		this.modelo = "";
 		this.marca = "";
-		this.anio = 0;
+		this.anio = "";
 		this.foto = "";
 	}
 
@@ -41,11 +41,11 @@ public class Clasico {
 		this.marca = marca;
 	}
 
-	public int getAnio() {
+	public String getAnio() {
 		return anio;
 	}
 
-	public void setAnio(int anio) {
+	public void setAnio(String anio) {
 		this.anio = anio;
 	}
 

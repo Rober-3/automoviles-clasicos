@@ -5,9 +5,8 @@
 	version="3.1">
 
 
-	<!-- La primera URL que se ejecuta es "clasicos" con esto forzamos para 
-		que no sea index.jsp Y conseguimso pasar por un controlador para conseguir 
-		los datos a mostrar en index.jsp -->
+	<!-- Con welcome-file-list se fuerza a que la primera URL que se ejecute sea "clasicos" en
+		vez de index.jsp, y que pase por un controlador para conseguir los datos a mostrar. -->
 
 	<welcome-file-list>
 		<welcome-file>clasicos</welcome-file>
