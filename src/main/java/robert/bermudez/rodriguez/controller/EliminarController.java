@@ -15,32 +15,37 @@ import robert.bermudez.rodriguez.modelo.Clasico;
  */
 @WebServlet("/eliminar")
 public class EliminarController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-    
+	private static ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
 	
 
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Clasico clasico = new Clasico();
-		String alerta = "";
+		Alerta alerta = new Alerta();
+		
 		
 		// Recogida de parámetros enviados desde la vista.
 		String paramId = request.getParameter("id");
 		
+		
 		try {
 			
 			int id = Integer.parseInt(paramId);
-			ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
 			clasico = dao.delete(id);
-			alerta = "Clásico borrado con éxito";
+			alerta = new Alerta("success","Clásico borrado con éxito.");
+
 			
 		} catch (Exception e) {
-			alerta =  "Ha habido un problema al intentar borrar el clásico: " + e.getMessage();
+			alerta = new Alerta("danger","Ha habido un problema al intentar borrar el clásico: " + e.getMessage());
 			e.printStackTrace();
 		}
+		
 		
 		request.setAttribute("clasico", clasico);
 		request.setAttribute("alerta", alerta);

@@ -107,7 +107,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 	} //  getById
 
-	// ¿Por qué los métodos de CrudAble arrojan excepciones y los de DAO no?
+	
 
 	@Override
 	public ArrayList<Clasico> getAll() throws Exception {
@@ -167,15 +167,14 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			
 			if (affectedRows == 1) {
 				
-				// Obtener el id generado automáticamente por la BBDD.
 				ResultSet rsKeys = pst.getGeneratedKeys();
 				
-				int id = rsKeys.getInt(1);
+				int id = rsKeys.getInt(1); // Obtener el id generado automáticamente por la BBDD.
 				
 				clasico.setId(id);
 				
 			} else {
-				throw new Exception("No se ha podido guardar el registro " + clasico + " debido a un problema.");
+				throw new Exception("Ha habido un problema al tratar de guardar " + clasico + ".");
 				
 			} // if-else
 			
@@ -205,14 +204,14 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			int affectedRows = pst.executeUpdate();
 			
 			if (affectedRows != 1) {
-				throw new Exception("No se han actualizado correctamente los datos del clásico.");
+				throw new Exception("No se han actualizado correctamente los datos de " + pojo + ".");
 				
 			} // if
 			
 		} catch (Exception e) {
-			throw new Exception("Ha habido un problema al tratar de actualizar los datos.");
+			throw new Exception("Ha habido un problema al tratar de actualizar " + pojo + ".");
 			
-		} // try
+		} // try-catch
 		
 		return pojo;
 
@@ -238,11 +237,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			if (affectedRows != 1) {
 				throw new Exception("No existen en la base de datos clásicos con el id " + id + ".");
 				
-			} else {
-				
-			}
+			} // if
 			
-		} // try
+		} catch (Exception e) {
+			throw new Exception("Ha habido un problema al tratar de borrar " + clasico + ".");
+			
+		} // try-catch
 		
 		return clasico;
 

@@ -1,11 +1,19 @@
 package robert.bermudez.rodriguez.modelo;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class Clasico {
 
 	private int id;
+	@Size(min = 3, max = 50, message  = "debe tener entre 3 y 50 caracteres y no estar repetido.")
+	@NotEmpty(message = "no puede quedar vacío.")
 	private String modelo;
+	@NotEmpty(message = "no puede quedar vacío.")
 	private String marca;
+	@NotEmpty(message = "no puede quedar vacío.")
 	private String anio;
+	@NotEmpty(message = "no puede quedar vacío.")
 	private String foto;
 	
 	public Clasico() {

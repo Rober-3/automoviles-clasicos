@@ -6,3 +6,7 @@
 .formulario {
 	max-width: 600px;
 }
+
+.barra {
+	background: linear-gradient(to bottom, red, white);
+}

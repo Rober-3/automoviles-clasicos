@@ -17,8 +17,11 @@ import robert.bermudez.rodriguez.modelo.Clasico;
  */
 @WebServlet("/clasicos")
 public class ClasicosController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
+	
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -44,6 +47,8 @@ public class ClasicosController extends HttpServlet {
 		
 	} // doGet
 
+	
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
