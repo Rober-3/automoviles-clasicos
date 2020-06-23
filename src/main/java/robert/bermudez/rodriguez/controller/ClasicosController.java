@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import robert.bermudez.rodriguez.interfaces.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.interfaces.MarcaDAOImpl;
 import robert.bermudez.rodriguez.modelo.Clasico;
+import robert.bermudez.rodriguez.modelo.Marca;
 
 /**
  * Servlet implementation class ClasicosController
@@ -26,15 +28,17 @@ public class ClasicosController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		
-		// getAll
-		
-		ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
+		ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
+		MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
 		
 		ArrayList<Clasico> clasicosAmericanos = new ArrayList<Clasico>();
+		ArrayList<Marca> marcas = new ArrayList<Marca>();
 		
 		try {
-			clasicosAmericanos = dao.getAll();
+			clasicosAmericanos = daoClasico.getAll();
+			marcas = daoMarca.getAll();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,6 +46,7 @@ public class ClasicosController extends HttpServlet {
 		} // try-catch
 		
 		request.setAttribute("clasicosAmericanos", clasicosAmericanos);
+		request.setAttribute("marcas", marcas);
 		
 		request.getRequestDispatcher("clasicos-americanos.jsp").forward(request, response);
 		

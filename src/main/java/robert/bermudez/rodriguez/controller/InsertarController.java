@@ -1,7 +1,8 @@
-package robert.bermudez.rodriguez.controller;
+ package robert.bermudez.rodriguez.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,9 @@ import javax.validation.ValidatorFactory;
 import  robert.bermudez.rodriguez.controller.Alerta;
 
 import robert.bermudez.rodriguez.interfaces.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.interfaces.MarcaDAOImpl;
 import robert.bermudez.rodriguez.modelo.Clasico;
+import robert.bermudez.rodriguez.modelo.Marca;
 
 /**
  * Servlet implementation class InsertarController
@@ -26,7 +29,8 @@ import robert.bermudez.rodriguez.modelo.Clasico;
 public class InsertarController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
+	private static ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
+	private static MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
 	
 	// Objeto Validator  al que se le pasa el POJO para ver si cumple las validaciones.
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -39,12 +43,17 @@ public class InsertarController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		// Haciendo un new de alerta se mostrará su div sin un mensaje, ya que al inicializarla se establecen como vacíos
+		// sus atributos y se cumple la condición <c:if test="${not empty alerta}">
+		Alerta alerta = null;
+		
 		Clasico clasico = new Clasico(); // Inicializa un clásico para obtener un id == 0.
-		Alerta alerta = new Alerta();
-
+		ArrayList<Marca> marcas = new ArrayList<Marca>();
 		
 		try {
 
+			marcas = daoMarca.getAll();
+			
 			String paramId = request.getParameter("id");
 
 			
@@ -52,8 +61,8 @@ public class InsertarController extends HttpServlet {
 
 				int id = Integer.parseInt(paramId);
 				//ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
-				clasico = dao.getById(id);
-				alerta = new Alerta("primary","Modifica los campos:");
+				clasico = daoClasico.getById(id);
+				alerta = new Alerta("primary","Modifica los campos.");
 
 			} // if
 
@@ -65,6 +74,7 @@ public class InsertarController extends HttpServlet {
 			
 		} finally {
 			request.setAttribute("clasico", clasico);
+			request.setAttribute("marcas", marcas);
 			request.setAttribute("alerta", alerta);
 			request.getRequestDispatcher("formulario.jsp").forward(request, response);
 
@@ -80,6 +90,7 @@ public class InsertarController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Clasico clasico = new Clasico();
+		Marca marca = new Marca();
 		//ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
 		Alerta alerta = new Alerta();
 
@@ -87,14 +98,18 @@ public class InsertarController extends HttpServlet {
 		// Recogida de parámetros enviados desde la vista.
 		String paramId = request.getParameter("id");
 		String modelo = request.getParameter("modelo");
-		String marca = request.getParameter("marca");
 		String anio = request.getParameter("anio");
 		String foto = request.getParameter("foto");
+		
+		String paramIdMarca = request.getParameter("id_marca");
 
 
 		try {
 
 			int id = Integer.parseInt(paramId);
+			int id_marca = Integer.parseInt(paramIdMarca);
+			
+			marca = daoMarca.getById(id_marca);
 
 			clasico.setId(id);
 			clasico.setModelo(modelo);
@@ -120,11 +135,11 @@ public class InsertarController extends HttpServlet {
 				
 				
 				if (id == 0) {
-					dao.insert(clasico);
+					daoClasico.insert(clasico);
 					alerta = new Alerta("success","Modelo guardado con éxito.");
 					
 				} else {
-					dao.update(clasico);
+					daoClasico.update(clasico);
 					alerta = new Alerta("success","Dato(s) actualizado(s) con éxito.");
 					
 				} // if-else interno
