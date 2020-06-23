@@ -3,6 +3,7 @@ package robert.bermudez.rodriguez.interfaces;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 // TODO Notas: clase que emplea el patrón singleton y el patrón DAO. 
 //			   - Singleton consta de un constructor privado y un método getInstance().
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 import robert.bermudez.rodriguez.conexion.ConnectionManager;
 import robert.bermudez.rodriguez.modelo.Clasico;
+import robert.bermudez.rodriguez.modelo.Marca;
 
 /**
  * Clase que emplea el patrón singleton y el patrón DAO. 
@@ -51,7 +53,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	} // getInstance()
 	
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 
 	// TODO Notas: patrón DAO
@@ -59,19 +61,30 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	// Querys
 
 	// executeQuery devuelve un ResultSet.
-	private static final String SQL_GET_BY_ID =			"SELECT id, modelo, marca, anio, foto FROM clasicos WHERE id = ?;";
-	private static final String SQL_GET_ALL =			"SELECT id, modelo, marca, anio, foto FROM clasicos ORDER BY id DESC;";
-	private static final String SQL_GET_ALL_BY_MODELO = "SELECT id, modelo, marca, anio, foto FROM clasicos WHERE modelo LIKE ?;";
-	private static final String SQL_GET_ALL_BY_MARCA =	"SELECT id, modelo, marca, anio, foto FROM clasicos WHERE marca LIKE ?;";
+	private static final String SQL_GET_BY_ID =			"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto " + 
+														"FROM clasicos c, marcas m " + 
+														"WHERE id_marca = m.id AND c.id = ?;";
+	
+	private static final String SQL_GET_ALL =			"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto " + 
+														"FROM clasicos c, marcas m " + 
+														"WHERE id_marca = m.id " + 
+														"ORDER BY c.id DESC;";
+	
+	// private static final String SQL_GET_BY_MODELO =	"SELECT id, modelo, marca, anio, foto FROM clasicos WHERE modelo LIKE ?;";
+	private static final String SQL_GET_BY_MARCA =		"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto " + 
+														"FROM clasicos c, marcas m " + 
+														"WHERE id_marca = ? AND c.id_marca = m.id;";
 
 	// executeUpdate devuelve un int que representa el número de filas afectadas.
-	private static final String SQL_INSERT =			"INSERT INTO clasicos (modelo, marca, anio, foto) VALUES (?, ?, ?, ?);";
-	private static final String SQL_UPDATE =			"UPDATE clasicos SET modelo = ?, marca = ?, anio = ?, foto = ? WHERE id = ?;";
+	private static final String SQL_INSERT =			"INSERT INTO clasicos (modelo, id_marca, anio, foto) VALUES (?, ?, ?, ?);";
+	private static final String SQL_UPDATE =			"UPDATE clasicos SET modelo = ?, id_marca = ?, anio = ?, foto = ? WHERE id = ?;";
 	private static final String SQL_DELETE =			"DELETE FROM clasicos WHERE id = ?;";
 
 
 
 	// Métodos.
+	
+	// TODO Implementar métodos que faltan.
 
 	@Override
 	public Clasico getById(int id) throws Exception {
@@ -89,14 +102,9 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) { // Si encuentra un resultado en el ResultSet...
+				clasico = mapper(rs);
 
-				clasico.setId(rs.getInt("id"));
-				clasico.setModelo( rs.getString("modelo") );
-				clasico.setMarca( rs.getString("marca") );
-				clasico.setAnio( rs.getString("anio") );
-				clasico.setFoto( rs.getString("foto") );
-
-			} // if
+			}
 
 		} catch (Exception e) {
 			throw new Exception("No existen en la base de datos clásicos con el id " + id + ".");
@@ -117,35 +125,51 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		try (
 				Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_GET_ALL);
-				ResultSet rs = pst.executeQuery(SQL_GET_ALL);
+				ResultSet rs = pst.executeQuery();
 
 				) {
 
+			System.out.println(pst);
 			while (rs.next()) { // Mientras encuentre resultados en el ResultSet...
-				
-				Clasico clasico = new Clasico();
-				
-				clasico.setId(rs.getInt("id"));
-				clasico.setModelo(rs.getString("modelo"));
-				clasico.setMarca(rs.getString("marca"));
-				clasico.setAnio(rs.getString("anio"));
-				clasico.setFoto(rs.getString("foto"));
-				
-				listaClasicos.add(clasico);
+				listaClasicos.add(mapper(rs));
 				
 			} // while
 
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} // try-catch
+		} // try
 
 		return listaClasicos;
 
 	} // getAll()
+	
+	
+	
+	@Override
+	public ArrayList<Clasico> getByMarca(int idMarca) throws Exception {
+		
+		ArrayList<Clasico> listaClasicos = new ArrayList<Clasico>();
+		
+		try (	
+				Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_MARCA);
+				
+				) {
+			
+			pst.setInt(1, idMarca);
+			ResultSet rs = pst.executeQuery();
+			System.out.println(pst);
+			while (rs.next()) {
+				listaClasicos.add(mapper(rs));
+				
+			} // while
+			
+		} // try
+		
+		return listaClasicos;
 
-
-
+	} // getByMarca
+	
+	
+	
 	@Override
 	public Clasico insert(Clasico pojo) throws Exception {
 		
@@ -159,7 +183,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				) {
 			
 			pst.setString(1, pojo.getModelo());
-			pst.setString(2, pojo.getMarca());
+			pst.setInt(2, pojo.getMarca().getId()); // Marca es un objeto, por tanto hay que acceder a su atributo id.
 			pst.setString(3, pojo.getAnio());
 			pst.setString(4, pojo.getFoto());
 			
@@ -196,7 +220,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				) {
 			
 			pst.setString(1, pojo.getModelo());
-			pst.setString(2, pojo.getMarca());
+			pst.setInt(2, pojo.getMarca().getId()); // Marca es un objeto, por tanto hay que acceder a su atributo id.
 			pst.setString(3, pojo.getAnio());
 			pst.setString(4, pojo.getFoto());
 			pst.setInt(5, pojo.getId());
@@ -251,19 +275,31 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 
 	@Override
-	public ArrayList<Clasico> getAllByModelo(String modelo) {
-		// TODO Auto-generated method stub
+	public ArrayList<Clasico> getByModelo(int idModelo) {
 		return null;
 
-	} // getAllByModelo
-
-
-
-	@Override
-	public ArrayList<Clasico> getAllByMarca(String marca) {
-		// TODO Auto-generated method stub
-		return null;
-
-	} // getAllByMarca
-
+	} // getByModelo
+	
+	
+	
+	public Clasico mapper(ResultSet rs) throws SQLException {
+		
+		Marca marca = new Marca();
+		
+		marca.setId(rs.getInt("id_marca"));
+		marca.setMarca(rs.getString("marca"));
+		
+		
+		Clasico clasico = new Clasico();
+		
+		clasico.setId(rs.getInt("id_modelo"));
+		clasico.setModelo( rs.getString("modelo") );
+		clasico.setMarca(marca);
+		clasico.setAnio( rs.getString("anio") );
+		clasico.setFoto( rs.getString("foto") );
+		
+		return clasico;
+		
+	} // mapper
+	
 } // class
