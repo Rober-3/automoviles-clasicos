@@ -1,12 +1,12 @@
-.img-thumbnail {
+.img-thumbnail, .foto {
 	max-width: 10rem;
 	height: auto;
 }
 
 .formulario {
-	max-width: 600px;
+	max-width: 470px;
 }
 
 .barra {
-	background: linear-gradient(to bottom, red, white);
+	background: linear-gradient(#dc0000, #ff0000, #990000);
 }
