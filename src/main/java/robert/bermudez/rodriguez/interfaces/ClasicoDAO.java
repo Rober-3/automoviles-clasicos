@@ -9,7 +9,7 @@ import robert.bermudez.rodriguez.modelo.Clasico;
 
 public interface ClasicoDAO  extends CrudAble<Clasico>  {
 
-	ArrayList<Clasico> getAllByModelo (String modelo);
-	
-	ArrayList<Clasico> getAllByMarca (String marca);
+	ArrayList<Clasico> getByModelo(int idModelo);
+
+	ArrayList<Clasico> getByMarca(int idMarca) throws Exception;
 }
