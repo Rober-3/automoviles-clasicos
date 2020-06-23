@@ -32,8 +32,9 @@ public class InicioController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// idMarca se recibe desde el dropdown de header.jsp para seleccionar una marca.
-		String id = request.getParameter("idMarca");
+		
+		String id = request.getParameter("idMarca"); // idMarca se recibe desde el dropdown de header.jsp para seleccionar una marca.
+		String marca = request.getParameter("marca"); // marca se recibe como parámetro para mostrarla luego en pantalla.
 		
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 		ArrayList<Marca> marcas = new ArrayList<Marca>();
@@ -59,6 +60,7 @@ public class InicioController extends HttpServlet {
 		} finally {
 			request.setAttribute("clasicos", clasicos);
 			request.setAttribute("marcas", marcas);
+			request.setAttribute("marca", marca); // La envía para mostrarla en pantalla.
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 
 		} // try-catch-finally
