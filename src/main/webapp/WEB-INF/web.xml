@@ -1,15 +1,14 @@
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	version="3.1">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+		 version="3.1">
 
 
-	<!-- Con welcome-file-list se fuerza a que la primera URL que se ejecute sea "clasicos" en
-		vez de index.jsp, y que pase por un controlador para conseguir los datos a mostrar. -->
+	<!-- Con welcome-file-list se fuerza a que la primera URL que se ejecute sea lo que está incluído entre las etiquetas 
+		welcome-file en vez de index.jsp, y que pase por un controlador para conseguir los datos a mostrar. -->
 
 	<welcome-file-list>
-		<welcome-file>clasicos</welcome-file>
+		<welcome-file>inicio</welcome-file>
 	</welcome-file-list>
 
 </web-app>
