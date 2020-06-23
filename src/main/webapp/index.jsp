@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -12,7 +11,14 @@
 
 	<div class="container mt-5">
 
-		<div class="row">
+		<c:if test="${empty marca}">
+			<h2 class="text-center">Mostrando todos los clásicos</h2>
+		</c:if>
+		<c:if test="${not empty marca}">
+			<h2 class="text-center">Mostrando clásicos de ${marca}</h2>
+		</c:if>
+
+		<div class="row mt-5">
 
 			<c:forEach items="${clasicos}" var="c">
 
@@ -23,9 +29,14 @@
 					<div class="card-body">
 
 						<h5 class="card-title font-weight-bold text-center">${c.modelo}</h5>
-						<p class="card-text">Marca: <b>${c.marca.marca}</b> </p>
-						<p class="card-text">Año: <b>${c.anio}</b> </p>
-						<a href="${c.foto}" target="_blank" class="card-link foto">Ver el clásico</a>
+						<p class="card-text">
+							Marca: <b>${c.marca.marca}</b>
+						</p>
+						<p class="card-text">
+							Año: <b>${c.anio}</b>
+						</p>
+						<a href="${c.foto}" target="_blank" class="card-link foto">Ver
+							el clásico</a>
 
 					</div>
 				</div>
