@@ -9,7 +9,9 @@ no será un pojo del modelo, ya que no se usará en la BBDD, si no que será un 
 
 <!-- c:if evita que se muestren el área y el botón de la alerta estando vacía-->
 <c:if test="${not empty alerta}">
+
 <div class>
+
 	<div class="alert alert-${alerta.tipo} alert-dismissible fade show text-center" role="alert">
 		${alerta.texto}
 		
