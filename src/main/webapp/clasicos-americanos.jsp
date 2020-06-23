@@ -18,10 +18,8 @@
 <main>
 	
 		<div class="container my-5">
-
-			<h3 class="text-center">Clásicos americanos</h3>
-
-			<div class="my-5"> <a href="index.jsp">Página principal</a> </div>
+			
+			<img src="img/logo.png" class="mx-auto my-5 d-block" >
 
 			<!-- Tabla -->
 
@@ -45,7 +43,7 @@
 
 							<td class="align-middle">${a.id}</td>
 							<td class="align-middle">${a.modelo}</td>
-							<td class="align-middle">${a.marca}</td>
+							<td class="align-middle">${a.marca.marca}</td> <!-- Accede al atributo marca del objeto Marca. -->
 							<td class="align-middle">${a.anio}</td>
 							<td class="align-middle"><img src="${a.foto}" class="img-thumbnail" alt="foto"></td>
 							
@@ -57,14 +55,10 @@
 							</td>
 
 						</tr>
-						
 					</c:forEach>
 				</tbody>
-				
 			</table>
-			
 		</div>
-		
 	</main>
 
 	<%@include file="includes/footer.jsp"%>
