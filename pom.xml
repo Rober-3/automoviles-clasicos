@@ -27,7 +27,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${javax.servlet.api}</version>
-			<scope>provided</scope>  <!-- Nos lo provee el servidor de aplicaciones -->
+			<scope>provided</scope>  <!-- Nos lo provee el servidor de aplicaciones, no hace falta incluir la librería en el proyecto. -->
 		</dependency>
 
 		<dependency>
@@ -105,7 +105,7 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-			<scope>test</scope> <!-- solo se usa para Test, cuando se crea el projecto no se usa esta libreria -->
+			<scope>test</scope> <!-- solo se usa para Test, cuando se crea el projecto no se usa esta libreria (lo indica el scope).-->
 		</dependency>
 
 
