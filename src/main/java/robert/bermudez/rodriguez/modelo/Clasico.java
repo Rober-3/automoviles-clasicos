@@ -6,13 +6,16 @@ import javax.validation.constraints.Size;
 public class Clasico {
 
 	private int id;
+	
 	@Size(min = 3, max = 50, message  = "debe tener entre 3 y 50 caracteres y no estar repetido.")
 	@NotEmpty(message = "no puede quedar vacío.")
 	private String modelo;
-	@NotEmpty(message = "no puede quedar vacío.")
-	private String marca;
+	
+	private Marca marca;
+	
 	@NotEmpty(message = "no puede quedar vacío.")
 	private String anio;
+	
 	@NotEmpty(message = "no puede quedar vacío.")
 	private String foto;
 	
@@ -20,7 +23,7 @@ public class Clasico {
 		super();
 		this.id = 0;
 		this.modelo = "";
-		this.marca = "";
+		this.marca = new Marca();
 		this.anio = "";
 		this.foto = "";
 	}
@@ -41,11 +44,11 @@ public class Clasico {
 		this.modelo = modelo;
 	}
 
-	public String getMarca() {
+	public Marca getMarca() {
 		return marca;
 	}
 
-	public void setMarca(String marca) {
+	public void setMarca(Marca marca) {
 		this.marca = marca;
 	}
 
@@ -67,7 +70,8 @@ public class Clasico {
 
 	@Override
 	public String toString() {
-		return "Clasico [id=" + id + ", modelo=" + modelo + ", marca=" + marca + ", anio=" + anio + ", foto=" + foto + "]";
+		return "Clasico [id=" + id + ", modelo=" + modelo + ", marca=" + marca + ", anio=" + anio + ", foto=" + foto
+				+ "]";
 	}
 	
 }
