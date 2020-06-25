@@ -8,7 +8,12 @@ public class Marca {
 	public Marca() {
 		super();
 		this.id = 0;
-		this.marca ="";
+		this.marca = "";
+	}
+	
+	public Marca(int id) {
+		this();
+		this.id = id;
 	}
 
 	public int getId() {

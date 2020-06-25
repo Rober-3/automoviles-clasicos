@@ -2,7 +2,6 @@
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -15,10 +14,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import  robert.bermudez.rodriguez.controller.Alerta;
-
 import robert.bermudez.rodriguez.interfaces.ClasicoDAOImpl;
-import robert.bermudez.rodriguez.interfaces.MarcaDAOImpl;
 import robert.bermudez.rodriguez.modelo.Clasico;
 import robert.bermudez.rodriguez.modelo.Marca;
 
@@ -30,7 +26,8 @@ public class InsertarController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
-	private static MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
+	// Con InicioAppListener ya no es necesario llamar al DAO de las marcas.
+	// private static MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
 	
 	// Objeto Validator  al que se le pasa el POJO para ver si cumple las validaciones.
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -48,11 +45,11 @@ public class InsertarController extends HttpServlet {
 		Alerta alerta = null;
 		
 		Clasico clasico = new Clasico(); // Inicializa un clásico para obtener un id == 0.
-		ArrayList<Marca> marcas = new ArrayList<Marca>();
+		// ArrayList<Marca> marcas = new ArrayList<Marca>();
 		
 		try {
 
-			marcas = daoMarca.getAll();
+			// marcas = daoMarca.getAll();
 			
 			String paramId = request.getParameter("id");
 
@@ -60,7 +57,7 @@ public class InsertarController extends HttpServlet {
 			if (paramId != null) { // Si id no es null obtiene un clásico de la BBDD para actualizarlo.
 
 				int id = Integer.parseInt(paramId);
-				//ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
+				// ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
 				clasico = daoClasico.getById(id);
 				alerta = new Alerta("primary","Modifica los campos.");
 
@@ -74,7 +71,7 @@ public class InsertarController extends HttpServlet {
 			
 		} finally {
 			request.setAttribute("clasico", clasico);
-			request.setAttribute("marcas", marcas);
+			// request.setAttribute("marcas", marcas);
 			request.setAttribute("alerta", alerta);
 			request.getRequestDispatcher("formulario.jsp").forward(request, response);
 
@@ -89,9 +86,8 @@ public class InsertarController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		// ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
 		Clasico clasico = new Clasico();
-		Marca marca = new Marca();
-		//ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
 		Alerta alerta = new Alerta();
 
 
@@ -100,7 +96,6 @@ public class InsertarController extends HttpServlet {
 		String modelo = request.getParameter("modelo");
 		String anio = request.getParameter("anio");
 		String foto = request.getParameter("foto");
-		
 		String paramIdMarca = request.getParameter("id_marca");
 
 
@@ -109,14 +104,16 @@ public class InsertarController extends HttpServlet {
 			int id = Integer.parseInt(paramId);
 			int id_marca = Integer.parseInt(paramIdMarca);
 			
-			marca = daoMarca.getById(id_marca);
+			// Para setear la marca no es necesario usar el getById, puede emplearse un constructor personalizado al que se
+			// le pase como único parámetro el id de la marca. De esta forma se evita utilizar el dao.
+			// marca = daoMarca.getById(id_marca);
+			Marca marca = new Marca(id_marca);
 
 			clasico.setId(id);
 			clasico.setModelo(modelo);
 			clasico.setMarca(marca);
 			clasico.setAnio(anio);
 			clasico.setFoto(foto);
-
 			
 			// Devuelve un set con todas las validaciones.
 			Set<ConstraintViolation<Clasico>> violations = validator.validate(clasico);
@@ -159,9 +156,13 @@ public class InsertarController extends HttpServlet {
 				alerta = new Alerta("danger",errores);
 
 			} // if-else externo
-
+			
 			
 		} catch (SQLException e) {
+			// TODO CORREGIR ESTE ERROR: 
+			// AL INTRODUCIR UN NUEVO CLÁSICO E INTENTAR GUARDARLO EN LA BBDD ENTRA POR ESTE CATCH Y EN APARIENCIA NO SE
+			// GUARDA, PERO YENDO A LA TABLA DE CLÁSICOS APARECERÁ.
+			
 			// Captura esta excepción en caso de tratar de introducir un modelo duplicado: dentro de la tabla clasicos hay
 			// una constraint en el campo modelo que indica que es único.
 			alerta = new Alerta("danger","Modelo duplicado.");

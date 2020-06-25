@@ -31,14 +31,15 @@ public class ClasicosController extends HttpServlet {
 
 		
 		ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
-		MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
+		// Con InicioAppListener ya no es necesario llamar al DAO de las marcas.
+		// MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
 		
 		ArrayList<Clasico> clasicosAmericanos = new ArrayList<Clasico>();
-		ArrayList<Marca> marcas = new ArrayList<Marca>();
+		// ArrayList<Marca> marcas = new ArrayList<Marca>();
 		
 		try {
 			clasicosAmericanos = daoClasico.getAll();
-			marcas = daoMarca.getAll();
+			// marcas = daoMarca.getAll();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,7 +47,7 @@ public class ClasicosController extends HttpServlet {
 		} // try-catch
 		
 		request.setAttribute("clasicosAmericanos", clasicosAmericanos);
-		request.setAttribute("marcas", marcas);
+		// request.setAttribute("marcas", marcas);
 		
 		request.getRequestDispatcher("clasicos-americanos.jsp").forward(request, response);
 		

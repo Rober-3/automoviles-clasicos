@@ -8,12 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.Null;
 
 import robert.bermudez.rodriguez.interfaces.ClasicoDAOImpl;
-import robert.bermudez.rodriguez.interfaces.MarcaDAOImpl;
 import robert.bermudez.rodriguez.modelo.Clasico;
-import robert.bermudez.rodriguez.modelo.Marca;
 
 /**
  * Servlet implementation class InicioController
@@ -23,7 +20,8 @@ public class InicioController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static final ClasicoDAOImpl clasicoDao = ClasicoDAOImpl.getInstance();
-	private static final MarcaDAOImpl marcaDao = MarcaDAOImpl.getInstance();
+	// Con InicioAppListener ya no es necesario llamar al DAO de las marcas.
+	// private static final MarcaDAOImpl marcaDao = MarcaDAOImpl.getInstance();
 
 
 
@@ -37,11 +35,11 @@ public class InicioController extends HttpServlet {
 		String marca = request.getParameter("marca"); // marca se recibe como parámetro para mostrarla luego en pantalla.
 		
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
-		ArrayList<Marca> marcas = new ArrayList<Marca>();
+		// ArrayList<Marca> marcas = new ArrayList<Marca>();
 
 		try {
 			
-			marcas = marcaDao.getAll();
+			// marcas = marcaDao.getAll();
 			
 			if (id == null) {
 				clasicos = clasicoDao.getAll();
@@ -59,7 +57,7 @@ public class InicioController extends HttpServlet {
 
 		} finally {
 			request.setAttribute("clasicos", clasicos);
-			request.setAttribute("marcas", marcas);
+			// request.setAttribute("marcas", marcas);
 			request.setAttribute("marca", marca); // La envía para mostrarla en pantalla.
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 
