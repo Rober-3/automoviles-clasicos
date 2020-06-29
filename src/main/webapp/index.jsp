@@ -8,40 +8,48 @@
 </jsp:include>
 
 <main>
-
 	<div class="container mt-5">
 
 		<c:if test="${empty marca}">
-			<h2 class="text-center">Mostrando todos los clásicos</h2>
-		</c:if>
-		<c:if test="${not empty marca}">
-			<h2 class="text-center">Mostrando clásicos de ${marca}</h2>
-		</c:if>
-
-		<div class="row mt-5">
-
-			<c:forEach items="${clasicos}" var="c">
-
-				<div class="card bg-light mb-5 mx-auto" style="max-width: 18rem;">
-
-					<img src="${c.foto}" class="card-img-top" alt="Foto del clásico">
-
-					<div class="card-body">
-
-						<h5 class="card-title font-weight-bold text-center">${c.modelo}</h5>
-						<p class="card-text">
-							Marca: <b>${c.marca.marca}</b>
-						</p>
-						<p class="card-text">
-							Año: <b>${c.anio}</b>
-						</p>
-						<a href="${c.foto}" target="_blank" class="card-link foto">Ver
-							el clásico</a>
-
+			<h2 class="text-center">Marcas A-Z</h2>
+			<div>
+				<c:forEach items="${marcasConClasicos}" var="m">
+					<h4 class="mt-5">${m.marca}</h4>
+					<div class="row mt-5">
+						<c:forEach items="${m.clasicos}" var="c">
+							<div class="card bg-light mb-5 mx-auto" style="max-width: 18rem;">
+								<img src="${c.foto}" class="card-img-top" alt="Foto del clásico">
+								<div class="card-body">
+									<h5 class="card-title font-weight-bold">${c.modelo}</h5>
+									<!-- <p class="card-text">Marca: <b>${c.marca.marca}</b></p> -->
+									<p class="card-text">Año: <b>${c.anio}</b>
+									</p><a href="${c.foto}" target="_blank" class="card-link foto">Ver el clásico</a>
+								</div>
+							</div>
+						</c:forEach>
 					</div>
-				</div>
-			</c:forEach>
-		</div>
+					<hr>
+				</c:forEach>
+			</div>
+		</c:if>
+
+		<c:if test="${not empty marca}">
+			<h2 class="text-center">Clásicos de ${marca}</h2>
+			<div class="row mt-5">
+				<c:forEach items="${clasicos}" var="c">
+					<div class="card bg-light mb-5 mx-auto" style="max-width: 18rem;">
+						<img src="${c.foto}" class="card-img-top" alt="Foto del clásico">
+						<div class="card-body">
+							<h5 class="card-title font-weight-bold">${c.modelo}</h5>
+							<!-- <p class="card-text">Marca: <b>${c.marca.marca}</b></p> -->
+							<p class="card-text">Año: <b>${c.anio}</b></p>
+							<a href="${c.foto}" target="_blank" class="card-link foto">Ver el clásico</a>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</c:if>
+
 	</div>
 </main>
 

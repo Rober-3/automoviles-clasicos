@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import robert.bermudez.rodriguez.interfaces.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.interfaces.MarcaDAOImpl;
 import robert.bermudez.rodriguez.modelo.Clasico;
+import robert.bermudez.rodriguez.modelo.Marca;
 
 /**
  * Servlet implementation class InicioController
@@ -20,35 +22,42 @@ public class InicioController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static final ClasicoDAOImpl clasicoDao = ClasicoDAOImpl.getInstance();
-	// Con InicioAppListener ya no es necesario llamar al DAO de las marcas.
-	// private static final MarcaDAOImpl marcaDao = MarcaDAOImpl.getInstance();
+	
+	// El DAO de las marcas sólo es necesario para llamar al método getAllWithClassics(). Para obtenerlas pinchando en el
+	// dropdown de la cabecera, es suficiente con el listener InicioAppListener.
+	private static final MarcaDAOImpl marcaDao = MarcaDAOImpl.getInstance();
 
 
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 * @Parámetros idMarca: se recibe desde el dropdown de header.jsp <br>
+	 * 			   marca: se recibe como parámetro para mostrar luego la marca en pantalla
+	 */ 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		String paramId = request.getParameter("idMarca");
+		String marca = request.getParameter("marca");
 		
-		String id = request.getParameter("idMarca"); // idMarca se recibe desde el dropdown de header.jsp para seleccionar una marca.
-		String marca = request.getParameter("marca"); // marca se recibe como parámetro para mostrarla luego en pantalla.
-		
-		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
-		// ArrayList<Marca> marcas = new ArrayList<Marca>();
+		ArrayList<Marca> marcasConClasicos = new ArrayList<Marca>(); // HashMap de marcas.
 
 		try {
 			
-			// marcas = marcaDao.getAll();
+			// marcas = marcaDao.getAll(); Para llamar a este método no sería necesario el DAO de las marcas.
 			
-			if (id == null) {
-				clasicos = clasicoDao.getAll();
+			if (paramId == null) { // Si no se reciben parámetros, se muestran todas las marcas ordenadas alfabéticamente.
 				
-			} else {
-				int idMarca = Integer.parseInt(id);
-				clasicos = clasicoDao.getByMarca(idMarca);
-
-			}
+				marcasConClasicos = marcaDao.getAllWithClassics();
+				
+			} else { // Si se reciben parámetros, muestra la marca correspondiente al idMarca.
+				
+				int idMarca = Integer.parseInt(paramId);
+				ArrayList<Clasico> clasicos = clasicoDao.getByMarca(idMarca);
+				
+				request.setAttribute("clasicos", clasicos);
+				request.setAttribute("marca", marca); // La envía para mostrarla en pantalla.
+				
+			} // if-else
 
 		} catch (Exception e) {
 			Alerta alerta = new Alerta("danger", "Ha habido un problema: " + e.getMessage());
@@ -56,9 +65,7 @@ public class InicioController extends HttpServlet {
 			e.printStackTrace();
 
 		} finally {
-			request.setAttribute("clasicos", clasicos);
-			// request.setAttribute("marcas", marcas);
-			request.setAttribute("marca", marca); // La envía para mostrarla en pantalla.
+			request.setAttribute("marcasConClasicos", marcasConClasicos);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 
 		} // try-catch-finally
@@ -78,7 +85,7 @@ public class InicioController extends HttpServlet {
 
 
 
-	// Para obtener los clásicos en la vista da lo mismo emplear el doGet que el doPost, con puentear uno de los dos es suficiente.
+	// Para obtener los clásicos en la vista da lo mismo emplear doGet que doPost, con puentear uno de los dos es suficiente.
 	// También se puede crear el método doProcess y llamarlo tanto desde el doGet como del doPost.
 
 	// private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

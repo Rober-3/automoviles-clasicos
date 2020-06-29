@@ -66,7 +66,7 @@
 							<button class="btn dropdown-toggle bg-transparent font-weight-bold text-white" type="button" id="dropdownMenuButton" 
 									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marcas</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item font-weight-bold" href="inicio">Todas</a>
+								<a class="dropdown-item font-weight-bold" href="inicio">Todas A-Z</a>
 							
 								<c:forEach items="${marcas}" var="m">
 									<!-- idMarca se envía a InicioController para seleccionar una marca. -->
