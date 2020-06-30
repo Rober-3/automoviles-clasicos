@@ -131,10 +131,10 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				) {
 
 			System.out.println(pst);
+			
 			while (rs.next()) { // Mientras encuentre resultados en el ResultSet...
-				clasicos.add(mapper(rs));
-				
-			} // while
+				clasicos.add(mapper(rs));	
+			}
 
 		} // try
 
