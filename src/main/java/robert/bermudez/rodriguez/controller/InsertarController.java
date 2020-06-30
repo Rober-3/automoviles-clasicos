@@ -73,7 +73,7 @@ public class InsertarController extends HttpServlet {
 			request.setAttribute("clasico", clasico);
 			// request.setAttribute("marcas", marcas);
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("views/formulario.jsp").forward(request, response);
+			request.getRequestDispatcher("views/formulario-clasicos.jsp").forward(request, response);
 
 		} // try-catch-finally
 
@@ -182,7 +182,7 @@ public class InsertarController extends HttpServlet {
 			request.setAttribute("alerta", alerta);
 
 			// Ir a la vista.
-			request.getRequestDispatcher("views/formulario.jsp").forward(request, response);
+			request.getRequestDispatcher("views/formulario-clasicos.jsp").forward(request, response);
 
 		} // try-catch-finally
 
