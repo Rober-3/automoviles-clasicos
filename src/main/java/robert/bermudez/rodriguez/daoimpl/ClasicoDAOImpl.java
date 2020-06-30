@@ -121,7 +121,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	@Override
 	public ArrayList<Clasico> getAll() throws Exception {
 
-		ArrayList<Clasico> listaClasicos = new ArrayList<Clasico>();
+		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 
 		try (
 				Connection con = ConnectionManager.getConnection();
@@ -132,13 +132,13 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 			System.out.println(pst);
 			while (rs.next()) { // Mientras encuentre resultados en el ResultSet...
-				listaClasicos.add(mapper(rs));
+				clasicos.add(mapper(rs));
 				
 			} // while
 
 		} // try
 
-		return listaClasicos;
+		return clasicos;
 
 	} // getAll()
 	
