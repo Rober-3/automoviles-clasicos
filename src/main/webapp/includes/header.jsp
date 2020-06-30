@@ -58,7 +58,7 @@
 					</li>
 					
 					<li class="nav-item font-weight-bold">
-						<a class="nav-link text-white ${ ('Formulario' eq param.pagina ?'disabled' :'') }" href="insertar-editar">Nuevo / Editar clásico</a>
+						<a class="nav-link text-white ${ ('Formulario' eq param.pagina ?'disabled' :'') }" href="insertar-editar">Nuevo clásico</a>
 					</li>
 					
 					<li>
