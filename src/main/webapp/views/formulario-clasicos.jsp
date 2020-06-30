@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:include page="../includes/header.jsp">
-	<jsp:param name="pagina" value="Formulario" />
-	<jsp:param name="title" value="Formulario" />
+	<jsp:param name="pagina" value="Formulario clasicos" />
+	<jsp:param name="title" value="Formulario clasicos" />
 </jsp:include>
 
 <main>

@@ -58,10 +58,14 @@
 					</li>
 					
 					<li class="nav-item font-weight-bold">
-						<a class="nav-link text-white ${ ('Formulario' eq param.pagina ?'disabled' :'') }" href="insertar-editar">Nuevo clásico</a>
+						<a class="nav-link text-white ${ ('Formulario clasicos' eq param.pagina ?'disabled' :'') }" href="insertar-editar">Nuevo clásico</a>
 					</li>
 					
-					<li>
+					<li class="nav-item font-weight-bold">
+						<a class="nav-link text-white ${ ('Formulario marcas' eq param.pagina ?'disabled' :'') }" href="#">Nueva marca</a>
+					</li>
+					
+					<li class="nav-item">
 						<div class="dropdown">
 							<button class="btn dropdown-toggle bg-transparent font-weight-bold text-white" type="button" id="dropdownMenuButton" 
 									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marcas</button>
