@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import robert.bermudez.rodriguez.interfaces.ClasicoDAOImpl;
-import robert.bermudez.rodriguez.interfaces.MarcaDAOImpl;
+import robert.bermudez.rodriguez.daoimpl.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.daoimpl.MarcaDAOImpl;
 import robert.bermudez.rodriguez.modelo.Clasico;
 import robert.bermudez.rodriguez.modelo.Marca;
 

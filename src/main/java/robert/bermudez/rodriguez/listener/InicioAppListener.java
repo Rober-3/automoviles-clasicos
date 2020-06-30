@@ -14,7 +14,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import robert.bermudez.rodriguez.controller.Alerta;
-import robert.bermudez.rodriguez.interfaces.MarcaDAOImpl;
+import robert.bermudez.rodriguez.daoimpl.MarcaDAOImpl;
 
 /**
  * Application Lifecycle Listener implementation class InicioAppListener

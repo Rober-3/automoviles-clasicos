@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.interfaces;
+package robert.bermudez.rodriguez.daoimpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import robert.bermudez.rodriguez.conexion.ConnectionManager;
+import robert.bermudez.rodriguez.dao.ClasicoDAO;
 import robert.bermudez.rodriguez.modelo.Clasico;
 import robert.bermudez.rodriguez.modelo.Marca;
 

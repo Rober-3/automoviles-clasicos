@@ -1,6 +1,6 @@
 package robert.bermudez.rodriguez.conexion;
 
-// TODO Notas: // Clase que se usará con todas aquellas clases que quieran establecer una conexión con una BBDD.
+// TODO Notas: Clase que se usará con todas aquellas clases que quieran establecer una conexión con una BBDD.
 
 import java.sql.Connection;
 import java.sql.DriverManager;

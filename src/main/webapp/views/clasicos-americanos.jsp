@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<jsp:include page="includes/header.jsp">
+<jsp:include page="../includes/header.jsp">
 	<jsp:param name="pagina" value="Clasicos americanos" />
 	<jsp:param name="title" value="Clasicos americanos" />
 </jsp:include>
@@ -19,7 +19,7 @@
 	
 		<div class="container my-5">
 			
-			<img src="img/logo.png" class="mx-auto my-5 d-block" >
+			<img src="img/encabezado-americanos.png" class="mx-auto my-5 d-block" >
 
 			<!-- Tabla -->
 
@@ -61,4 +61,4 @@
 		</div>
 	</main>
 
-	<%@include file="includes/footer.jsp"%>
+	<%@include file="../includes/footer.jsp"%>

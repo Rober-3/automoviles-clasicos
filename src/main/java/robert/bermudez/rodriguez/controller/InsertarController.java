@@ -14,7 +14,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import robert.bermudez.rodriguez.interfaces.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.Clasico;
 import robert.bermudez.rodriguez.modelo.Marca;
 
@@ -73,7 +73,7 @@ public class InsertarController extends HttpServlet {
 			request.setAttribute("clasico", clasico);
 			// request.setAttribute("marcas", marcas);
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("formulario.jsp").forward(request, response);
+			request.getRequestDispatcher("views/formulario.jsp").forward(request, response);
 
 		} // try-catch-finally
 
@@ -182,7 +182,7 @@ public class InsertarController extends HttpServlet {
 			request.setAttribute("alerta", alerta);
 
 			// Ir a la vista.
-			request.getRequestDispatcher("formulario.jsp").forward(request, response);
+			request.getRequestDispatcher("views/formulario.jsp").forward(request, response);
 
 		} // try-catch-finally
 

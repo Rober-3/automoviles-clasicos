@@ -21,7 +21,7 @@
 
 <body>
 
-	<jsp:include page="includes/alerta.jsp"></jsp:include>
+	<jsp:include page="../includes/alerta.jsp"></jsp:include>
 
 	<main>
 
@@ -32,19 +32,24 @@
 			<form action="login" method="post" class="mt-3">
 
 				<div class="form-group">
-					<label for="nombre">Nombre de usuario</label> <input type="text"
-						id="nombre" name="nombre" value="${usuario.nombre}"
-						class="form-control form-control-sm"
-						placeholder="Introduce tu nombre de usuario">
+					<label for="nombre">Nombre de usuario</label>
+					<input type="text"
+						   id="nombre"
+						   name="nombre"
+						   value="${usuario.nombre}"
+						   class="form-control form-control-sm"
+						   placeholder="Introduce tu nombre de usuario">
 				</div>
 				<div class="form-group">
-					<label for="contrasena">Contraseña</label> <input type="text"
-						id="contrasena" name="contrasena" value="${usuario.contrasena}"
-						class="form-control form-control-sm"
-						placeholder="Introduce tu contraseña">
+					<label for="contrasena">Contraseña</label>
+					<input type="text"
+						   id="contrasena"
+						   name="contrasena"
+						   value="${usuario.contrasena}"
+						   class="form-control form-control-sm"
+						   placeholder="Introduce tu contraseña">
 				</div>
-				<button type="submit" class="btn btn-primary btn-sm">Iniciar
-					sesión</button>
+				<button type="submit" class="btn btn-primary btn-sm">Iniciar sesión</button>
 
 			</form>
 
@@ -52,4 +57,4 @@
 
 	</main>
 
-	<%@include file="includes/footer.jsp"%>
+	<%@include file="../includes/footer.jsp"%>

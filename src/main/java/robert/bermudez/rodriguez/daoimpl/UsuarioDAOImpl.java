@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.interfaces;
+package robert.bermudez.rodriguez.daoimpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import robert.bermudez.rodriguez.conexion.ConnectionManager;
+import robert.bermudez.rodriguez.dao.UsuarioDAO;
 import robert.bermudez.rodriguez.modelo.Usuario;
 
 
@@ -112,19 +113,20 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public Usuario insert(Usuario pojo) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	} // insert
 
+	
+	
 	@Override
 	public Usuario update(Usuario pojo) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	} // update
 
+	
+	
 	@Override
 	public Usuario delete(int id) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	} // delete
 

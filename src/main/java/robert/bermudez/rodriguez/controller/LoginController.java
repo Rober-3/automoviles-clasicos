@@ -13,7 +13,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import robert.bermudez.rodriguez.interfaces.UsuarioDAOImpl;
+import robert.bermudez.rodriguez.daoimpl.UsuarioDAOImpl;
 import robert.bermudez.rodriguez.modelo.Usuario;
 
 /**
@@ -76,7 +76,7 @@ public class LoginController extends HttpServlet {
 
 				} else {
 					alerta = new Alerta("danger","El usuario y/o la contraseña son erróneos.");
-					ruta = "login.jsp";
+					ruta = "views/login.jsp";
 
 				} // if-else interno
 
@@ -91,7 +91,7 @@ public class LoginController extends HttpServlet {
 				} // for
 
 				alerta = new Alerta ("danger", errores);
-				ruta = "login.jsp";
+				ruta = "views/login.jsp";
 
 			} // if-else externo
 

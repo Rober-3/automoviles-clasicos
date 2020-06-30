@@ -1,5 +1,6 @@
-package robert.bermudez.rodriguez.interfaces;
+package robert.bermudez.rodriguez.dao;
 
+import robert.bermudez.rodriguez.interfaces.CrudAble;
 import robert.bermudez.rodriguez.modelo.Usuario;
 
 public interface UsuarioDAO extends CrudAble<Usuario> {
