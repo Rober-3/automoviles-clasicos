@@ -9,7 +9,7 @@
 
 <main>
 
-	<div class="container my-5 formulario">
+	<div class="container my-5 bg-light formularioclasicos">
 
 		<h3 class="my-5 text-center">Nuevo registro / Editar registro</h3>
 

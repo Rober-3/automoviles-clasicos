@@ -29,7 +29,7 @@
 
 		<!-- Barra de navegación -->
 
-		<nav class=" text-light barra navbar navbar-expand-lg navbar-light bg-light py-4">
+		<nav class="barra text-light navbar navbar-expand-lg navbar-light bg-light py-4">
 
 			<a class="navbar-brand" href="#">Navbar</a>
 			<button class="navbar-toggler" 
@@ -62,7 +62,7 @@
 					</li>
 					
 					<li class="nav-item font-weight-bold">
-						<a class="nav-link text-white ${ ('Formulario marcas' eq param.pagina ?'disabled' :'') }" href="#">Nueva marca</a>
+						<a class="nav-link text-white ${ ('Formulario marcas' eq param.pagina ?'disabled' :'') }" href="marcas">Nueva marca</a>
 					</li>
 					
 					<li class="nav-item">
@@ -70,6 +70,9 @@
 							<button class="btn dropdown-toggle bg-transparent font-weight-bold text-white" type="button" id="dropdownMenuButton" 
 									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marcas</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							
+								<a class="dropdown-item font-weight-bold" href="marcas">Todas</a>
+								
 								<a class="dropdown-item font-weight-bold" href="inicio">Todas A-Z</a>
 							
 								<c:forEach items="${marcas}" var="m">

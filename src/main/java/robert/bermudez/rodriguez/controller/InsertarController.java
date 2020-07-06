@@ -177,7 +177,7 @@ public class InsertarController extends HttpServlet {
 			
 		} finally {
 
-			// Enviar atributos a la vista.
+			// Envío de atributos a la vista.
 			request.setAttribute("clasico", clasico);
 			request.setAttribute("alerta", alerta);
 

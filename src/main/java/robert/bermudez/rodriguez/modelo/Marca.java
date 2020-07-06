@@ -2,9 +2,12 @@ package robert.bermudez.rodriguez.modelo;
 
 import java.util.ArrayList;
 
+import javax.validation.constraints.NotEmpty;
+
 public class Marca {
 	
 	private int id;
+	@NotEmpty(message = ": este campo no puede quedar vacío")
 	private String marca;
 	
 	// Atributo necesario para hacer un hashmap de clásicos. No se puede poner en el toString porque
