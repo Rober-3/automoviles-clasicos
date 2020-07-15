@@ -91,7 +91,7 @@
 				<span class="form-inline my-2 my-lg-0 font-weight-bold">
 				
 					<c:if test="${empty usuario}">
-						<a class="nav-link text-white" href="login.jsp">Iniciar sesión</a>
+						<a class="nav-link text-white" href="login">Iniciar sesión</a>
 					</c:if> 
 					
 					<c:if test="${not empty usuario}">
