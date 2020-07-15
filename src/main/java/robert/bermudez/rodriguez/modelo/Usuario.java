@@ -12,12 +12,16 @@ public class Usuario {
 	//@NotEmpty(message = "no puede quedar vacía.")
 	private String imagen;
 	
+	// Atributo necesario para las autorizaciones y autentificaciones.
+	private Rol rol;
+	
 	public Usuario() {
 		super();
 		this.id = 0;
 		this.nombre = "";
 		this.contrasena = "";
 		this.imagen = "";
+		this.rol = new Rol();
 	}
 
 	public int getId() {
@@ -51,10 +55,19 @@ public class Usuario {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
+	
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", contrasena=" + contrasena + ", imagen=" + imagen + "]";
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", contrasena=" + contrasena + ", imagen=" + imagen
+				+ ", rol=" + rol + "]";
 	}
-	
+
 }

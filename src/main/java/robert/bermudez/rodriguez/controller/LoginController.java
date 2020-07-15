@@ -14,6 +14,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import robert.bermudez.rodriguez.daoimpl.UsuarioDAOImpl;
+import robert.bermudez.rodriguez.modelo.Rol;
 import robert.bermudez.rodriguez.modelo.Usuario;
 
 /**
@@ -72,10 +73,20 @@ public class LoginController extends HttpServlet {
 					
 					alerta = new Alerta("success", "Has iniciado sesión correctamente.");
 					request.setAttribute("usuario", usuario);
-					ruta = "clasicos";
+					
+					// En función del valor del atributo (ADMINISTRADOR o USUARIO) de Rol redirige al backoffice o al frontoffice.
+					if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
+						ruta = "views/backoffice/index.jsp";
+						
+					} else {
+						ruta = "views/frontoffice/index.jsp";
+					}
+					
+					//ruta = "clasicos";
 
 				} else {
 					alerta = new Alerta("danger","El usuario y/o la contraseña son erróneos.");
+					
 					ruta = "views/login.jsp";
 
 				} // if-else interno

@@ -45,6 +45,7 @@ public class MarcaDAOImpl implements MarcaDAO{
 	private static final String SQL_GET_ALL_WITH_CLASSICS = "SELECT m.id 'id_marca', marca, c.id 'id_modelo', modelo, anio, foto " +
 															"FROM marcas m, clasicos c " + 
 															"WHERE m.id = id_marca " +
+															"AND c.fecha_validacion IS NOT NULL " +
 															"ORDER BY modelo ASC";
 	
 	// executeUpdate devuelve un int que representa el número de filas afectadas.

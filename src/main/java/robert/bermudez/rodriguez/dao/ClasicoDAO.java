@@ -10,7 +10,15 @@ import robert.bermudez.rodriguez.modelo.Clasico;
 
 public interface ClasicoDAO  extends CrudAble<Clasico>  {
 
+	/**
+	 * Validación del clásico para que sea visible en la parte pública.
+	 * @param id identificador del cĺásico
+	 */
+	// TODO Método para validación
+	void validar (int id);
+	
 	ArrayList<Clasico> getByModelo(int idModelo);
 
 	ArrayList<Clasico> getByMarca(int idMarca) throws Exception;
+	
 }

@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.daoimpl;
+ package robert.bermudez.rodriguez.daoimpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,15 +66,17 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 														"FROM clasicos c, marcas m " + 
 														"WHERE id_marca = m.id AND c.id = ?;";
 	
-	private static final String SQL_GET_ALL =			"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto " + 
-														"FROM clasicos c, marcas m " + 
-														"WHERE id_marca = m.id " + 
+	private static final String SQL_GET_ALL =			"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto " +
+														"FROM clasicos c, marcas m " +
+														"WHERE id_marca = m.id " +
+														"AND fecha_validacion IS NOT NULL " + 
 														"ORDER BY c.id DESC;";
 	
 	// private static final String SQL_GET_BY_MODELO =	"SELECT id, modelo, marca, anio, foto FROM clasicos WHERE modelo LIKE ?;";
 	private static final String SQL_GET_BY_MARCA =		"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto " + 
 														"FROM clasicos c, marcas m " + 
-														"WHERE id_marca = ? AND c.id_marca = m.id;";
+														"WHERE id_marca = ? AND c.id_marca = m.id " +
+														"AND fecha_validacion IS NOT NULL;";
 
 	// executeUpdate devuelve un int que representa el número de filas afectadas.
 	private static final String SQL_INSERT =			"INSERT INTO clasicos (modelo, id_marca, anio, foto) VALUES (?, ?, ?, ?);";
@@ -86,6 +88,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	// Métodos.
 	
 	// TODO Implementar métodos que faltan.
+	
+	
+	@Override
+	public void validar(int id) {
+		// UPDATE clasicos SET fecha_validacion = NOW() WHERE id = 7;
+	}
 
 	@Override
 	public Clasico getById(int id) throws Exception {
