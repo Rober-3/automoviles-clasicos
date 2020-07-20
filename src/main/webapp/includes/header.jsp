@@ -7,19 +7,34 @@
 <!DOCTYPE html>
 <html lang="es">
 
+<!-- Si en una de las páginas hay un enlace css de más, incluirlo en la cabecera aunque las demás páginas
+	 no lo usen. Es mucho más práctico hacerlo así que hacer una cabecera específica para cada página.-->
+
 <head>
-<meta charset="UTF-8">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-<!-- Datatables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<!-- CSS personalizado -->
-<link rel="stylesheet" href="css/styles.css">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Todas las rutas relativas comienzan por el href indicado. -->
+    <!-- <base href="http://localhost:8080/supermerkado-master/" /> -->
+    
+    <!-- Si se cambia la ruta del proyecto lo anterior no funciona, así que para hacerlo dinámico: -->
+    <base href="${pageContext.request.contextPath}/" />
 
-<title>${param.title}</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+	<!-- Datatables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+	<!-- CSS personalizado -->
+	<link rel="stylesheet" href="css/styles.css">
+
+	<!-- <title>title%></title> Para presentar el título de esta manera hay que utilizar el include sin parámetros.  -->
+	<title>${param.title}</title>
 
 </head>
 
@@ -53,50 +68,57 @@
 						<a class="nav-link text-white" href="inicio">Inicio <span class="sr-only">(current)</span> </a>
 					</li>
 					
-					<li class="nav-item font-weight-bold">
-						<a class="nav-link text-white ${ ('Clasicos americanos' eq param.pagina ?'disabled' :'') }" href="clasicos" tabindex="-1" aria-disabled="true">Clásicos americanos</a>
-					</li>
+					<!-- Esta parte sólo se muestra si un usuario ha iniciado sesión. -->
+					<c:if test="${not empty sessionScope.usuario}">
 					
-					<li class="nav-item font-weight-bold">
-						<a class="nav-link text-white ${ ('Formulario clasicos' eq param.pagina ?'disabled' :'') }" href="insertar-editar">Nuevo clásico</a>
-					</li>
+						<li class="nav-item font-weight-bold">
+							<a class="nav-link text-white ${ ('Clasicos americanos' eq param.pagina ?'disabled' :'') }" href="clasicos" tabindex="-1" aria-disabled="true">Clásicos americanos</a>
+						</li>
 					
-					<li class="nav-item font-weight-bold">
-						<a class="nav-link text-white ${ ('Formulario marcas' eq param.pagina ?'disabled' :'') }" href="marcas">Nueva marca</a>
-					</li>
+						<li class="nav-item font-weight-bold">
+							<a class="nav-link text-white ${ ('Formulario clasicos' eq param.pagina ?'disabled' :'') }" href="insertar-editar">Nuevo clásico</a>
+						</li>
 					
-					<li class="nav-item">
-						<div class="dropdown">
-							<button class="btn dropdown-toggle bg-transparent font-weight-bold text-white" type="button" id="dropdownMenuButton" 
-									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marcas</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<li class="nav-item font-weight-bold">
+							<a class="nav-link text-white ${ ('Formulario marcas' eq param.pagina ?'disabled' :'') }" href="marcas">Nueva marca</a>
+						</li>
+					
+						<li class="nav-item">
+							<div class="dropdown">
+								<button class="btn dropdown-toggle bg-transparent font-weight-bold text-white" type="button" id="dropdownMenuButton" 
+										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marcas</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							
-								<a class="dropdown-item font-weight-bold" href="marcas">Todas</a>
+									<a class="dropdown-item font-weight-bold" href="marcas">Todas</a>
 								
-								<a class="dropdown-item font-weight-bold" href="inicio">Todas A-Z</a>
+									<a class="dropdown-item font-weight-bold" href="inicio">Todas A-Z</a>
 							
-								<c:forEach items="${marcas}" var="m">
-									<!-- idMarca se envía a InicioController para seleccionar una marca. -->
-									<!-- marca se envía como atributo para mostrar en pantalla la marca de un grupo de clásicos. -->
-									<a class="dropdown-item" href="inicio?idMarca=${m.id}&marca=${m.marca}">${m.marca}</a>
-								</c:forEach>
-								
+									<c:forEach items="${marcas}" var="m">
+										<!-- idMarca se envía a InicioController para seleccionar una marca. -->
+										<!-- marca se envía como atributo para mostrar en pantalla la marca de un grupo de clásicos. -->
+										<a class="dropdown-item" href="inicio?idMarca=${m.id}&marca=${m.marca}">${m.marca}</a>
+									</c:forEach>
+								</div>
 							</div>
-						</div>
-					</li>
+						</li>
+					</c:if>
+					
 				</ul>
 
-				<!-- Opciones en el inicio de sesión -->
+				<!-- Opciones cuando un usuario ha iniciado o cerrado sesión. -->
 
 				<span class="form-inline my-2 my-lg-0 font-weight-bold">
 				
-					<c:if test="${empty usuario}">
+					 <!-- LoginController -->
+					 
+					<c:if test="${empty sessionScope.usuario}">
 						<a class="nav-link text-white" href="login">Iniciar sesión</a>
-					</c:if> 
+					</c:if>
 					
-					<c:if test="${not empty usuario}">
-						<span>${usuario.nombre}</span>
-						<a class="nav-link text-white" href="#">Cerrar sesión</a>
+					<c:if test="${not empty sessionScope.usuario}">
+						<span>Has iniciado sesión como ${sessionScope.usuario.nombre}</span>
+						<a class="nav-link text-white" href="views/frontoffice/inicio">Mi panel</a>
+						<a class="nav-link text-white" href="logout">Cerrar sesión</a>
 					</c:if>
 
 				</span>
