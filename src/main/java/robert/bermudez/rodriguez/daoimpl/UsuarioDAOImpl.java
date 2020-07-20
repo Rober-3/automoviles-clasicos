@@ -3,10 +3,12 @@ package robert.bermudez.rodriguez.daoimpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import robert.bermudez.rodriguez.conexion.ConnectionManager;
 import robert.bermudez.rodriguez.dao.UsuarioDAO;
+import robert.bermudez.rodriguez.modelo.Rol;
 import robert.bermudez.rodriguez.modelo.Usuario;
 
 
@@ -37,10 +39,17 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	// DAO
 
 	// Querys
-	String SQL_GET_BY_ID = "SELECT id, nombre, contrasena, imagen FROM usuarios WHERE id = ?:";
-	String SQL_GET_ALL = "SELECT id, nombre, contrasena, imagen FROM usuarios ORDER BY id DESC;";
-	String SQL_EXISTS = "SELECT * FROM usuarios WHERE nombre = ? AND contrasena = ?;";
-
+	
+	private static final String SQL_GET_BY_ID = "SELECT u.id, nombre, contrasena, imagen, id_rol, rol "
+											  + "FROM usuarios u, roles r "
+											  + "WHERE id_rol = r.id AND u.id = ?:";
+	private static final String SQL_GET_ALL = 	"SELECT u.id, nombre, contrasena, imagen, id_rol, rol "
+											  + "FROM usuarios u, roles r "
+											  + "WHERE id_rol = r.id "
+											  + "ORDER BY u.id LIMIT 500;";
+	private static final String SQL_EXISTS = 	"SELECT u.id, nombre, contrasena, imagen, id_rol, rol "
+											  + "FROM usuarios u, roles r "
+											  + "WHERE id_rol = r.id AND nombre = ? AND contrasena = ?;";
 
 	// Métodos
 
@@ -56,29 +65,39 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				) {
 
 			pst.setInt(1, id);
-			ResultSet rs = pst.executeQuery();
+			
+			try (ResultSet rs = pst.executeQuery()) {
 
-			if (rs.next()) {
-				usuario.setId(rs.getInt("id"));
-				usuario.setNombre(rs.getString("nombre"));
-				usuario.setContrasena("contrasena");
-				usuario.setImagen("imagen");
-			}
-
+				if (rs.next()) {
+					usuario = mapper(rs);
+				
+				} else {
+					throw new Exception("No existen usuarios en la base de datos con el id " + id);
+					
+				} // if-else
+				
+			} // try
+			
 		} catch (Exception e) {
-			throw new Exception("No existen usuarios en la base de datos con el id " + id);
+			e.printStackTrace();
 
 		} // try-catch
 
 		return usuario;
-	}
+		
+	} // getById
 
 
 
 	@Override
 	public ArrayList<Usuario> getAll() throws Exception {
+		
+		// Acceder así a getAll() podría ocasionar un desbordamiento de la variable si la BBDD tuviese millones de registros.
+		// ArrayList<Usuario> usuarios = getAll();
+				
 
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		Usuario usuario;
 
 		try (
 				Connection con = ConnectionManager.getConnection();
@@ -89,13 +108,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			while (rs.next()) {
 
-				Usuario usuario = new Usuario();
-
-				usuario.setId(rs.getInt("id"));
-				usuario.setNombre(rs.getString("nombre"));
-				usuario.setContrasena(rs.getString("contrasena"));
-				usuario.setImagen(rs.getString("imagen"));
-
+				usuario = mapper(rs);
 				usuarios.add(usuario);
 
 			} // while
@@ -133,57 +146,89 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 
 	@Override
-	public Usuario exists(String nombre, String contrasena) throws Exception {
+	public Usuario exists(String nombre, String contrasena) {
 		
 		Usuario usuario = new Usuario();
-		
+
 		try(
 				Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_EXISTS);
-				
+
 				) {
-			
+
 			pst.setString(1, nombre);
 			pst.setString(2, contrasena);
-			ResultSet rs = pst.executeQuery();
-			
-			if (rs.next()) {
-				
-				usuario.setId(rs.getInt("id"));
-				usuario.setNombre(rs.getString("nombre"));
-				usuario.setContrasena(rs.getString("contrasena"));
-				usuario.setImagen(rs.getString("imagen"));
-				
-			} // if
-			
+
+			try (ResultSet rs = pst.executeQuery()) {
+
+				if (rs.next()) {
+					usuario = mapper(rs);
+				}
+
+			} // try
+
 		} catch (Exception e) {
-			throw new Exception("No existen en la base de datos usuarios con el nombre " + nombre + " y la contrasena "
-					+ contrasena + ".");
+			e.printStackTrace();
 
 		} // try-catch
-		
-		
+
 		return usuario;
-
-		// Acceder al método getAll() de esta manera podría ocasionar que, en el hipotético
-		// caso de que la BBDD tuviese millones de registros, se desbordase la variable.
-		// ArrayList<Usuario> usuarios = getAll();
 		
-		// Usuario usuario = new Usuario();
-
-		// for (Usuario u : usuarios) {
-
-			// if (u.getNombre().equals(nombre) && u.getContrasena().equals(contrasenia)) {
-
-				// usuario.setId(u.getId());
-				// usuario.setNombre(u.getNombre());
-				// usuario.setContrasena(u.getContrasena());
-				// usuario.setImagen(u.getImagen());
-
-			// } // if
-
-		// } // for
+		
+		
+//		Método antes de modificarlo. Lanzaba excepciones que debía recoger LoginController en el doPost.
+			
+//		Usuario usuario = new Usuario();
+//
+//		try(
+//				Connection con = ConnectionManager.getConnection();
+//				PreparedStatement pst = con.prepareStatement(SQL_EXISTS);
+//
+//				) {
+//
+//			pst.setString(1, nombre);
+//			pst.setString(2, contrasena);
+//
+//			try (ResultSet rs = pst.executeQuery()) {
+//
+//				if (rs.next()) {
+//
+//					usuario = mapper(rs);
+//
+//				} else {
+//					throw new Exception("No existen en la base de datos usuarios con el nombre " + nombre + " y la contrasena "
+//								+ contrasena + ".");
+//				} // if-else
+//					
+//			} // try
+//
+//
+//		} catch (Exception e) {
+//					e.printStackTrace();
+//
+//		} // try-catch
+//
+//		return usuario;
+		
 
 	} // exists
+	
+	private Usuario mapper(ResultSet rs) throws SQLException {
+		
+		Usuario usuario = new Usuario();
+		Rol rol = new Rol();
+		
+		rol.setId(rs.getInt("id_rol"));
+		rol.setRol(rs.getString("rol"));
+
+		usuario.setId(rs.getInt("id"));
+		usuario.setNombre(rs.getString("nombre"));
+		usuario.setContrasena(rs.getString("contrasena"));
+		usuario.setImagen(rs.getString("imagen"));
+		usuario.setRol(rol);
+		
+		return usuario;
+		
+	} // mapper
 
 } // class
