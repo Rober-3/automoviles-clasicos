@@ -17,7 +17,7 @@ public class Usuario {
 	
 	public Usuario() {
 		super();
-		this.id = 0;
+		this.id = 1;
 		this.nombre = "";
 		this.contrasena = "";
 		this.imagen = "";
