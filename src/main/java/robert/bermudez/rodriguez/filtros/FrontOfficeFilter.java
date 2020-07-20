@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -60,7 +61,12 @@ public class FrontOfficeFilter implements Filter {
 		
 		
 		// Recuperar el usuario.
-		Usuario usuario = (Usuario) req.getAttribute("usuario");
+		// Hubo inicios de sesión fallidos debido a esta línea, en la que se recuperaba el usuario de la request, no de la sessión.
+		// Usuario usuario = (Usuario) req.getAttribute("usuario");
+		
+		// HttpSession session = req.getSession();
+		// Usuario usuario = (Usuario) session.getAttribute("usuario");
+		Usuario usuario = (Usuario) req.getSession().getAttribute("usuario");
 		
 		
 		if (usuario == null) {

@@ -37,7 +37,6 @@ public class BackOfficeFilter implements Filter {
 	private final static Logger LOG = Logger.getLogger(BackOfficeFilter.class);
 	
 	
-
 	/**
 	 * @see Filter#destroy()
 	 */
@@ -68,9 +67,11 @@ public class BackOfficeFilter implements Filter {
 		LOG.trace("Filtrando URI " + req.getRequestURI());
 		
 		
+		// Se recuperal el usuario de la session.
+		Usuario usuario = (Usuario) req.getSession().getAttribute("usuario");
+		
 		// Se recupera el usuario de la request
-		// Usuario usuario = (Usuario) req.getSession().getAttribute("usuario");
-		Usuario usuario = (Usuario) req.getAttribute("usuario");
+		// Usuario usuario = (Usuario) req.getAttribute("usuario");
 		
 		
 		if (usuario == null) { // Aquí se comprueba que el usuario está autentificado.
