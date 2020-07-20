@@ -8,9 +8,9 @@ dinámica, pero lo mejor será encapsularlos en un objeto a través de una clase
 no será un pojo del modelo, ya que no se usará en la BBDD, si no que será un pojo de los controladores. -->
 
 <!-- c:if evita que se muestren el área y el botón de la alerta estando vacía-->
-<c:if test="${not empty alerta}">
 
-<div>
+
+<c:if test="${not empty alerta}">
 
 	<div class="alert alert-${alerta.tipo} alert-dismissible fade show text-center" role="alert">
 		${alerta.texto}
@@ -18,7 +18,12 @@ no será un pojo del modelo, ya que no se usará en la BBDD, si no que será un 
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
-		
 	</div>
-</div>
+	
+	<%
+		// Eliminar el atributo de la sesión tras mostrarlo en pantalla.
+		session.setAttribute("alerta", null);
+	%>
+	
 </c:if>
+
