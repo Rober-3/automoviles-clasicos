@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -33,8 +34,7 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		doPost(request, response);
-
-	} // doGet
+	}
 
 
 
@@ -42,51 +42,52 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		Usuario usuario = new Usuario();
+		
 		UsuarioDAOImpl dao = UsuarioDAOImpl.getInstance();
 		Alerta alerta = null;
 		String ruta = "";
 
-
 		String nombre = request.getParameter("nombre");
-		String contrasena = request.getParameter("contrasena");
-
+		String contrasena = request.getParameter("contrasena"); 
+		
+		HttpSession session = request.getSession();
 
 		try {
-
-			usuario.setNombre(nombre);
-			usuario.setContrasena(contrasena);
-
+			
+			Usuario usuario = dao.exists(nombre, contrasena);
 
 			ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 			Validator validator = factory.getValidator();
 
 			Set<ConstraintViolation<Usuario>> violations = validator.validate(usuario);
 
-
 			if (violations.isEmpty()) {
-
-				usuario = dao.exists(nombre, contrasena);
 
 				if (nombre.equals(usuario.getNombre()) && contrasena.equals(usuario.getContrasena())) {
 					
+					//request.setAttribute("usuario", usuario);
+					
+					// Se invalida la sesión del usuario si está 5 minutos sin hacer peticiones.
+					session.setMaxInactiveInterval( 60 * 5 );
+					session.setAttribute("usuario", usuario);
+					
 					alerta = new Alerta("success", "Has iniciado sesión correctamente.");
-					request.setAttribute("usuario", usuario);
 					
 					// En función del valor del atributo (ADMINISTRADOR o USUARIO) de Rol redirige al backoffice o al frontoffice.
 					if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
-						ruta = "views/backoffice/index.jsp";
+						ruta = "views/backoffice/inicio";
 						
 					} else {
-						ruta = "views/frontoffice/index.jsp";
+						// ruta = "views/frontoffice/index.jsp";
+						// Si inicia sesión un usuario normal tiene que pasar por un controlador
+						ruta = "views/frontoffice/inicio";
 					}
 					
 					//ruta = "clasicos";
 
 				} else {
-					alerta = new Alerta("danger","El usuario y/o la contraseña son erróneos.");
 					
+					alerta = new Alerta("danger","El usuario y/o la contraseña son erróneos.");
 					ruta = "views/login.jsp";
 
 				} // if-else interno
@@ -108,7 +109,7 @@ public class LoginController extends HttpServlet {
 
 
 		} catch (Exception e) {
-			alerta = new Alerta ("danger", "No existen en la base de datos usuarios con ese nombre y esa contraseña.");
+			alerta = new Alerta ("danger", "Hay un problema: " + e.getMessage());
 
 
 		} finally {
@@ -118,5 +119,5 @@ public class LoginController extends HttpServlet {
 		}  // try-catch-finally
 
 	} // doPost
-
+	
 } // class
