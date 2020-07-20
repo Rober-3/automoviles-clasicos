@@ -291,7 +291,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	
 	
 	
-	public Clasico mapper(ResultSet rs) throws SQLException {
+	private Clasico mapper(ResultSet rs) throws SQLException {
 		
 		Marca marca = new Marca();
 		
