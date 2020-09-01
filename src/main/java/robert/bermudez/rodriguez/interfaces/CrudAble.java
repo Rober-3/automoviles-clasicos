@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface CrudAble<C> {
 	
-	C getById(int id) throws Exception;
+	C getById(int idModelo) throws Exception;
 	
 	ArrayList<C> getAll() throws Exception;
 	
@@ -15,6 +15,6 @@ public interface CrudAble<C> {
 	
 	C update(C pojo) throws Exception;
 	
-	C delete(int id) throws Exception;
+	C delete(int idModelo) throws Exception;
 
 }
