@@ -10260,3 +10260,27 @@ body {
 .sb-sidenav-light .sb-sidenav-footer {
   background-color: #e9ecef;
 }
+
+
+/*
+ **************************************************************************************************************
+ *												Mis estilos													  *
+ **************************************************************************************************************
+ */
+ 
+.img-thumbnail, .foto {
+	max-width: 10rem;
+	height: auto;
+}
+
+.numeroClasicos {
+	font-size: 3rem;
+	position: absolute;
+	bottom: 2rem;
+	right: 0.5rem;
+}
+
+.formularioclasicos {
+	height: 600px;
+	width: 500px;
+}
