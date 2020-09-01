@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 public class ConnectionManager {
 	
-	// Si se copia esta clase en otro proyecto, es necesario modificar la URL para indicarle la BBDD que se use en dicho proyecto.
+	// Si se copia esta clase en otro proyecto, es necesario modificar la URL para indicar la BBDD que se usará en dicho proyecto.
 	// USUARIO y PASSWORD son las credenciales que se usan en Ubuntu para acceder a la BBDD. Se pueden encontrar en el archivo de
 	// texto leeme.txt, situado en el escritorio de Ubuntu.
 //	private final static String URL = "jdbc:mysql://localhost/automoviles_clasicos";
