@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import robert.bermudez.rodriguez.daoimpl.ClasicoDAOImpl;
-import robert.bermudez.rodriguez.modelo.Clasico;
+import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 
 /**
  * Servlet implementation class ClasicosController
