@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import robert.bermudez.rodriguez.modelo.Rol;
-import robert.bermudez.rodriguez.modelo.Usuario;
+import robert.bermudez.rodriguez.modelo.pojo.Rol;
+import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 /**
  * Servlet Filter implementation class BackOfficeFilter
