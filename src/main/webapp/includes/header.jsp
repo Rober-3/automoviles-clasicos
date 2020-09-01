@@ -1,4 +1,4 @@
-<%@page import="robert.bermudez.rodriguez.modelo.Clasico"%>
+<%@page import="robert.bermudez.rodriguez.modelo.pojo.Clasico"%>
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -15,10 +15,14 @@
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Todas las rutas relativas comienzan por el href indicado. -->
-    <!-- <base href="http://localhost:8080/supermerkado-master/" /> -->
+    <!-- Todas las rutas relativas que se carguen en el front comenzarán por el href indicado, es decir, 
+    el nombre del proyecto. Haciendo este cambio no será necesario el ../../ para salta carpetas. Todas
+    las rutas se compondrán de la raíz del proyecto hacia delante.-->
+    <!-- <base href="http://localhost:8080/automoviles-clasicos/" /> -->
     
-    <!-- Si se cambia la ruta del proyecto lo anterior no funciona, así que para hacerlo dinámico: -->
+    <!-- Si se cambia la ruta del proyecto lo anterior no funciona, así que para hacerlo dinámico habrá que
+    usar esta línea. Así, todas las URL del proyecto comenzarán con contextPath. El valor de éste será el 
+    contexto o nombre de la aplicación, que en este caso será automoviles-clasicos. -->
     <base href="${pageContext.request.contextPath}/" />
 
 	<!-- Bootstrap CSS -->
@@ -127,3 +131,4 @@
 	</header>
 
 	<jsp:include page="alerta.jsp"></jsp:include>
+	
