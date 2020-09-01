@@ -10,5 +10,31 @@
 	<welcome-file-list>
 		<welcome-file>inicio</welcome-file>
 	</welcome-file-list>
+	
+	
+	<!-- Gestión de errores. Cuando haya errores 404 y 500 en la aplicación, en vez de redireccionar a páginas 404 y 500
+	estándar lo hará a las páginas personalizadas 404.jsp y error.jsp. Hay que que incluir dentro de éstas la directiva
+	<%@ page isErrorPage="true" %> para indicar que son páginas de error. Se puede comprobar el funcionamiento forzando
+	el siguiente fallo en index.jsp: <% object o = null; o.toString; %>-->
+	<error-page>	
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsp</location>
+	</error-page>
+	
+
+	<!-- <jsp-config>
+	
+		Definir donde se encuentra nuestra JSTL y la URI. Sirve para hacer la directiva en la JSP. Tags personalizadas.
+		<taglib>
+			<taglib-uri>https://formacion.ipartek.com/jsp/tlds/ejemplos</taglib-uri>
+			<taglib-location>/WEB-INF/ejemplos.tld</taglib-location>
+		</taglib>
+		
+	</jsp-config> -->
 
 </web-app>
