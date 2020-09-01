@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="../../includes/office-header.jsp" />
-<jsp:include page="../../includes/office-navbar.jsp" />
+<jsp:include page="../../includes/office-header.jsp">
+	<jsp:param name="pagina" value="Formulario clasicos" />
+	<jsp:param name="title" value="Formulario clasicos" />
+</jsp:include>
+<jsp:include page="../../includes/office-navbar-usuario.jsp" />
 
-<main>
+<main class="container mt-2">
 
-	<div class="container my-5 bg-light formularioclasicos">
+	<div class="formularioclasicos">
 
 		<h3 class="my-5 text-center">Nuevo clásico / Editar clásico</h3>
 
@@ -78,6 +81,5 @@
 	</div>
 
 </main>
-
 
 <jsp:include page="../../includes/office-footer.jsp" />
