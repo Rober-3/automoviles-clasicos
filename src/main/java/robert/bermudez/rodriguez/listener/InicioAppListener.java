@@ -1,12 +1,14 @@
 package robert.bermudez.rodriguez.listener;
 
-// TODO Notas: Ejemplo de listener. Un listener se ejecuta antes de que una aplicación se conecte con una BBDD,
-//			   antes que cualquier controlador y que cualquier método. Dentro de un listener se puede guardar
-//			   cualquier atributo y será accesible desde cualquier punto de la aplicación.
+// TODO Notas. Ejemplo de listener. Un listener se dispara con ciertos eventos de una aplicación web.
+// 			   Se ejecuta antes de que una aplicación se conecte con una BBDD, antes que cualquier controlador 
+//			   y antes que cualquier método. Dentro de un listener se puede guardar cualquier atributo y será 
+//			   accesible desde cualquier punto de la aplicación.
 
 //			   En este caso, con el listener ya no será necesario llamar desde los controladores al DAO de las
 //			   marcas para obtenerlas y mostrarlas en pantalla, con lo que se reducen las líneas de código y la 
 //			   cantidad de variables.
+
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -16,7 +18,7 @@ import javax.servlet.annotation.WebListener;
 import org.apache.log4j.Logger;
 
 import robert.bermudez.rodriguez.controller.Alerta;
-import robert.bermudez.rodriguez.daoimpl.MarcaDAOImpl;
+import robert.bermudez.rodriguez.modelo.daoimpl.MarcaDAOImpl;
 
 /**
  * Application Lifecycle Listener implementation class InicioAppListener
