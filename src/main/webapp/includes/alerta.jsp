@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- Para mostrar diferentes mensajes de alerta hay que cambiar dos valores: el tipo de alerta (alert, success,... 
@@ -21,7 +20,7 @@ no será un pojo del modelo, ya que no se usará en la BBDD, si no que será un 
 	</div>
 	
 	<%
-		// Eliminar el atributo de la sesión tras mostrarlo en pantalla.
+		// Eliminar el atributo de la sesión tras mostrar alerta.
 		session.setAttribute("alerta", null);
 	%>
 	
