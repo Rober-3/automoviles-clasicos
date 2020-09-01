@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.daoimpl;
+package robert.bermudez.rodriguez.modelo.daoimpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,12 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import robert.bermudez.rodriguez.conexion.ConnectionManager;
-import robert.bermudez.rodriguez.dao.MarcaDAO;
-import robert.bermudez.rodriguez.modelo.Clasico;
-import robert.bermudez.rodriguez.modelo.Marca;
+import org.apache.log4j.Logger;
 
-public class MarcaDAOImpl implements MarcaDAO{
+import robert.bermudez.rodriguez.conexion.ConnectionManager;
+import robert.bermudez.rodriguez.modelo.dao.MarcaDAO;
+import robert.bermudez.rodriguez.modelo.pojo.Clasico;
+import robert.bermudez.rodriguez.modelo.pojo.Marca;
+import robert.bermudez.rodriguez.modelo.pojo.Usuario;
+
+public class MarcaDAOImpl implements MarcaDAO {
+	
+	private static final Logger LOG = Logger.getLogger(MarcaDAOImpl.class);
 	
 	// Singleton
 	
@@ -37,14 +42,15 @@ public class MarcaDAOImpl implements MarcaDAO{
 	
 	// DAO
 	
-	// Querys
+	// QUERYS
 	
 	// executeQuery devuelve un ResultSet.
 	private static final String SQL_GET_BY_ID =				"SELECT id, marca FROM marcas WHERE id = ?;";
 	private static final String SQL_GET_ALL =				"SELECT id, marca FROM marcas ORDER BY marca ASC;";
-	private static final String SQL_GET_ALL_WITH_CLASSICS = "SELECT m.id 'id_marca', marca, c.id 'id_modelo', modelo, anio, foto " +
-															"FROM marcas m, clasicos c " + 
+	private static final String SQL_GET_ALL_WITH_CLASSICS = "SELECT m.id 'id_marca', marca, c.id 'id_modelo', modelo, anio, foto, u.id 'id_usuario', u.nombre 'nombre_usuario' " +
+															"FROM marcas m, clasicos c, usuarios u " + 
 															"WHERE m.id = id_marca " +
+															"AND u.id = id_usuario " +
 															"AND c.fecha_validacion IS NOT NULL " +
 															"ORDER BY modelo ASC";
 	
@@ -55,7 +61,7 @@ public class MarcaDAOImpl implements MarcaDAO{
 	
 	
 			
-	// Métodos
+	// MÉTODOS
 	
 	
 	@Override
@@ -63,11 +69,8 @@ public class MarcaDAOImpl implements MarcaDAO{
 		
 		Marca marca = new Marca();
 		
-		try (
-				Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_ID);
-				
-				) {
+		try (	Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_ID);	) {
 			
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
@@ -143,11 +146,16 @@ public class MarcaDAOImpl implements MarcaDAO{
 					
 				} // if
 				
+				Usuario usuario = new Usuario();
+				usuario.setId(rs.getInt("id_usuario"));
+				usuario.setNombre(rs.getString("nombre_usuario"));
+				
 				Clasico clasico = new Clasico();
 				clasico.setId(rs.getInt("id_modelo"));
 				clasico.setModelo(rs.getString("modelo"));
 				clasico.setAnio(rs.getString("anio"));
 				clasico.setFoto(rs.getString("foto"));
+				clasico.setUsuario(usuario);
 				
 				// Recuperar los clásicos y añadir uno nuevo dentro de la marca.
 				marca.getClasicos().add(clasico);
@@ -158,23 +166,44 @@ public class MarcaDAOImpl implements MarcaDAO{
 			} // while
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 			
 		} // try-catch
 		
 		// Como hay que devolver un ArrayList y se tiene un HashMap hay que hacer una conversión al devolver marcas (de
 		// no hacerlo dará un error en el return). De un HashMap se pueden conseguir sus keys y sus values.
 		return new ArrayList<Marca>(marcas.values());
-	}
+		
+	} // getAllWithClassics
 
 	
-
+	
 	@Override
 	public Marca insert(Marca pojo) throws Exception {
 		//"INSERT INTO marcas (id, marca) VALUES (?,?);";
-		Marca marca = new Marca();
 		
-		return marca;
+		try (	Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_INSERT,PreparedStatement.RETURN_GENERATED_KEYS);	){
+			
+			pst.setInt(1, pojo.getId());
+			pst.setString(2, pojo.getMarca());
+			LOG.debug(pst);
+			
+			int affectedRows = pst.executeUpdate();
+			
+			if (affectedRows == 1) {
+				
+				try () {
+					
+				}
+				
+			} else {
+				throw new Exception("Ha habido un problema al tratar de guardar la marca " + marca + ".");
+			}
+			
+		} // try externo
+		
+		return pojo;
 		
 	} // insert
 	

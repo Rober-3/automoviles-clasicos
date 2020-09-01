@@ -1,9 +1,9 @@
-package robert.bermudez.rodriguez.dao;
+package robert.bermudez.rodriguez.modelo.dao;
 
 import java.util.ArrayList;
 
 import robert.bermudez.rodriguez.interfaces.CrudAble;
-import robert.bermudez.rodriguez.modelo.Marca;
+import robert.bermudez.rodriguez.modelo.pojo.Marca;
 
 public interface MarcaDAO extends CrudAble<Marca>{
 	

@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.modelo;
+package robert.bermudez.rodriguez.modelo.pojo;
 
 import java.util.ArrayList;
 
@@ -7,15 +7,15 @@ import javax.validation.constraints.NotEmpty;
 public class Marca {
 	
 	private int id;
+	
 	@NotEmpty(message = ": este campo no puede quedar vacío")
 	private String marca;
 	
-	// Atributo necesario para hacer un hashmap de clásicos. No se puede poner en el toString porque
-	// no arrancaría la aplicación: como en el POJO Clasico hay un atributo que es un objeto de tipo 
-	// Marca, si se hiciera un toString del ArrayList<Clasico> clasicos cuando recorriera el primero
-	// de los clásicos entraría en su atributo Marca, lo recorrería y a su vez entraría de nuevo en
-	// clasicos, haciendo constantemente el mismo proceso y entrando en un bucle que originaría una
-	// una redundancia cíclica que dejaría sin memoria el ordenador.
+	// Atributo necesario para hacer un hashmap de clásicos. No puede ponerse en el toString porque no arrancaría la
+	// aplicación: como en el POJO Clasico hay un atributo que es un objeto de tipo Marca, si se hiciera un toString
+	// del ArrayList<Clasico> clasicos cuando recorriera el primero de los clásicos entraría en su atributo Marca, lo
+	// recorrería y a su vez entraría de nuevo en clasicos, haciendo constantemente el mismo proceso y entrando en un
+	// bucle que originaría una redundancia cíclica que dejaría sin memoria el ordenador.
 	private ArrayList<Clasico> clasicos; 
 	
 	public Marca() {

@@ -1,14 +1,17 @@
-package robert.bermudez.rodriguez.modelo;
+package robert.bermudez.rodriguez.modelo.pojo;
 
 import javax.validation.constraints.NotEmpty;
 
 public class Usuario {
 	
 	private int id;
-	@NotEmpty(message = "no puede quedar vacío.")
+	
+	@NotEmpty(message = ": este campo no puede quedar vacío.")
 	private String nombre;
-	@NotEmpty(message = "no puede quedar vacía.")
+	
+	@NotEmpty(message = ": este campo no puede quedar vacío.")
 	private String contrasena;
+	
 	//@NotEmpty(message = "no puede quedar vacía.")
 	private String imagen;
 	

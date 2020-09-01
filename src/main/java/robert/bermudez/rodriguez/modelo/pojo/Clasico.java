@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.modelo;
+package robert.bermudez.rodriguez.modelo.pojo;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -19,13 +19,16 @@ public class Clasico {
 	@NotEmpty(message = ": este campo no puede quedar vacío")
 	private String foto;
 	
+	// Usuario que ha registrado el clásico.
+	private Usuario usuario;
+
 	public Clasico() {
-		super();
 		this.id = 0;
 		this.modelo = "";
 		this.marca = new Marca();
 		this.anio = "";
 		this.foto = "";
+		this.usuario = new Usuario();
 	}
 
 	public int getId() {
@@ -68,10 +71,18 @@ public class Clasico {
 		this.foto = foto;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	@Override
 	public String toString() {
 		return "Clasico [id=" + id + ", modelo=" + modelo + ", marca=" + marca + ", anio=" + anio + ", foto=" + foto
-				+ "]";
+				+ ", usuario=" + usuario + "]";
 	}
 	
-}
+} // class

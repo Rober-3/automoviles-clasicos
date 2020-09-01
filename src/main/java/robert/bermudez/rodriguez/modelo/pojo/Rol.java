@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.modelo;
+package robert.bermudez.rodriguez.modelo.pojo;
 
 public class Rol {
 	

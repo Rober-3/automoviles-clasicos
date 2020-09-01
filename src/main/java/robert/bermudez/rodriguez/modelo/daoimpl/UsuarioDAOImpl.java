@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.daoimpl;
+package robert.bermudez.rodriguez.modelo.daoimpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,13 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import robert.bermudez.rodriguez.conexion.ConnectionManager;
-import robert.bermudez.rodriguez.dao.UsuarioDAO;
-import robert.bermudez.rodriguez.modelo.Rol;
-import robert.bermudez.rodriguez.modelo.Usuario;
+import robert.bermudez.rodriguez.modelo.dao.UsuarioDAO;
+import robert.bermudez.rodriguez.modelo.pojo.Rol;
+import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 
 public class UsuarioDAOImpl implements UsuarioDAO {
+	
+	private static final Logger LOG = Logger.getLogger(UsuarioDAOImpl.class);
 
 	// Singleton
 
@@ -33,25 +37,28 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	} // getInstance
 
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	// DAO
 
-	// Querys
+	// QUERYS
 	
-	private static final String SQL_GET_BY_ID = "SELECT u.id, nombre, contrasena, imagen, id_rol, rol "
-											  + "FROM usuarios u, roles r "
-											  + "WHERE id_rol = r.id AND u.id = ?:";
-	private static final String SQL_GET_ALL = 	"SELECT u.id, nombre, contrasena, imagen, id_rol, rol "
-											  + "FROM usuarios u, roles r "
-											  + "WHERE id_rol = r.id "
-											  + "ORDER BY u.id LIMIT 500;";
-	private static final String SQL_EXISTS = 	"SELECT u.id, nombre, contrasena, imagen, id_rol, rol "
-											  + "FROM usuarios u, roles r "
-											  + "WHERE id_rol = r.id AND nombre = ? AND contrasena = ?;";
-
-	// Métodos
+	private static final String SQL_SELECT_FROM_WHERE = "SELECT u.id, nombre, contrasena, imagen, id_rol, rol " +
+												  		"FROM usuarios u, roles r " +
+												  		"WHERE id_rol = r.id ";
+	
+	private static final String SQL_GET_BY_ID =			SQL_SELECT_FROM_WHERE + "AND u.id = ?:";
+	private static final String SQL_GET_ALL =			SQL_SELECT_FROM_WHERE + "ORDER BY u.id LIMIT 500;";
+	private static final String SQL_EXISTS =			SQL_SELECT_FROM_WHERE + "AND nombre = ? AND contrasena = ?;";
+	
+	private static final String SQL_INSERT =			"INSERT INTO usuarios (nombre, contrasena, imagen, id_rol) VALUES (?,?,?,?);";
+	private static final String SQL_UPDATE =			"UPDATE usuarios SET nombre = ?, contrasena = ?, imagen = ?, id_rol = ? WHERE id = ?";
+	private static final String SQL_DELETE =			"DELETE FROM usuarios WHERE id = ?;";
+	
+	
+	
+	// MÉTODOS
 
 	@Override
 	public Usuario getById(int id) throws Exception {
@@ -79,7 +86,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			} // try
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 
 		} // try-catch
 
@@ -92,9 +99,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override
 	public ArrayList<Usuario> getAll() throws Exception {
 		
-		// Acceder así a getAll() podría ocasionar un desbordamiento de la variable si la BBDD tuviese millones de registros.
+		// Acceder a getAll() de esta manera podría ocasionar un desbordamiento de la variable si la BBDD tuviese millones de registros.
 		// ArrayList<Usuario> usuarios = getAll();
-				
 
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 		Usuario usuario;
@@ -114,7 +120,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			} // while
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 
 		} // try-catch
 
@@ -126,21 +132,105 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public Usuario insert(Usuario pojo) throws Exception {
-		return null;
+
+		try (
+				Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+				
+				){
+			
+			pst.setString(1, pojo.getNombre());
+			pst.setString(2, pojo.getContrasena());
+			pst.setString(3, pojo.getImagen());
+			pst.setInt(4, pojo.getRol().getId());
+			LOG.debug(pst);
+			
+			int affectedRows = pst.executeUpdate();
+			
+			if (affectedRows == 1) {
+				
+				try (ResultSet rsKeys = pst.getGeneratedKeys()) {
+
+					if (rsKeys.next()) {
+						int id = rsKeys.getInt(1);
+						pojo.setId(id);
+					}
+					
+				} // try interno
+				
+			} else {
+				throw new Exception("Ha habido un problema al intentar guardar el usuario " + pojo + ".");
+			
+			} // if-else
+			
+		} // try externo
+		
+		return pojo;
+		
 	} // insert
 
 	
 	
 	@Override
 	public Usuario update(Usuario pojo) throws Exception {
-		return null;
+		
+		try (
+				Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
+				
+				){
+			
+			pst.setString(1, pojo.getNombre());
+			pst.setString(2, pojo.getContrasena());
+			pst.setString(3, pojo.getImagen());
+			pst.setInt(4, pojo.getRol().getId());
+			pst.setInt(5, pojo.getId());
+			LOG.debug(pst);
+			
+			int affectedRows = pst.executeUpdate();
+			
+			if (affectedRows != 1) {
+				throw new Exception("No se han actualizado correctamente los datos del usuario " + pojo + ".");
+			}
+			
+		} catch (Exception e) {
+			LOG.error(e);
+			
+		} // try-catch
+		
+		return pojo;
+		
 	} // update
 
 	
 	
 	@Override
-	public Usuario delete(int id) throws Exception {
-		return null;
+	public Usuario delete(int idUsuario) throws Exception {
+		
+		Usuario usuario = getById(idUsuario);
+		
+		try (
+				Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_DELETE);
+				
+				){
+			
+			pst.setInt(1, idUsuario);
+			LOG.debug(pst);
+			
+			int affectedRows = pst.executeUpdate();
+			
+			if (affectedRows != 1) {
+				throw new Exception("Ha habido un problema al tratar de eliminar el usuario con el id " + idUsuario + ".");
+			}
+			
+		} catch (Exception e) {
+			LOG.error(e);
+			
+		} // try-catch
+		
+		return usuario;
+		
 	} // delete
 
 
