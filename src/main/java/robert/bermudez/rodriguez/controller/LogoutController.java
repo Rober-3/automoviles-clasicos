@@ -23,7 +23,10 @@ public class LogoutController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		session.invalidate();
+		
+		// Cuando un usuario cierra sesión se ejecuta el método attributeRemoved en UsuariosLogueadosListener.
+		session.invalidate(); // @see UsuariosLogueadosListener => attributeRemoved
+		
 		session = null;
 		
 		request.setAttribute("alerta", new Alerta("success","Has cerrado sesión correctamente."));

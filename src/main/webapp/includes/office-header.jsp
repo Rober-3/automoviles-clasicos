@@ -8,12 +8,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Mi panel</title>
+        <title>${param.title}</title>
         
         
         <!-- Todas las rutas relativas comienzan por el href indicado. -->    	
     	<base href="${pageContext.request.contextPath}/" />
     	
+        <!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         
       	<!-- Datatables CSS -->
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />

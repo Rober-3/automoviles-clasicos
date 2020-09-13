@@ -14,9 +14,9 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import robert.bermudez.rodriguez.daoimpl.ClasicoDAOImpl;
-import robert.bermudez.rodriguez.modelo.Clasico;
-import robert.bermudez.rodriguez.modelo.Marca;
+import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.modelo.pojo.Clasico;
+import robert.bermudez.rodriguez.modelo.pojo.Marca;
 
 /**
  * Servlet implementation class InsertarController

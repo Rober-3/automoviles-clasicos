@@ -14,9 +14,9 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import robert.bermudez.rodriguez.daoimpl.UsuarioDAOImpl;
-import robert.bermudez.rodriguez.modelo.Rol;
-import robert.bermudez.rodriguez.modelo.Usuario;
+import robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl;
+import robert.bermudez.rodriguez.modelo.pojo.Rol;
+import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 /**
  * Servlet implementation class LoginController
@@ -68,8 +68,11 @@ public class LoginController extends HttpServlet {
 					//request.setAttribute("usuario", usuario);
 					
 					// Se invalida la sesión del usuario si está 5 minutos sin hacer peticiones.
-					session.setMaxInactiveInterval( 60 * 5 );
-					session.setAttribute("usuario", usuario);
+					// session.setMaxInactiveInterval( 60 * 5 );
+					
+					// Aquí se ejecutará automáticamente el método attributeAdded del listener UsuariosLogueadosListener. Este
+					// atributo permitirá contar los usuarios registrados que han iniciado sesión.
+					session.setAttribute("usuario", usuario); // @see UsuarioLogueadosListener => attributeAdded
 					
 					alerta = new Alerta("success", "Has iniciado sesión correctamente.");
 					
@@ -102,7 +105,7 @@ public class LoginController extends HttpServlet {
 
 				} // for
 
-				alerta = new Alerta ("danger", errores);
+				alerta = new Alerta ("warning", errores);
 				ruta = "views/login.jsp";
 
 			} // if-else externo

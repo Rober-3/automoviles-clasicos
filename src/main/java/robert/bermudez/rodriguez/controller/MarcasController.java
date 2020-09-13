@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import robert.bermudez.rodriguez.modelo.Marca;
+import robert.bermudez.rodriguez.modelo.pojo.Marca;
 
 /**
  * Servlet implementation class MarcasController

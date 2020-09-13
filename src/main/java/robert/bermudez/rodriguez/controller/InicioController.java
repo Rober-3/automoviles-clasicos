@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import robert.bermudez.rodriguez.daoimpl.ClasicoDAOImpl;
-import robert.bermudez.rodriguez.daoimpl.MarcaDAOImpl;
-import robert.bermudez.rodriguez.modelo.Clasico;
-import robert.bermudez.rodriguez.modelo.Marca;
+import org.apache.log4j.Logger;
+
+import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.modelo.daoimpl.MarcaDAOImpl;
+import robert.bermudez.rodriguez.modelo.pojo.Clasico;
+import robert.bermudez.rodriguez.modelo.pojo.Marca;
 
 /**
  * Servlet implementation class InicioController
@@ -21,6 +23,7 @@ import robert.bermudez.rodriguez.modelo.Marca;
 public class InicioController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(InicioController.class);
 	private static final ClasicoDAOImpl clasicoDao = ClasicoDAOImpl.getInstance();
 	
 	// El DAO de las marcas sólo es necesario para llamar al método getAllWithClassics(). Para obtenerlas pinchando en el
@@ -52,7 +55,7 @@ public class InicioController extends HttpServlet {
 			} else { // Si se reciben parámetros, muestra la marca correspondiente al idMarca.
 				
 				int idMarca = Integer.parseInt(paramId);
-				ArrayList<Clasico> clasicos = clasicoDao.getByMarca(idMarca);
+				ArrayList<Clasico> clasicos = clasicoDao.getAllByMarca(idMarca, 10);
 				
 				request.setAttribute("clasicos", clasicos);
 				request.setAttribute("marca", marca); // La envía para mostrarla en pantalla.
@@ -60,9 +63,7 @@ public class InicioController extends HttpServlet {
 			} // if-else
 
 		} catch (Exception e) {
-			Alerta alerta = new Alerta("danger", "Ha habido un problema: " + e.getMessage());
-			request.setAttribute("alerta", alerta);
-			e.printStackTrace();
+			LOG.error(e);
 
 		} finally {
 			request.setAttribute("marcasConClasicos", marcasConClasicos);

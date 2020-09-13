@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-				<footer class="py-4 bg-light mt-auto">
+				
+				<!-- <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2020</div>
@@ -11,9 +11,8 @@
                             </div>
                         </div>
                     </div>
-                </footer>
+                </footer> -->
                 
-            </div> <!-- <div id="layoutSidenav_content"> En index.jsp. -->
         </div> <!-- <div id="layoutSidenav"> En office-navbar.jsp. -->
         
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -25,5 +24,8 @@
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
         <script src="assets/demo/datatables-demo.js"></script>
+        
+        <!-- Javascript personalizado -->
+	<script src="js/custom-office.js"></script>
     </body>
 </html>
