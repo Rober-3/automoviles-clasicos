@@ -8,16 +8,15 @@
 <jsp:include page="../../includes/office-navbar-usuario.jsp" />
 
 <main class="container">
-
-	<!-- ClasicosFrontOfficeController -->
-	<h1>${encabezado}</h1>
-	<div class="tablaamericanos container my-5">
+	<div class="container my-5">
+		<!-- ClasicosFrontOfficeController -->
+		<h1 class="text-center mt-5">${encabezado}</h1>
+		
 		<img src="img/encabezado-americanos.png" class="mx-auto my-5 d-block">
 
 		<!-- Tabla -->
-
 		<table class="table table-striped mt-3 tabla">
-			<thead class="thead-dark">
+			<thead class="thead-light">
 				<tr>
 					<th scope="col">Id</th>
 					<th scope="col">Modelo</th>
