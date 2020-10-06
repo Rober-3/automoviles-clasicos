@@ -29,7 +29,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	ArrayList<Clasico> getAllByModelo (String modelo);
 	
-	
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) pertenecientes a una marca,
 	 * por medio del id de dicha marca y mostrando un determinado número de resultados.
@@ -40,19 +39,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	ArrayList<Clasico> getAllByMarca (int idMarca, int numReg);
 	
-	
-	/**
-	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) que han sido registrados por
-	 * un usuario, por medio del id de dicho usuario y estén aprobados o no por el administrador.
-	 * 
-	 * @param idUsuario (int) Id del usuario que ha registrado los clásicos.
-	 * @param isValidado (boolean) true para mostrar los clásicos aprobados por el administrador, false para mostrar 
-	 * los pendientes de aprobación.
-	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
-	 */
-	ArrayList<Clasico> getAllByUser (int idUsuario, boolean validado);
-	
-	
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, los últimos modelos (objetos de tipo Clasico) registrados, ordenados por
 	 * su id de mayor a menor y mostrando un determinado número de resultados.
@@ -61,7 +47,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
 	ArrayList<Clasico> getLast (int numReg);
-	
 	
 	/**
 	 * Obtiene de la base de datos datos estadisticos de un usuario determinado.
@@ -72,7 +57,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	ResumenUsuario getResumenUsuario (int idUsuario);
 	
-	
 	/**
 	 * Permite al administrador aprobar un modelo (objeto de tipo Clasico) registrado por un usuario, añadiendo
 	 * una fecha de validación en el registro de dicho modelo en la tabla clasicos de la base de datos.
@@ -80,7 +64,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @param idModelo (int) Id del modelo a aprobar.
 	 */
 	void validar (int idModelo);
-	
 	
 	
 	
@@ -105,6 +88,18 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	Clasico getByIdByUser (int idModelo, int idUsuario) throws SeguridadException, Exception;
 	
+	/**
+	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) que han sido registrados por
+	 * un usuario, por medio del id de dicho usuario y estén aprobados o no por el administrador.
+	 * 
+	 * @param idUsuario (int) Id del usuario que ha registrado los clásicos.
+	 * @param isValidado (boolean) true para mostrar los clásicos aprobados por el administrador, false para mostrar 
+	 * los pendientes de aprobación.
+	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
+	 */
+	ArrayList<Clasico> getAllByUser (int idUsuario, boolean validado);
+	
+	Clasico updateByUser (Clasico pojo);
 	
 	/**
 	 * Elimina de la bbdd, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id y comprobando que
@@ -116,6 +111,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @throws SeguridadException Si el usuario no puede eliminar el modelo porque no lo registró previamente.
 	 * @throws Exception 
 	 */
-	Clasico delete (int idModelo, int idUsuario) throws SeguridadException, Exception;
+	Clasico deleteByUser (int idModelo, int idUsuario) throws SeguridadException, Exception;
 	
 } // interface
