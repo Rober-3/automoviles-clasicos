@@ -14,56 +14,68 @@
 			</li>
 		</ul>
 	</nav>
-	
 	<div class="mt-5"><jsp:include page="alerta.jsp"></jsp:include></div>
-	
+
 	<div id="layoutSidenav"> <!-- Termina en office-footer.jsp. -->
 		<div id="layoutSidenav_nav">
 			<nav class="sb-sidenav accordion sb-sidenav-dark"
 				id="sidenavAccordion">
 				<div class="sb-sidenav-menu">
 					<div class="nav">
-						<div>
-							<!-- InicioController -->
-							<a class="nav-link" href="inicio">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div> Inicio del sitio
-							</a>
-							<!-- InicioBackOfficeController -->
-							<a class="nav-link" href="views/backoffice/inicio">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div> Mi panel
-							</a>
-							<!-- UsuariosBackOfficeController -->
-							<a class="nav-link" href="views/backoffice/usuarios">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div> Usuarios
-							</a>
-							<a class="nav-link" href="#">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div> Clásicos
-							</a>
-							<a class="nav-link" href="#">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div> Marcas
-							</a>
-							<!-- MigracionBackOfficeController -->
-							<a class="nav-link" href="views/backoffice/migracion">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div> Lanzar proceso de migración
-							</a>
-							<a class="nav-link" href="#">
-								<div class="sb-nav-link-icon">
-									<i class="fas fa-tachometer-alt"></i>
-								</div> Parsear web
-							</a>
-						</div>
+					
+						<!-- InicioController -->
+						<a class="nav-link" href="inicio">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Inicio del sitio
+						</a>
+						
+						<!-- InicioBackOfficeController -->
+						<a class="nav-link" href="views/backoffice/inicio">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Mi panel
+						</a>
+						
+						<!-- UsuariosBackOfficeController -->
+						<a class="nav-link" href="views/backoffice/usuarios">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Usuarios
+						</a>
+						
+						<!-- ClasicosBackOfficeController -->
+						<a class="nav-link" href="views/backoffice/clasicos">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Clásicos publicados
+						</a>
+						
+						<!-- ClasicosBackOfficeController -->
+						<a class="nav-link" href="views/backoffice/clasicos?validados=0">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Clásicos pendientes de aprobación
+						</a>
+						
+						<a class="nav-link" href="#">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Marcas
+						</a>
+						
+						<!-- MigracionBackOfficeController -->
+						<a class="nav-link" href="views/backoffice/migracion">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Lanzar proceso de migración
+						</a>
+						
+						<a class="nav-link" href="#">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> Parsear web
+						</a>
 					</div>
 				</div>
 			</nav>
