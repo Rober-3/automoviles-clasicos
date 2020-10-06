@@ -104,14 +104,20 @@
 				<!-- Opciones cuando un usuario ha iniciado o cerrado sesión. -->
 				<span class="form-inline my-2 my-lg-0 font-weight-bold">
 				
-					 <!-- LoginController -->
+					<!-- LoginController -->
 					<c:if test="${empty sessionScope.usuario}">
 						<a class="nav-link text-white" href="views/login.jsp">Iniciar sesión</a>
 					</c:if>
-					
 					<c:if test="${not empty sessionScope.usuario}">
 						<span>Has iniciado sesión como ${sessionScope.usuario.nombre}</span>
-						<a class="nav-link text-white" href="views/frontoffice/inicio">Mi panel</a>
+						
+						<c:if test="${sessionScope.usuario.rol.rol == 'usuario'}">
+							<a class="nav-link text-white" href="views/frontoffice/inicio">Mi panel</a>
+						</c:if>
+						<c:if test="${sessionScope.usuario.rol.rol == 'administrador'}">
+							<a class="nav-link text-white" href="views/backoffice/inicio">Mi panel</a>
+						</c:if>
+						
 						<a class="nav-link text-white" href="logout">Cerrar sesión</a>
 					</c:if>
 				</span>
