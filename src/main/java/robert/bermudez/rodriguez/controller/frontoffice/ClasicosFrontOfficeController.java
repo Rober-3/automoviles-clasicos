@@ -15,9 +15,6 @@ import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
-/**
- * Servlet implementation class ClasicosFrontOfficeController
- */
 @WebServlet("/views/frontoffice/clasicos")
 public class ClasicosFrontOfficeController extends HttpServlet {
 
@@ -26,17 +23,12 @@ public class ClasicosFrontOfficeController extends HttpServlet {
 	private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
 
 	
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 		String encabezado = "";
 
-		String validados = request.getParameter("validados"); // Recogida de parámetros  de office-navbar.jsp
-		
-		
+		String validados = request.getParameter("validados"); // Recogida de parámetros de office-navbar-usuario.jsp
 		
 		
 		// LOG.trace("Leer fichero de texto.");
@@ -76,14 +68,10 @@ public class ClasicosFrontOfficeController extends HttpServlet {
 //			} catch (Exception e){
 //				// Capturar posibles excepciones para poder seguir dentro del for.
 //				numErroneas++;
-//
-//			} // try-catch interno
-//
+//			}
+
 //		} // for
 
-		
-		
-		
 		
 		
 		try {
@@ -118,18 +106,8 @@ public class ClasicosFrontOfficeController extends HttpServlet {
 			request.setAttribute("clasicos", clasicos);
 			request.setAttribute("encabezado", encabezado);
 			request.getRequestDispatcher("clasicos.jsp").forward(request, response);
-			
-		} // try-catch-finally
+		}
 
 	} // doGet
-	
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		doGet(request, response);
-	}
 
 } // class
