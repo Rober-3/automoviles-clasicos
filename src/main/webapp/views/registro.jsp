@@ -9,7 +9,7 @@
 	<div class="container my-5 formulario">
 		<h3 class="text-center">Registro de usuario</h3>
 
-		<form action="registro" method="post" class="mt-3"> <!-- LoginController -->
+		<form action="registro" method="post" class="mt-3"> <!-- RegistroUsuarioController -->
 			
 			<div class="form-group">
 				<label for="nombre">Nombre de usuario</label>
@@ -20,7 +20,7 @@
 					   id="nombre"
 					   name="nombre"
 					   onkeyup="buscarUsuario(event)"
-					   value="admin"
+					   value="${nombre}"
 					   class="form-control"
 					   placeholder="Introduce tu nombre de usuario">
 			</div>
