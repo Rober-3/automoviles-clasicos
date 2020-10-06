@@ -183,7 +183,8 @@ public class MarcaDAOImpl implements MarcaDAO {
 		//"INSERT INTO marcas (id, marca) VALUES (?,?);";
 		
 		try (	Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_INSERT,PreparedStatement.RETURN_GENERATED_KEYS);	){
+				PreparedStatement pst = con.prepareStatement(SQL_INSERT,PreparedStatement.RETURN_GENERATED_KEYS);
+				){
 			
 			pst.setInt(1, pojo.getId());
 			pst.setString(2, pojo.getMarca());
@@ -193,12 +194,17 @@ public class MarcaDAOImpl implements MarcaDAO {
 			
 			if (affectedRows == 1) {
 				
-				try () {
+				try (ResultSet rsKeys = pst.getGeneratedKeys()) {
 					
-				}
+					if (rsKeys.next()) {
+						int id = rsKeys.getInt(1);
+						pojo.setId(id);
+					}
+					
+				} // try interno
 				
 			} else {
-				throw new Exception("Ha habido un problema al tratar de guardar la marca " + marca + ".");
+				throw new Exception("Ha habido un problema al tratar de guardar la marca " + pojo + ".");
 			}
 			
 		} // try externo

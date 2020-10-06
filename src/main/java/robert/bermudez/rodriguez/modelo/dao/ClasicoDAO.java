@@ -11,58 +11,77 @@ import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
 
 
 /**
- * Hereda los métodos básicos de la interfaz Crudable. Además, define nuevos métodos.
+ * Interfaz que hereda los métodos básicos de la interfaz CrudAble. Además define nuevos métodos.
+ * 
+ * @author Roberto Bermúdez Rodríguez
+ * @version 1.0
+ * 
+ * @see package robert.bermudez.rodriguez.interfaces.CrudAble.java
  */
-public interface ClasicoDAO  extends CrudAble<Clasico>  {
+public interface ClasicoDAO extends CrudAble<Clasico>  {
 	
 	
 	/**
-	 * Obtiene todos los clásicos por el nombre del modelo.
-	 * @param modelo
-	 * @return
+	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) con un nombre determinado.
+	 * 
+	 * @param modelo (objeto Modelo) Nombre del modelo que se quiere buscar.
+	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
-	ArrayList<Clasico> getAllByModelo(String modelo);
+	ArrayList<Clasico> getAllByModelo (String modelo);
 	
 	
 	/**
-	 * Obtiene todos los clásicos de una marca
-	 * @param idMarca int identificador de la marca.
-	 * @param numReg int número de registros a mostrar.
-	 * @return
+	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) pertenecientes a una marca,
+	 * por medio del id de dicha marca y mostrando un determinado número de resultados.
+	 * 
+	 * @param idMarca (int) Id de la marca.
+	 * @param numReg (int) Número de registros a mostrar.
+	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
-	ArrayList<Clasico> getAllByMarca(int idMarca, int numReg);
+	ArrayList<Clasico> getAllByMarca (int idMarca, int numReg);
 	
 	
 	/**
-	 * Obtiene todos los clásicos de un usuario, estén validados o no.
-	 * @param idUsuario int identificador del usuario.
-	 * @param isValidado boolean true para mostrar los clásicos con fecha_validacion, false para mostrar los pendientes de validar.
-	 * @return
+	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) que han sido registrados por
+	 * un usuario, por medio del id de dicho usuario y estén aprobados o no por el administrador.
+	 * 
+	 * @param idUsuario (int) Id del usuario que ha registrado los clásicos.
+	 * @param isValidado (boolean) true para mostrar los clásicos aprobados por el administrador, false para mostrar 
+	 * los pendientes de aprobación.
+	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
-	ArrayList<Clasico> getAllByUser(int idUsuario, boolean validado);
+	ArrayList<Clasico> getAllByUser (int idUsuario, boolean validado);
 	
 	
 	/**
-	 * Obtiene los ultimos registros por id descendente.
-	 * @param numReg int numero de registros a recuperar
-	 * @return ArrayList<Producto>
+	 * Obtiene de la base de datos, tabla clasicos, los últimos modelos (objetos de tipo Clasico) registrados, ordenados por
+	 * su id de mayor a menor y mostrando un determinado número de resultados.
+	 * 
+	 * @param numReg (int) Número de registros a mostrar.
+	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
-	ArrayList<Clasico> getLast(int numReg);
+	ArrayList<Clasico> getLast (int numReg);
 	
 	
 	/**
-	 * Obtiene datos estadisticos del usuario.
-	 * @see ResumenUsuario
-	 * @return ResumenUsuario
+	 * Obtiene de la base de datos datos estadisticos de un usuario determinado.
+	 * 
+	 * @param idUsuario (int) Id del usuario.
+	 * @return ResumenUsuario (Objeto ResumenUsuario) Datos del usuario.
+	 * @see package robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario.java
 	 */
-	ResumenUsuario getResumenUsuario(int idUsuario);
+	ResumenUsuario getResumenUsuario (int idUsuario);
 	
 	
 	/**
-	 * Validación del clásico para que sea visible en la parte pública.
-	 * @param id identificador del cĺásico
+	 * Permite al administrador aprobar un modelo (objeto de tipo Clasico) registrado por un usuario, añadiendo
+	 * una fecha de validación en el registro de dicho modelo en la tabla clasicos de la base de datos.
+	 * 
+	 * @param idModelo (int) Id del modelo a aprobar.
 	 */
 	void validar (int idModelo);
+	
+	
 	
 	
 	// Estos métodos se declaran por seguridad, para evitar accesos por parte de un usuario a clásicos que no le
@@ -73,25 +92,30 @@ public interface ClasicoDAO  extends CrudAble<Clasico>  {
 	// se mantienen para que un administrador, al tener privilegios totales, pueda hacer cualquier operación con
 	// cualquier registro.
 	
-	/**
-	 * Obtiene un registro comprobando que pertenezca al usuario que lo solicita.
-	 * @param idModelo
-	 * @param idUsuario
-	 * @return clásico solicitado
-	 * @throws SeguridadException si el usuario no puede visualizar el registro porque no le pertenece
-	 * @throws Exception 
-	 */
-	Clasico getByIdByUser(int idModelo, int idUsuario) throws SeguridadException, Exception;
-	
 	
 	/**
-	 * Elimina un registro comprobando que pertenezca al usuario que lo solicita.
-	 * @param idModelo
-	 * @param idUsuario
-	 * @return clásico eliminado
-	 * @throws SeguridadException si el usuario no puede eliminar el registro porque no le pertenece
+	 * Obtiene de la bbdd, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id y comprobando que
+	 * pertenece al usuario que lo ha registrado.
+	 * 
+	 * @param idModelo (int) Id del modelo que se solicita.
+	 * @param idUsuario (int) Id del usuario que solicita el modelo.
+	 * @return Clasico (Objeto Clasico) Modelo solicitado.
+	 * @throws SeguridadException Si el usuario no puede visualizar el modelo porque no lo registró previamente.
 	 * @throws Exception 
 	 */
-	Clasico delete(int idModelo, int idUsuario) throws SeguridadException, Exception;
+	Clasico getByIdByUser (int idModelo, int idUsuario) throws SeguridadException, Exception;
 	
-}
+	
+	/**
+	 * Elimina de la bbdd, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id y comprobando que
+	 * pertenece al usuario que lo ha registrado.
+	 * 
+	 * @param idModelo (int) Id del modelo a eliminar.
+	 * @param idUsuario (int) Id del usuario que solicita la eliminación.
+	 * @return Clasico (Objeto Clasico) Modelo eliminado.
+	 * @throws SeguridadException Si el usuario no puede eliminar el modelo porque no lo registró previamente.
+	 * @throws Exception 
+	 */
+	Clasico delete (int idModelo, int idUsuario) throws SeguridadException, Exception;
+	
+} // interface

@@ -74,7 +74,6 @@ public class InsertarFrontOfficeController extends HttpServlet {
 			request.setAttribute("clasico", clasico);
 			request.setAttribute("alerta", alerta);
 			request.getRequestDispatcher("formulario-clasicos.jsp").forward(request, response);
-			
 		}
 		
 	} // doGet
@@ -87,7 +86,6 @@ public class InsertarFrontOfficeController extends HttpServlet {
 		Clasico clasico = new Clasico();
 		Usuario usuario = new Usuario();
 		Alerta alerta = new Alerta();
-
 		
 		// Recogida de parámetros de formulario-clasicos.jsp del frontoffice.
 		String id = request.getParameter("id");
@@ -96,7 +94,6 @@ public class InsertarFrontOfficeController extends HttpServlet {
 		String anio = request.getParameter("anio");
 		String foto = request.getParameter("foto");
 
-		
 		try {
 
 			int idModelo = Integer.parseInt(id);
@@ -108,7 +105,6 @@ public class InsertarFrontOfficeController extends HttpServlet {
 			usuario = (Usuario) request.getSession().getAttribute("usuario");
 
 			// Comprobar que el clásico pertenece al usuario que lo registró.
-			
 			int idUsuario = usuario.getId();
 			
 			if (idModelo != 0) {
@@ -123,9 +119,7 @@ public class InsertarFrontOfficeController extends HttpServlet {
 			clasico.setFoto(foto);
 			clasico.setUsuario(usuario);
 
-			
 			// Comprueba si se han rellenado los campos requeridos. En caso contrario muestra mensajes de advertencia.
-			
 			Set<ConstraintViolation<Clasico>> violations = validator.validate(clasico);
 
 			if (violations.isEmpty()) {
@@ -136,19 +130,15 @@ public class InsertarFrontOfficeController extends HttpServlet {
 
 				} else {
 					dao.update(clasico);
-					alerta = new Alerta("success", "Clásico actualizado en espera de aprobación por parte del administrador.");
-					
-				} // if-else interno
-
+					alerta = new Alerta("success", "Clásico actualizado en espera de aprobación por parte del administrador.");	
+				}
 
 			} else {
-
 				String errores = "";
 
 				for (ConstraintViolation<Clasico> v : violations) {
 					errores += "<p> <b>" + v.getPropertyPath() + "</b>: "  + v.getMessage() + "</p>";
 				}
-
 				alerta = new Alerta ("warning", errores);
 
 			} // if-else externo
@@ -164,8 +154,7 @@ public class InsertarFrontOfficeController extends HttpServlet {
 			request.setAttribute("clasico", clasico);
 			request.setAttribute("alerta", alerta);
 			request.getRequestDispatcher("formulario-clasicos.jsp").forward(request, response);
-
-		} // try-catch-finally
+		}
 
 	} // doPost
 

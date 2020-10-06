@@ -15,7 +15,7 @@ public class Rol {
 		this.rol = "";
 	}
 	
-	public Rol( int id ) {
+	public Rol (int id) {
 		this();
 		this.id = id;		
 	}
@@ -24,7 +24,7 @@ public class Rol {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId (int id) {
 		this.id = id;
 	}
 
@@ -32,7 +32,7 @@ public class Rol {
 		return rol;
 	}
 
-	public void setRol(String rol) {
+	public void setRol (String rol) {
 		this.rol = rol;
 	}
 

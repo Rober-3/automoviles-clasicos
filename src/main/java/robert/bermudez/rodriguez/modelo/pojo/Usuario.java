@@ -31,7 +31,7 @@ public class Usuario {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId (int id) {
 		this.id = id;
 	}
 
@@ -39,7 +39,7 @@ public class Usuario {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombre (String nombre) {
 		this.nombre = nombre;
 	}
 
@@ -47,7 +47,7 @@ public class Usuario {
 		return contrasena;
 	}
 
-	public void setContrasena(String contrasena) {
+	public void setContrasena (String contrasena) {
 		this.contrasena = contrasena;
 	}
 
@@ -55,7 +55,7 @@ public class Usuario {
 		return imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen (String imagen) {
 		this.imagen = imagen;
 	}
 	
@@ -63,7 +63,7 @@ public class Usuario {
 		return rol;
 	}
 
-	public void setRol(Rol rol) {
+	public void setRol (Rol rol) {
 		this.rol = rol;
 	}
 

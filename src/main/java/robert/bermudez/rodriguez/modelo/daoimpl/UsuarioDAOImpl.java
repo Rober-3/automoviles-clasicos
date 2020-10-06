@@ -15,7 +15,7 @@ import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 
 public class UsuarioDAOImpl implements UsuarioDAO {
-	
+
 	private static final Logger LOG = Logger.getLogger(UsuarioDAOImpl.class);
 
 	// Singleton
@@ -43,25 +43,26 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	// DAO
 
 	// QUERYS
-	
+
 	private static final String SQL_SELECT_FROM_WHERE = "SELECT u.id, nombre, contrasena, imagen, id_rol, rol " +
-												  		"FROM usuarios u, roles r " +
-												  		"WHERE id_rol = r.id ";
-	
+			"FROM usuarios u, roles r " +
+			"WHERE id_rol = r.id ";
+
 	private static final String SQL_GET_BY_ID =			SQL_SELECT_FROM_WHERE + "AND u.id = ?:";
 	private static final String SQL_GET_ALL =			SQL_SELECT_FROM_WHERE + "ORDER BY u.id LIMIT 500;";
 	private static final String SQL_EXISTS =			SQL_SELECT_FROM_WHERE + "AND nombre = ? AND contrasena = ?;";
-	
+	private static final String SQL_BUSCAR_POR_NOMBRE =	"SELECT id FROM usuarios WHERE nombre = ?;";
+
 	private static final String SQL_INSERT =			"INSERT INTO usuarios (nombre, contrasena, imagen, id_rol) VALUES (?,?,?,?);";
 	private static final String SQL_UPDATE =			"UPDATE usuarios SET nombre = ?, contrasena = ?, imagen = ?, id_rol = ? WHERE id = ?";
 	private static final String SQL_DELETE =			"DELETE FROM usuarios WHERE id = ?;";
-	
-	
-	
+
+
+
 	// MÉTODOS
 
 	@Override
-	public Usuario getById(int id) throws Exception {
+	public Usuario getById (int id) throws Exception {
 
 		Usuario usuario = new Usuario();
 
@@ -72,33 +73,32 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				) {
 
 			pst.setInt(1, id);
-			
+			LOG.debug(pst);
+
 			try (ResultSet rs = pst.executeQuery()) {
 
 				if (rs.next()) {
 					usuario = mapper(rs);
-				
+
 				} else {
 					throw new Exception("No existen usuarios en la base de datos con el id " + id);
-					
-				} // if-else
-				
+				}
+
 			} // try
-			
+
 		} catch (Exception e) {
 			LOG.error(e);
-
-		} // try-catch
+		}
 
 		return usuario;
-		
+
 	} // getById
 
 
 
 	@Override
 	public ArrayList<Usuario> getAll() throws Exception {
-		
+
 		// Acceder a getAll() de esta manera podría ocasionar un desbordamiento de la variable si la BBDD tuviese millones de registros.
 		// ArrayList<Usuario> usuarios = getAll();
 
@@ -113,16 +113,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				) {
 
 			while (rs.next()) {
-
 				usuario = mapper(rs);
 				usuarios.add(usuario);
-
-			} // while
+			}
 
 		} catch (Exception e) {
 			LOG.error(e);
-
-		} // try-catch
+		}
 
 		return usuarios;
 
@@ -131,114 +128,143 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 
 	@Override
-	public Usuario insert(Usuario pojo) throws Exception {
+	public boolean buscarPorNombre (String nombre) {
+
+		boolean nombreExiste = false;
+
+		try (	
+				Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_BUSCAR_POR_NOMBRE);
+
+				) {
+
+			pst.setString(1, nombre);
+			LOG.debug(pst);
+
+			try (ResultSet rs = pst.executeQuery()) {
+
+				if (rs.next()) {
+					nombreExiste = true;
+				}
+				
+			} // try interno
+			
+		} catch (Exception e) {
+			LOG.error(e);
+		} 
+
+		return nombreExiste;
+
+	} // buscarPorNombre
+
+
+
+	@Override
+	public Usuario insert (Usuario pojo) throws Exception {
 
 		try (
 				Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-				
+
 				){
-			
+
 			pst.setString(1, pojo.getNombre());
 			pst.setString(2, pojo.getContrasena());
 			pst.setString(3, pojo.getImagen());
 			pst.setInt(4, pojo.getRol().getId());
 			LOG.debug(pst);
-			
+
 			int affectedRows = pst.executeUpdate();
-			
+
 			if (affectedRows == 1) {
-				
+
 				try (ResultSet rsKeys = pst.getGeneratedKeys()) {
 
 					if (rsKeys.next()) {
 						int id = rsKeys.getInt(1);
 						pojo.setId(id);
 					}
-					
+
 				} // try interno
-				
+
 			} else {
 				throw new Exception("Ha habido un problema al intentar guardar el usuario " + pojo + ".");
-			
-			} // if-else
-			
+			}
+
 		} // try externo
-		
+
 		return pojo;
-		
+
 	} // insert
 
-	
-	
+
+
 	@Override
-	public Usuario update(Usuario pojo) throws Exception {
-		
+	public Usuario update (Usuario pojo) throws Exception {
+
 		try (
 				Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
-				
+
 				){
-			
+
 			pst.setString(1, pojo.getNombre());
 			pst.setString(2, pojo.getContrasena());
 			pst.setString(3, pojo.getImagen());
 			pst.setInt(4, pojo.getRol().getId());
 			pst.setInt(5, pojo.getId());
 			LOG.debug(pst);
-			
+
 			int affectedRows = pst.executeUpdate();
-			
+
 			if (affectedRows != 1) {
 				throw new Exception("No se han actualizado correctamente los datos del usuario " + pojo + ".");
 			}
-			
+
 		} catch (Exception e) {
 			LOG.error(e);
-			
-		} // try-catch
-		
+		}
+
 		return pojo;
-		
+
 	} // update
 
-	
-	
+
+
 	@Override
-	public Usuario delete(int idUsuario) throws Exception {
-		
+	public Usuario delete (int idUsuario) throws Exception {
+
 		Usuario usuario = getById(idUsuario);
-		
+
 		try (
 				Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_DELETE);
-				
+
 				){
-			
+
 			pst.setInt(1, idUsuario);
 			LOG.debug(pst);
-			
+
 			int affectedRows = pst.executeUpdate();
-			
+
 			if (affectedRows != 1) {
 				throw new Exception("Ha habido un problema al tratar de eliminar el usuario con el id " + idUsuario + ".");
 			}
-			
+
 		} catch (Exception e) {
 			LOG.error(e);
-			
-		} // try-catch
-		
+		}
+
 		return usuario;
-		
+
 	} // delete
 
 
 
 	@Override
-	public Usuario exists(String nombre, String contrasena) {
-		
-		Usuario usuario = new Usuario();
+	public Usuario exists (String nombre, String contrasena) {
+
+		Usuario usuario = null;
 
 		try(
 				Connection con = ConnectionManager.getConnection();
@@ -248,6 +274,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			pst.setString(1, nombre);
 			pst.setString(2, contrasena);
+			LOG.debug(pst);
 
 			try (ResultSet rs = pst.executeQuery()) {
 
@@ -258,56 +285,51 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			} // try
 
 		} catch (Exception e) {
-			e.printStackTrace();
-
-		} // try-catch
+			LOG.error(e);
+		}
 
 		return usuario;
-		
-		
-		
+
 //		Método antes de modificarlo. Lanzaba excepciones que debía recoger LoginController en el doPost.
-			
+
 //		Usuario usuario = new Usuario();
-//
+
 //		try(
 //				Connection con = ConnectionManager.getConnection();
 //				PreparedStatement pst = con.prepareStatement(SQL_EXISTS);
 //
 //				) {
-//
+
 //			pst.setString(1, nombre);
 //			pst.setString(2, contrasena);
-//
+
 //			try (ResultSet rs = pst.executeQuery()) {
-//
+
 //				if (rs.next()) {
-//
 //					usuario = mapper(rs);
 //
 //				} else {
 //					throw new Exception("No existen en la base de datos usuarios con el nombre " + nombre + " y la contrasena "
 //								+ contrasena + ".");
-//				} // if-else
-//					
+//				}
+
 //			} // try
-//
-//
+
 //		} catch (Exception e) {
 //					e.printStackTrace();
-//
-//		} // try-catch
-//
+//		}
+
 //		return usuario;
-		
 
 	} // exists
-	
-	private Usuario mapper(ResultSet rs) throws SQLException {
-		
+
+
+
+	private Usuario mapper (ResultSet rs) throws SQLException {
+
 		Usuario usuario = new Usuario();
 		Rol rol = new Rol();
-		
+
 		rol.setId(rs.getInt("id_rol"));
 		rol.setRol(rs.getString("rol"));
 
@@ -316,9 +338,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		usuario.setContrasena(rs.getString("contrasena"));
 		usuario.setImagen(rs.getString("imagen"));
 		usuario.setRol(rol);
-		
+
 		return usuario;
-		
+
 	} // mapper
 
 } // class

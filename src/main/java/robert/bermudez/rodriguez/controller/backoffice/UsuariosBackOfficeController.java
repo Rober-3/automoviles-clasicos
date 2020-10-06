@@ -17,6 +17,9 @@ import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 /**
  * Muestra en el backoffice una lista con todos los usuarios registrados en la base de datos para que el administrador
  * pueda eliminarlos o actualizar sus datos.
+ * 
+ * @author Roberto Bermúdez Rodríguez
+ * @version 1.0
  */
 @WebServlet("/views/backoffice/usuarios")
 public class UsuariosBackOfficeController extends HttpServlet {
@@ -25,9 +28,14 @@ public class UsuariosBackOfficeController extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(UsuariosBackOfficeController.class);
 	private static final UsuarioDAOImpl dao = UsuarioDAOImpl.getInstance();
        
-
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Llama al método para obtener todos los usuarios registrados y los almacena en una lista para mostrarlos luego
+	 * en una página determinada del backoffice.
+	 * 
+	 * <dt>Variables
+	 *	   <dd>{@code ArrayList<Usuario>} usuarios: lista de usuarios.
+	 *
+	 * @see robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -44,12 +52,5 @@ public class UsuariosBackOfficeController extends HttpServlet {
 		request.getRequestDispatcher("usuarios.jsp").forward(request, response);
 		
 	} // doGet
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
 
 } // class

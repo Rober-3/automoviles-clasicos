@@ -24,6 +24,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
         
         <!-- CSS personalizado -->
-        <link href="css/styles-office.css" rel="stylesheet" />
+        <!-- <link rel="stylesheet" href="css/styles-office.css"> -->
+        <link rel="stylesheet" href="css/styles-office.css?d=<%=System.currentTimeMillis()%>">
         
     </head>

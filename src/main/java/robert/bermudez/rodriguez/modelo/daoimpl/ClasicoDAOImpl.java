@@ -31,7 +31,7 @@ import robert.bermudez.rodriguez.modelo.pojo.Usuario;
  * El DAO implementa los métodos CRUD básicos: getAll, getById, insert, update y delete.
  * 
  * @author Roberto Bermúdez Rodríguez
- * @see https://github.com/Rober-3/supermercado-java/tree/master/src/main/java/com/ipartek/formacion
+ * @see 
  * 
  */
 public class ClasicoDAOImpl implements ClasicoDAO {
@@ -46,9 +46,9 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		super();
 	}
 
-	// getInstance() obtiene una instancia ÚNICA de la clase. Las siguientes ocasiones en las que se traten de crear otras instancias,
-	// como INSTANCE ya no será null el método devolverá la clase única creada anteriormente. La palabra synchronized evita que varios
-	// hilos o ejecuciones puedan entrar a la vez.
+	// getInstance() obtiene una instancia ÚNICA de la clase. Las siguientes ocasiones en las que se intente
+	// crear instancias, como INSTANCE ya no será null el método devolverá la clase única creada anteriormente.
+	// synchronized evita que varios hilos o ejecuciones puedan entrar a la vez.
 	public static synchronized ClasicoDAOImpl getInstance() {
 
 		if (INSTANCE == null) {
@@ -61,7 +61,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	} // getInstance()
 
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	// TODO Notas. Patrón DAO
@@ -78,26 +78,22 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	private static final String SQL_AND_IS_NOT_NULL =	"AND fecha_validacion IS NOT NULL ";
 	
 	private static final String SQL_GET_BY_ID = SQL_SELECT_FROM_WHERE + "AND c.id = ?;";
-
-	private static final String SQL_GET_ALL
-								= SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "ORDER BY c.id DESC LIMIT 500;";
-
-	private static final String SQL_GET_ALL_BY_MODELO
-								= SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "AND modelo LIKE ? ORDER BY c.id DESC LIMIT 500;";
 	
-	private static final String SQL_GET_ALL_BY_MARCA
-								= SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "AND m.id = ? ORDER BY c.id DESC LIMIT ?;";
+	private static final String SQL_GET_ALL = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "ORDER BY c.id DESC LIMIT 500;";
+	
+	private static final String SQL_GET_ALL_BY_MODELO = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "AND modelo LIKE ? ORDER BY c.id DESC LIMIT 500;";
+	
+	private static final String SQL_GET_ALL_BY_MARCA = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "AND m.id = ? ORDER BY c.id DESC LIMIT ?;";
 	
 	private static final String SQL_GET_BY_ID_BY_USER = SQL_SELECT_FROM_WHERE + "AND c.id = ? AND id_usuario = ?;";
 	
-	private static final String SQL_GET_ALL_BY_USER_CLASICO_VALIDADO
-								= SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "AND id_usuario = ? ORDER BY c.id DESC LIMIT 500;";
+	private static final String SQL_GET_ALL_BY_USER_CLASICO_VALIDADO = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL
+								+ "AND id_usuario = ? ORDER BY c.id DESC LIMIT 500;";
 	
-	private static final String SQL_GET_ALL_BY_USER_CLASICO_SIN_VALIDAR
-								= SQL_SELECT_FROM_WHERE + "AND fecha_validacion IS NULL AND id_usuario = ? ORDER BY c.id DESC LIMIT 500;";
+	private static final String SQL_GET_ALL_BY_USER_CLASICO_SIN_VALIDAR = SQL_SELECT_FROM_WHERE
+								+ "AND fecha_validacion IS NULL AND id_usuario = ? ORDER BY c.id DESC LIMIT 500;";
 
-	private static final String SQL_GET_RESUMEN_USUARIO
-								= "SELECT id_usuario, total, aprobados, pendientes FROM v_clasicos_usuario WHERE id_usuario = ?;";
+	private static final String SQL_GET_RESUMEN_USUARIO = "SELECT id_usuario, total, aprobados, pendientes FROM v_clasicos_usuario WHERE id_usuario = ?;";
 	
 	private static final String SQL_GET_LAST = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "ORDER BY c.id DESC LIMIT ?;";
 	
@@ -114,6 +110,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	
 	// MÉTODOS.
 
+	/**
+	 * Obtiene de la base de datos, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id.
+	 * 
+	 * @param idModelo (int) Id del modelo a mostrar.
+	 * @return Clasico (Objeto Clasico) Modelo a mostrar.
+	 */
 	@Override
 	public Clasico getById(int idModelo) throws Exception {
 
@@ -148,7 +150,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	} // getById
 
 
-
+	
+	/**
+	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico).
+	 * 
+	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
+	 */
 	@Override
 	public ArrayList<Clasico> getAll() throws Exception {
 
@@ -384,6 +391,14 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	
 	
 	
+	/**
+	 * Inserta en la base de datos, tabla clasicos, un modelo (objeto de tipo Clasico). Es necesario introducir el nombre del modelo,
+	 * la marca, el año y la foto.
+	 * 
+	 * @param pojo (Objeto Clasico) Modelo a insertar.
+	 * @return Clasico (Objeto Clasico) Modelo insertado.
+	 * @see package robert.bermudez.rodriguez.modelo.pojo.Clasico
+	 */
 	@Override
 	public Clasico insert(Clasico pojo) throws Exception {
 
@@ -394,7 +409,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 				// RETURN_GENERATED_KEYS es una constante de una clase de Java que sirve para devolver la clave generada por la bbdd.
-
 				) {
 
 			pst.setString(1, pojo.getModelo());
@@ -430,6 +444,14 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	
 	
 	
+	/**
+	 * Actualiza en la base de datos, tabla clasicos, un modelo (objeto de tipo Clasico). Es opcional introducir uno
+	 * o varios de los siguientes campos: nombre del modelo, marca, año y foto.
+	 * 
+	 * @param pojo (Objeto Clasico) Modelo a actualizar.
+	 * @return Clasico (Objeto Clasico) Modelo actualizado.
+	 * @see package robert.bermudez.rodriguez.modelo.pojo.Clasico.java
+	 */
 	@Override
 	public Clasico update(Clasico pojo) throws Exception {
 
@@ -469,6 +491,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 
 
+	/**
+	 * Elimina de la bbdd, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id.
+	 * 
+	 * @param idModelo (int) Id del modelo a borrar.
+	 * @return Clasico (Objeto Clasico) Modelo borrado.
+	 */
 	@Override
 	public Clasico delete(int idModelo) throws Exception {
 
@@ -516,9 +544,9 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			pst.setInt(2, idUsuario);
 			LOG.debug(pst);
 
-			// Como getById lanza una excepción si se intenta acceder a un clásico no autorizado, con hacer executeUpdate es suficiente.
 			pst.executeUpdate();
 			
+			// Como getById lanza una excepción si se intenta acceder a un clásico no autorizado, basta con hacer executeUpdate.
 			// int affectedRows = pst.executeUpdate(); 
 			// if (affectedRows != 1) {
 			//	 throw new SeguridadException();
@@ -560,24 +588,26 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	
 	
 	
+	/**
+	 * Mapea los campos de un modelo (objeto de tipo Clasico) para usarlo en el resto de métodos de la clase ClasicoDAOImpl.
+	 * 
+	 * @param rs (ResultSet)
+	 * @return Clasico (Objeto Clasico) Modelo mapeado.
+	 * @throws SQLException
+	 */
 	private Clasico mapper(ResultSet rs) throws SQLException {
 		
 		Marca marca = new Marca();
-
 		marca.setId(rs.getInt("id_marca"));
 		marca.setMarca(rs.getString("marca"));
 		
-		
-		// Para mostrar los clásicos de un usuario en una tabla de su panel su nombre de usuario es irrelevante. Sin embargo, de cara al
-		// backoffice será útil mostrar sus datos, o si en la parte pública se quiere mostrar al propietario de un clásico registrado.
+		// Mostrar el nombre del usuario en una tabla de clásicos de su propio panel carece de utilidad. Sin embargo, en el
+		// backoffice o en la parte pública será útil mostrar los datos de este usuario.
 		Usuario usuario = new Usuario();
-		
 		usuario.setId(rs.getInt("id_usuario"));
 		usuario.setNombre(rs.getString("nombre_usuario"));
 
-		
 		Clasico clasico = new Clasico();
-
 		clasico.setId(rs.getInt("id_modelo"));
 		clasico.setModelo( rs.getString("modelo"));
 		clasico.setMarca(marca);

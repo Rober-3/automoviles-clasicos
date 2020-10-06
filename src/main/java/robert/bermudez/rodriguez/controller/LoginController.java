@@ -1,7 +1,6 @@
 package robert.bermudez.rodriguez.controller;
 
 import java.io.IOException;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,118 +8,90 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Rol;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 /**
- * Servlet implementation class LoginController
+ * Realiza el inicio de sesión en la aplicación.
+ * 
+ * @author Roberto Bermúdez Rodríguez
+ * @version 1.0
  */
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-
-
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		doPost(request, response);
-	}
-
-
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Proceso para el inicio de sesión.
+	 * <ol>
+	 *     <li>Recibe parámetros del usuario.</li>
+	 *     <li>En base a esos parámetros comprueba que ese usuario esté registrado, lanzando una excepción si no lo está.</li>
+	 *     <li>Evalúa que los parámetros se hayan introducido, mostrando un mensaje de advertencia en caso de estar vacío(s) alguno(s).</li>
+	 *     <li>Comprueba que el nombre de usuario y la contraseña sean correctos, mostrando una advertencia si tienen errores.</li>
+	 *     <li>Si el nombre y la contraeña son correctos usa el atributo Rol del usuario para redirigir a la vista correspondiente.</li>
+	 * </ol>
+	 * <dl>
+	 * 	   <dt>Variables
+	 * 		   <dd><b>UsuarioDAOImpl dao</b> Instancia de UsuarioDAOImpl para aplicar métodos a la clase Usuario.
+	 * 		   <dd><b>Alerta alerta</b> Muestra mensajes en pantalla al usuario.
+	 * 		   <dd><b>String ruta</b> Almacena la ruta para que el controlador redirija a la vista correspondiente.
+	 * 		   <dd><b>HttpSession session</b> Guarda en la sesión los atributos del usuario.
+	 * 	   <dt>
+	 *	   <dt>
+	 *	   <dt>Parámetros del formulario.
+	 *		   <dd><b>nombre (String</b> Nombre.
+	 *		   <dd><b>contrasena (String)</b> Contraseña.
+	 * </dl>
+	 * @see robert.bermudez.rodriguez.controller.Alerta
+	 * @see robert.bermudez.rodriguez.modelo.pojo.Usuario
+	 * @see robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		UsuarioDAOImpl dao = UsuarioDAOImpl.getInstance();
-		Alerta alerta = null;
+
+		Alerta alerta = new Alerta();
 		String ruta = "";
 
 		String nombre = request.getParameter("nombre");
 		String contrasena = request.getParameter("contrasena"); 
-		
 		HttpSession session = request.getSession();
 
-		try {
-			
-			Usuario usuario = dao.exists(nombre, contrasena);
+		UsuarioDAOImpl dao = UsuarioDAOImpl.getInstance();
+		Usuario usuario = dao.exists(nombre, contrasena);
 
-			ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-			Validator validator = factory.getValidator();
+		if (usuario != null) {
 
-			Set<ConstraintViolation<Usuario>> violations = validator.validate(usuario);
+			// request.setAttribute("usuario", usuario);
 
-			if (violations.isEmpty()) {
+			// Se invalida la sesión del usuario si está 5 minutos sin hacer peticiones.
+			// session.setMaxInactiveInterval( 60 * 5 );
 
-				if (nombre.equals(usuario.getNombre()) && contrasena.equals(usuario.getContrasena())) {
-					
-					//request.setAttribute("usuario", usuario);
-					
-					// Se invalida la sesión del usuario si está 5 minutos sin hacer peticiones.
-					// session.setMaxInactiveInterval( 60 * 5 );
-					
-					// Aquí se ejecutará automáticamente el método attributeAdded del listener UsuariosLogueadosListener. Este
-					// atributo permitirá contar los usuarios registrados que han iniciado sesión.
-					session.setAttribute("usuario", usuario); // @see UsuarioLogueadosListener => attributeAdded
-					
-					alerta = new Alerta("success", "Has iniciado sesión correctamente.");
-					
-					// En función del valor del atributo (ADMINISTRADOR o USUARIO) de Rol redirige al backoffice o al frontoffice.
-					if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
-						ruta = "views/backoffice/inicio";
-						
-					} else {
-						// ruta = "views/frontoffice/index.jsp";
-						// Si inicia sesión un usuario normal tiene que pasar por un controlador
-						ruta = "views/frontoffice/inicio";
-					}
-					
-					//ruta = "clasicos";
+			// Aquí se ejecutará automáticamente el método attributeAdded del listener UsuariosLogueadosListener. Este
+			// atributo permitirá contar los usuarios registrados que han iniciado sesión.
+			session.setAttribute("usuario", usuario); // @see UsuarioLogueadosListener => attributeAdded
 
-				} else {
-					
-					alerta = new Alerta("danger","El usuario y/o la contraseña son erróneos.");
-					ruta = "views/login.jsp";
+			alerta = new Alerta("success", "Has iniciado sesión correctamente.");
 
-				} // if-else interno
-
+			// En función del valor del atributo de Rol(ADMINISTRADOR o USUARIO) redirige al backoffice o al frontoffice.
+			if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
+				ruta = "views/backoffice/inicio";
 
 			} else {
+				// ruta = "views/frontoffice/index.jsp"; // Si inicia sesión un usuario normal tiene que pasar por un controlador
+				ruta = "views/frontoffice/inicio";
+			}
 
-				String errores = "";
-
-				for (ConstraintViolation<Usuario> v : violations) {
-					errores += "<p> <b>" + v.getPropertyPath() + "</b>: "  + v.getMessage() + "</p>";
-
-				} // for
-
-				alerta = new Alerta ("warning", errores);
-				ruta = "views/login.jsp";
-
-			} // if-else externo
-
-
-		} catch (Exception e) {
-			alerta = new Alerta ("danger", "Hay un problema: " + e.getMessage());
-
-
-		} finally {
 			request.setAttribute("alerta", alerta);
 			request.getRequestDispatcher(ruta).forward(request, response);
 
-		}  // try-catch-finally
+		} else {
+			alerta = new Alerta ("warning", "Credenciales incorrectas.");
+			request.setAttribute("alerta", alerta);
+			request.getRequestDispatcher("views/login.jsp").forward(request, response);
+		}
 
 	} // doPost
-	
+
 } // class

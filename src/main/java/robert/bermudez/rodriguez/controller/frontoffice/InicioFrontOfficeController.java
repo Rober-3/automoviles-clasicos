@@ -70,13 +70,10 @@ public class InicioFrontOfficeController extends HttpServlet {
 		
 	} // doGet
 	
-	
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	// Si se elimina este método, al iniciar sesión en el backoffice dará un error 405.
+	// HTTP Status 405 – Method Not Allowed HTTP method POST is not supported by this URL
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doGet(request, response);
 	}
 

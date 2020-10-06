@@ -18,8 +18,10 @@ import org.apache.log4j.Logger;
 import robert.bermudez.rodriguez.conexion.ConnectionManager;
 
 /**
- * Controlador para realizar un proceso de migración de un fichero de texto a la base de datos.
- * Lee un .txt con 100 registros y los inserta en la base de datos..
+ * Realiza la migración de un fichero de texto a la base de datos. Lee un .txt con 100 registros y los inserta.
+ * 
+ * @author Roberto Bermúdez Rodríguez
+ * @version 1.0
  */
 @WebServlet("/views/backoffice/migracion")
 public class MigracionBackOfficeController extends HttpServlet {
@@ -27,9 +29,27 @@ public class MigracionBackOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(MigracionBackOfficeController.class);
 
-
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * <ol>
+	 *     <li>Abre una conexión con la base de datos.</li>
+	 *     <li>Lee el fichero línea a línea, lanzando una excepción si hay alguna nula.</li>
+	 *     <li>Almacena en un array cada línea y si no tiene todos los campos la cuenta como errónea.</li>
+	 *     <li>Sustituye en la query todas las interrogaciones por los campos correspondientes de cada línea.</li>
+	 *     <li>Ejecuta la query para guardar la línea.</li>
+	 *     <li>Después guardar todas las líneas envía los datos y dirige a la vista.</li>
+	 * </ol>  
+	 * <dt>Variables
+	 * 	   <dd><b>String SQL</b> 
+	 *     <dd><b>String PATH_FICHERO</b> Ruta del fichero.
+	 *     <dd><b>String mensaje</b> Muestra mensajes de error en los catch.
+	 *     <dd><b>int numLeidas</b> Total de líneas leídas.
+	 *     <dd><b>int numInsertadas</b> Total de líneas insertadas.
+	 *     <dd><b>int numErroneas</b> Total de líneas erróneas.
+	 *     <dd><b>long tiempoInicio</b> Hora de inicio de la migración.
+	 *     <dd><b>long tiempoFin</b> Hora de fin de la migración.
+	 *     <dd><b>{@code ArrayList<String>}lineasErroneas</b> guarda las líneas erróneas.
+	 *     <dd><b>String linea</b> lee cada una de las líneas del fichero.
+	 *     <dd><b>{@code String[]}campos</b>
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -40,7 +60,6 @@ public class MigracionBackOfficeController extends HttpServlet {
 		// El problema de establecer esta ruta para el nombre del fichero es que si el proyecto se cuelga en un servidor o
 		// se lleva a otro ordenador no se encontrará: /home/javaee/eclipse-workspace es una ruta dentro de una carpeta de
 		// mi ordenador. Para resolverlo hay que incluir el fichero en src/main/resources.
-		
 		// String fichero = "/home/javaee/eclipse-workspace/automoviles-clasicos/personas.txt";
 		final String PATH_FICHERO = "personas.txt"; // Busca el fichero en la carpeta src/main/resources.
 		
@@ -54,7 +73,7 @@ public class MigracionBackOfficeController extends HttpServlet {
 		ArrayList<String>lineasErroneas = new ArrayList<String>();
 		
 		// Lógica de programación.
-
+		
 		try (	
 				Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL);
@@ -75,7 +94,7 @@ public class MigracionBackOfficeController extends HttpServlet {
 
 			while (null != (linea = br.readLine())) {
 
-				try { // En un principio no inclui este try-catch, pero sólo se leían 85 de las 100 líneas del fichero.
+				try { // En un principio no incluí este try-catch, pero sólo se leían 85 de las 100 líneas del fichero.
 
 					numLeidas++;
 
@@ -85,13 +104,13 @@ public class MigracionBackOfficeController extends HttpServlet {
 
 						pst.setString(1, campos[0]);
 						LOG.debug(pst);
-
+						
 						int affectedRows = pst.executeUpdate();
-
+						
 						if (affectedRows == 1) {
 							numInsertadas++;
 							LOG.trace("Registro insertado.");
-
+							
 						} else {
 							LOG.trace("No se ha podido insertar el registro.");
 						}
@@ -99,8 +118,7 @@ public class MigracionBackOfficeController extends HttpServlet {
 					} else {
 						lineasErroneas.add(linea);
 						numErroneas ++;
-
-					} // if-else
+					}
 
 				} catch (Exception e) {
 					LOG.error(e);
@@ -135,12 +153,5 @@ public class MigracionBackOfficeController extends HttpServlet {
 		LOG.trace("Fin");
 
 	} // doGet
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
 
 } // class 
