@@ -21,6 +21,8 @@ import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
 public interface ClasicoDAO extends CrudAble<Clasico>  {
 	
 	
+	ArrayList<Clasico> getAllSinValidar() throws Exception;
+	
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) con un nombre determinado.
 	 * 
@@ -75,7 +77,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	// se mantienen para que un administrador, al tener privilegios totales, pueda hacer cualquier operación con
 	// cualquier registro.
 	
-	
 	/**
 	 * Obtiene de la bbdd, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id y comprobando que
 	 * pertenece al usuario que lo ha registrado.
@@ -99,7 +100,7 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	ArrayList<Clasico> getAllByUser (int idUsuario, boolean validado);
 	
-	Clasico updateByUser (Clasico pojo);
+	Clasico updateByUser (Clasico pojo) throws SeguridadException, Exception;
 	
 	/**
 	 * Elimina de la bbdd, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id y comprobando que
