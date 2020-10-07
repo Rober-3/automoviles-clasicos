@@ -1,5 +1,5 @@
 .barra {
-	background: linear-gradient(#dc0000, #ff0000, #990000);
+	background: linear-gradient(#0B610B, #0B3B0B);
 }
 
 .formularioclasicos {
@@ -23,4 +23,32 @@
 
 .tablamarcas {
 	width: 500px;
+}
+
+.principal {
+	width: 700px;
+	height: auto;
+}
+
+.error {
+	background-image: url("../img/error.jpg");
+	color: yellow;
+	width: 800px;
+	height: 600px;
+}
+
+.error h1 {
+	font-size: 4rem;
+}
+
+.noencontrada {
+	background-image: url("../img/404.jpg");
+	color: white;
+	font-size: 3rem;
+	width: 800px;
+	height: 600px;
+}
+
+.noencontrada h1 {
+	font-size: 5rem;
 }
