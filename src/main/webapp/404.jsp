@@ -6,11 +6,9 @@
 	<jsp:param name="title" value="404" />
 </jsp:include>
 
-<div class="jumbotron">
-	<h1 class="text-center display-1">404</h1>
-	<p class="lead">No existe la página indicada.</p>
-	<hr class="my-4">
-	<a class="btn btn-primary btn-lg" href="inicio" role="button">Volver a la pantalla principal</a> <!-- InicioController -->
+<div class="noencontrada container mt-3">
+	<h1 class="text-center font-weight-bold">404</h1>
+	<p class="text-center font-weight-bold mt-1">No existe la página indicada.</p>
 </div>
 
 <%@include file="includes/footer.jsp"%>
