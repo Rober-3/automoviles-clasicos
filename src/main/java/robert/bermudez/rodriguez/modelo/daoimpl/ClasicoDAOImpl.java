@@ -29,7 +29,6 @@ import robert.bermudez.rodriguez.modelo.pojo.Usuario;
  * El DAO implementa los métodos CRUD básicos: getAll, getById, insert, update y delete.
  * 
  * @author Roberto Bermúdez Rodríguez
- * @see 
  * 
  */
 public class ClasicoDAOImpl implements ClasicoDAO {
@@ -89,6 +88,8 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	private static final String SQL_GET_RESUMEN_USUARIO = "SELECT id_usuario, total, aprobados, pendientes FROM v_clasicos_usuario WHERE id_usuario = ?;";
 	private static final String SQL_GET_LAST = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "ORDER BY c.id DESC LIMIT ?;";
 	
+	private static final String SQL_GET_ALEATORY= SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "ORDER BY RAND() LIMIT 3;";
+	
 	
 	// executeUpdate devuelve un int que representa el número de filas afectadas.
 	private static final String SQL_INSERT =	     "INSERT INTO clasicos (modelo, id_marca, anio, foto, id_usuario) VALUES (?, ?, ?, ?, ?);";
@@ -139,7 +140,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	
 	
 	@Override
-	public Clasico getByIdByUser(int idModelo, int idUsuario) throws SeguridadException, Exception {
+	public Clasico getByIdByUser(int idUsuario, int idModelo) throws SeguridadException, Exception {
 
 		Clasico clasico = new Clasico();
 
@@ -147,8 +148,8 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_ID_BY_USER);
 			) {
 
-			pst.setInt(1, idModelo);
-			pst.setInt(2, idUsuario);
+			pst.setInt(1, idUsuario);
+			pst.setInt(2, idModelo);
 			LOG.debug(pst);
 			
 			try (ResultSet rs = pst.executeQuery()) {
@@ -376,13 +377,35 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	} // getLast
 	
 	
+	@Override
+	public ArrayList<Clasico> getThree() throws Exception {
+
+		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
+
+		try (	Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_ALEATORY);
+				ResultSet rs = pst.executeQuery();
+				) {
+
+			LOG.debug(pst);
+
+			while (rs.next()) {
+				clasicos.add(mapper(rs));
+			}
+
+		} // try
+		
+		return clasicos;
+
+	} // getLast
+	
+	
 	/**
 	 * Inserta en la base de datos, tabla clasicos, un modelo (objeto de tipo Clasico). Es necesario introducir el nombre del modelo,
 	 * la marca, el año y la foto.
 	 * 
 	 * @param pojo (Objeto Clasico) Modelo a insertar.
 	 * @return Clasico (Objeto Clasico) Modelo insertado.
-	 * @see package robert.bermudez.rodriguez.modelo.pojo.Clasico
 	 */
 	@Override
 	public Clasico insert(Clasico pojo) throws Exception {
@@ -434,7 +457,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	 * 
 	 * @param pojo (Objeto Clasico) Modelo a actualizar.
 	 * @return Clasico (Objeto Clasico) Modelo actualizado.
-	 * @see package robert.bermudez.rodriguez.modelo.pojo.Clasico.java
 	 */
 	@Override
 	public Clasico update(Clasico pojo) throws Exception {

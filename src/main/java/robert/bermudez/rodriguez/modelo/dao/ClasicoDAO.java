@@ -1,5 +1,7 @@
 package robert.bermudez.rodriguez.modelo.dao;
 
+import java.sql.SQLException;
+
 // TODO Notas: interface que extiende de CrudAble y que contiene métodos adicionales a los métodos CRUD básicos.
 //			   En esta interface la C de CrudAble, que es una clase genérica, se ha sustituido por la clase Clasico.
 
@@ -16,7 +18,6 @@ import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
  * @author Roberto Bermúdez Rodríguez
  * @version 1.0
  * 
- * @see package robert.bermudez.rodriguez.interfaces.CrudAble.java
  */
 public interface ClasicoDAO extends CrudAble<Clasico>  {
 	
@@ -55,9 +56,12 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * 
 	 * @param idUsuario (int) Id del usuario.
 	 * @return ResumenUsuario (Objeto ResumenUsuario) Datos del usuario.
-	 * @see package robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario.java
 	 */
 	ResumenUsuario getResumenUsuario (int idUsuario);
+	
+	
+	ArrayList<Clasico> getThree() throws Exception;
+	
 	
 	/**
 	 * Permite al administrador aprobar un modelo (objeto de tipo Clasico) registrado por un usuario, añadiendo
@@ -85,7 +89,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @param idUsuario (int) Id del usuario que solicita el modelo.
 	 * @return Clasico (Objeto Clasico) Modelo solicitado.
 	 * @throws SeguridadException Si el usuario no puede visualizar el modelo porque no lo registró previamente.
-	 * @throws Exception 
 	 */
 	Clasico getByIdByUser (int idModelo, int idUsuario) throws SeguridadException, Exception;
 	
@@ -94,7 +97,7 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * un usuario, por medio del id de dicho usuario y estén aprobados o no por el administrador.
 	 * 
 	 * @param idUsuario (int) Id del usuario que ha registrado los clásicos.
-	 * @param isValidado (boolean) true para mostrar los clásicos aprobados por el administrador, false para mostrar 
+	 * @param validado (boolean) true para mostrar los clásicos aprobados por el administrador, false para mostrar 
 	 * los pendientes de aprobación.
 	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
@@ -110,7 +113,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @param idUsuario (int) Id del usuario que solicita la eliminación.
 	 * @return Clasico (Objeto Clasico) Modelo eliminado.
 	 * @throws SeguridadException Si el usuario no puede eliminar el modelo porque no lo registró previamente.
-	 * @throws Exception 
 	 */
 	Clasico deleteByUser (int idModelo, int idUsuario) throws SeguridadException, Exception;
 	
