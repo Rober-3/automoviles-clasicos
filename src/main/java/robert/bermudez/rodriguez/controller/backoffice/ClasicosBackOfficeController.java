@@ -41,6 +41,7 @@ public class ClasicosBackOfficeController extends HttpServlet {
 				
 			} else {
 				encabezado = "Clásicos pendientes de aprobación";
+				request.setAttribute("validados", validados);
 				clasicos = dao.getAllSinValidar();
 			}
 			
