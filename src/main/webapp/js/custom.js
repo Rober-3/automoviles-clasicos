@@ -1,11 +1,10 @@
 // Script necesario para ejecutar el plugin DataTables.
-
- // Ejecuta la funcion cuando todo el documento de HTML DOM esté listo y cargado.
-$(document).ready(function() {
+$(document).ready(function() { // Ejecuta la funcion cuando todo el documento de HTML DOM esté listo y cargado.
 	// Selecciona el id de la tabla y ejecuta el plugin .DataTable().
     // "#" puede ser id (#) o class(.) y tabla cualquier nombre. Hace referencia a la tabla.
     $('.tabla').DataTable();
 });
+
 
 function init() {
 	console.log('Documento cargado y listo.');
@@ -109,5 +108,5 @@ function confirmar(modelo) {
 		console.debug('Previene o detiene el evento del ancla.');
 		event.preventDefault();
 	}
-	
 }
+

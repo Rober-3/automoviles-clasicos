@@ -20,11 +20,6 @@ public class ConnectionManager {
 //	private final static String USUARIO = "debian-sys-maint";
 //	private final static String PASSWORD = "o8lAkaNtX91xMUcV";
 	
-	/**
-	 * Configuración a través de un DataSource
-	 * @see src/main/webapp/META-INF/context.xml
-	 */
-
 	public static Connection getConnection() throws ClassNotFoundException, SQLException, NamingException {
 
 		Connection con = null;

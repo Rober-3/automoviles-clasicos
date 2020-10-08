@@ -8,10 +8,10 @@ public interface UsuarioDAO extends CrudAble<Usuario> {
 	/**
 	 * Comprueba si un usuario existe en la base de datos.
 	 * En caso de fallar, devuelve una excepción
-	 * @param nombre
-	 * @param contrasena
-	 * @return Usuario
-	 * @throws Exception
+	 * @param nombre nombre del usuario
+	 * @param contrasena contraseña del usuario
+	 * @return Usuario objeto Usuario
+	 * @throws Exception si no se encuentra el usuario
 	 */
 	Usuario exists (String nombre, String contrasena) throws Exception;
 	
