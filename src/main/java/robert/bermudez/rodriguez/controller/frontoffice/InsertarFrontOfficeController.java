@@ -22,9 +22,6 @@ import robert.bermudez.rodriguez.modelo.pojo.Marca;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 import robert.bermudez.rodriguez.controller.Alerta;
 
-/**
- * Servlet implementation class InsertarFrontOfficeController
- */
 @WebServlet("/views/frontoffice/insertar")
 public class InsertarFrontOfficeController extends HttpServlet {
 
@@ -34,9 +31,7 @@ public class InsertarFrontOfficeController extends HttpServlet {
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	private static Validator validator = factory.getValidator();
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String id = request.getParameter("id"); // Recogida de parámetros de clasicos.jsp del frontoffice.
@@ -59,7 +54,7 @@ public class InsertarFrontOfficeController extends HttpServlet {
 			int idUsuario = usuario.getId();
 			
 			if (idModelo != 0) {
-				clasico = dao.getByIdByUser(idModelo, idUsuario);
+				clasico = dao.getByIdByUser(idUsuario, idModelo);
 				alerta = new Alerta("warning", "Modifica los datos del clásico.");
 			}
 			
@@ -78,9 +73,7 @@ public class InsertarFrontOfficeController extends HttpServlet {
 		
 	} // doGet
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Clasico clasico = new Clasico();
@@ -108,7 +101,7 @@ public class InsertarFrontOfficeController extends HttpServlet {
 			int idUsuario = usuario.getId();
 			
 			if (idModelo != 0) {
-				clasico = dao.getByIdByUser(idModelo, idUsuario);
+				clasico = dao.getByIdByUser(idUsuario, idModelo);
 				alerta = new Alerta("warning", "Introduce los datos del clásico.");
 			}
 			
@@ -129,7 +122,7 @@ public class InsertarFrontOfficeController extends HttpServlet {
 					alerta = new Alerta("success", "Clásico registrado en espera de aprobación por parte del administrador.");
 
 				} else {
-					dao.update(clasico);
+					dao.updateByUser(clasico);
 					alerta = new Alerta("success", "Clásico actualizado en espera de aprobación por parte del administrador.");	
 				}
 
@@ -148,7 +141,7 @@ public class InsertarFrontOfficeController extends HttpServlet {
 			
 		} catch (Exception e) {
 			LOG.error(e);
-			alerta = new Alerta ("danger", "Ese modelo ya está registrado.");
+			alerta = new Alerta ("danger", e.getMessage());
 
 		} finally {
 			request.setAttribute("clasico", clasico);
