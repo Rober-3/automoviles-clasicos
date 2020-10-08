@@ -17,7 +17,7 @@ import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 /**
  * Servlet implementation class InsertarEditarBackOfficeController
  */
-@WebServlet("/views/fackoffice/insertar-editar")
+@WebServlet("/views/backoffice/insertar-editar")
 public class InsertarEditarBackOfficeController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
