@@ -42,13 +42,18 @@
 						<td class="align-middle">
 							<% // Se pasa el id del clásico a editar o eliminar como parámetro en la URL. %>
 							
-							<a href="views/frontoffice/insertar?id=${c.id}">
-							<i class="fas fa-edit fa-1x mx-2 align-middle" title="Editar"></i></a> 
+							<!-- <a href="views/frontoffice/insertar?id=${c.id}"> -->
+							<i class="fas fa-edit fa-1x mx-2 align-middle" title="Editar"></i> <!-- </a>  -->
 							
 							<!-- EliminarFrontOfficeController -->
 							<!-- El evento confirmar ejecuta un script de JavaScript para confirmar la eliminación de un modelo. -->
-							<a href="views/frontoffice/eliminar?id=${c.id}" onclick="confirmar('${c.modelo}')">
-							<i class="fas fa-trash fa-1x mx-2" title="Eliminar"></i></a>
+							<!-- <a href="views/frontoffice/eliminar?id=${c.id}" onclick="confirmar('${c.modelo}')"> -->
+							<i class="fas fa-trash fa-1x mx-2" title="Eliminar"></i> <!-- </a>  -->
+							
+							<c:if test="${validados==0}">
+								<a href="views/fackoffice/insertar-editar?id=${c.id}">
+								<i class="fas fa-check-square" title="Confirmar"></i></a>
+							</c:if>
 						</td>
 
 					</tr>
