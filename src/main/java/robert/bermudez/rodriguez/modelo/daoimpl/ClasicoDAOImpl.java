@@ -502,13 +502,14 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			int idModelo = pojo.getId();
 			int idUsuario = pojo.getUsuario().getId();
 			
-			getByIdByUser(idModelo, idUsuario);
-
+			getByIdByUser(idUsuario, idModelo);
+			//UPDATE clasicos SET modelo = ?, id_marca = ?, anio = ?, foto = ?, fecha_validacion = NULL WHERE id = ? AND id_usuario = ?;
 			pst.setString(1, pojo.getModelo());
 			pst.setInt(2, pojo.getMarca().getId());
 			pst.setString(3, pojo.getAnio());
 			pst.setString(4, pojo.getFoto());
 			pst.setInt(5, pojo.getId());
+			pst.setInt(6, pojo.getUsuario().getId());
 			LOG.debug(pst);
 			
 			int affectedRows = pst.executeUpdate();
