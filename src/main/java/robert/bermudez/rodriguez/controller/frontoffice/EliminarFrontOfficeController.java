@@ -48,7 +48,7 @@ public class EliminarFrontOfficeController extends HttpServlet {
 			int idUsuario = usuario.getId();
 			
 			if (idModelo != 0) {
-				clasico = dao.getByIdByUser(idModelo, idUsuario);
+				clasico = dao.getByIdByUser(idUsuario, idModelo);
 			}
 			
 			clasico = dao.delete(idModelo);	
