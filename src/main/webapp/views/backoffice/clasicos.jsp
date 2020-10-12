@@ -52,7 +52,7 @@
 							<i class="fas fa-trash fa-1x mx-2" title="Eliminar"></i> </a>
 							
 							<c:if test="${validados==0}"> <!-- ClasicosBackOfficeController -->
-								<a href="views/fackoffice/insertar-editar?id=${c.id}"> <!-- InsertarEditarBackOfficeController -->
+								<a href="views/backoffice/insertar-editar?id=${c.id}"> <!-- InsertarEditarBackOfficeController -->
 								<i class="fas fa-check-square" title="Confirmar"></i></a>
 							</c:if>
 							
