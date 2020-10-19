@@ -7,6 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
+import robert.bermudez.rodriguez.controller.frontoffice.InicioFrontOfficeController;
+import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
+import robert.bermudez.rodriguez.modelo.pojo.EstadisticasMarca;
+
 /**
  * Dirige a la pantalla de inicio del backoffice.
  * 
@@ -15,8 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/views/backoffice/inicio")
 public class InicioBackOfficeController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(InicioFrontOfficeController.class);
+    private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
 
 	/**
 	 * Dirige a la pantalla de inicio del backoffice.
@@ -26,13 +35,21 @@ public class InicioBackOfficeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// Cuidado con la URL del servlet ("/views/frontoffice/inicio") ya que al hacer forward se sustitituye la última parte
+		LOG.trace("Panel de inicio.");
+		
+		EstadisticasClasico estadisticasClasicos = dao.getAllEstadisticasClasicos();
+		EstadisticasMarca estadisticasMarcas = dao.getAllEstadisticasMarcas();
+		
+		// Cuidado con la URL del servlet ("/views/frontoffice/inicio") ya que al hacer forward se sustitituye la última
 		// parte (inicio) por la variable pagina (ver más abajo).
 
 		// El forward resuelve la URL de la siguiente manera:
 		// "/views/backOffice/inicio" + "index.jsp"  =  "/views/backOffice/index.jsp"
 		String pagina = "index.jsp"; // index.jsp de backoffice, no el index.jsp general.
+		LOG.debug("forward: " + pagina);
 
+		request.setAttribute("estadisticasClasicos", estadisticasClasicos);
+		request.setAttribute("estadisticasMarcas", estadisticasMarcas);
 		request.getRequestDispatcher(pagina).forward(request, response);
 
 	} // doGet

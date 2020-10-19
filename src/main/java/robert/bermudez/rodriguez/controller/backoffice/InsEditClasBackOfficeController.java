@@ -10,15 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import robert.bermudez.rodriguez.controller.Alerta;
 import robert.bermudez.rodriguez.controller.frontoffice.InsertarFrontOfficeController;
+import robert.bermudez.rodriguez.controller.publico.Alerta;
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 
-/**
- * Servlet implementation class InsertarEditarBackOfficeController
- */
-@WebServlet("/views/backoffice/insertar-editar")
-public class InsertarEditarBackOfficeController extends HttpServlet {
+@WebServlet("/views/backoffice/insertar-editar-clasico")
+public class InsEditClasBackOfficeController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(InsertarFrontOfficeController.class);
@@ -36,7 +33,7 @@ public class InsertarEditarBackOfficeController extends HttpServlet {
     		int idModelo = Integer.parseInt(id);
     		
     		if (idModelo != 0) {
-				dao.validar(idModelo);
+				dao.validate(idModelo);
 				alerta = new Alerta("success", "Clásico validado con éxito.");
 			}
     		
@@ -49,10 +46,5 @@ public class InsertarEditarBackOfficeController extends HttpServlet {
 		}
     	
 	} // doGet
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
-	}
 
 } // class
