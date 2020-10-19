@@ -14,7 +14,6 @@ function init() {
 
 
 // Script para encriptar la contraseña de usuario.
-
 /*
  * function cifrar() {
 		
@@ -46,13 +45,12 @@ function init() {
  */
 
 
-// Script para confirmar la eliminación de un registro.
-
-function confirmar(modelo) {
+// Script para confirmar la eliminación de un clásico o una marca.
+function confirmar(parametro) {
 	
 	// The confirm() method returns true if the user clicked "OK", and false otherwise.
 	// modelo es el parámetro que se le pasa al script desde la vista ('${a.modelo}).
-	if ( confirm('¿Estás seguro de querer eliminar ' + modelo + '?') ){
+	if ( confirm('¿Estás seguro de querer eliminar ' + parametro + '?') ){
 		
 		console.debug('Continúa el evento por defecto del ancla.');
 		
