@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.controller;
+package robert.bermudez.rodriguez.controller.publico;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class InicioController extends HttpServlet {
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 
 		try {
-			clasicos = dao.getThree();
+			clasicos = dao.getAleatory();
 			Clasico clasico1 = clasicos.get(0);
 			Clasico clasico2 = clasicos.get(1);
 			Clasico clasico3 = clasicos.get(2);

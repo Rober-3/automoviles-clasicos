@@ -1,4 +1,4 @@
- package robert.bermudez.rodriguez.controller;
+ package robert.bermudez.rodriguez.controller.publico;
 
 import java.io.IOException;
 import java.sql.SQLException;

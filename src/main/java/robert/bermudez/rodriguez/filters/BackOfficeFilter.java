@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.filtros;
+package robert.bermudez.rodriguez.filters;
 
 // TODO Notas: filtro para el backoffice
 

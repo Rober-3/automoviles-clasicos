@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.controller;
+package robert.bermudez.rodriguez.controller.publico;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,57 +9,39 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 
-/**
- * Servlet implementation class ClasicosController
- */
 @WebServlet("/clasicos")
 public class ClasicosController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(ClasicosController.class);
 
-	
-	
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		
 		ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
 		// Con InicioAppListener ya no es necesario llamar al DAO de las marcas.
 		// MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
 		
-		ArrayList<Clasico> clasicosAmericanos = new ArrayList<Clasico>();
+		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 		// ArrayList<Marca> marcas = new ArrayList<Marca>();
 		
 		try {
-			clasicosAmericanos = daoClasico.getAll();
+			clasicos = daoClasico.getAll();
 			// marcas = daoMarca.getAll();
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 			
-		} // try-catch
-		
-		request.setAttribute("clasicosAmericanos", clasicosAmericanos);
-		// request.setAttribute("marcas", marcas);
-		
-		request.getRequestDispatcher("views/clasicos-americanos.jsp").forward(request, response);
+		} finally {
+			request.setAttribute("clasicos", clasicos);
+			// request.setAttribute("marcas", marcas);
+			request.getRequestDispatcher("views/public/clasicos.jsp").forward(request, response);
+		}
 		
 	} // doGet
-
-	
-	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
-		
-	} // doPost
 
 } // class

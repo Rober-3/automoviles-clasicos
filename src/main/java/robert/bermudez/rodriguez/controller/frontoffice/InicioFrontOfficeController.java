@@ -62,7 +62,6 @@ public class InicioFrontOfficeController extends HttpServlet {
 		// El forward resuelve la URL de la siguiente manera:
 		// "/views/frontoffice/inicio" + "index.jsp"  =  "/views/frontoffice/index.jsp"
 		
-		
 		String pagina = "index.jsp"; // index.jsp de frontoffice, no index.jsp público.
 		LOG.debug("forward: " + pagina);
 		

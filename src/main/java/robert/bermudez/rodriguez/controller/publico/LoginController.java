@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.controller;
+package robert.bermudez.rodriguez.controller.publico;
 
 import java.io.IOException;
 
@@ -23,6 +23,10 @@ import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 public class LoginController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
 
 	/**
 	 * Proceso para el inicio de sesión.
@@ -45,7 +49,7 @@ public class LoginController extends HttpServlet {
 	 *		   <dd><b>nombre (String</b> Nombre.
 	 *		   <dd><b>contrasena (String)</b> Contraseña.
 	 * </dl>
-	 * @see robert.bermudez.rodriguez.controller.Alerta
+	 * @see robert.bermudez.rodriguez.controller.publico.Alerta
 	 * @see robert.bermudez.rodriguez.modelo.pojo.Usuario
 	 * @see robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl
 	 */
@@ -89,7 +93,7 @@ public class LoginController extends HttpServlet {
 		} else {
 			alerta = new Alerta ("warning", "Credenciales incorrectas.");
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("views/login.jsp").forward(request, response);
+			request.getRequestDispatcher("views/public/login.jsp").forward(request, response);
 		}
 
 	} // doPost

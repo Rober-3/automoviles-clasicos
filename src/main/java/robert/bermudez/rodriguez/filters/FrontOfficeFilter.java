@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.filtros;
+package robert.bermudez.rodriguez.filters;
 
 import java.io.IOException;
 
