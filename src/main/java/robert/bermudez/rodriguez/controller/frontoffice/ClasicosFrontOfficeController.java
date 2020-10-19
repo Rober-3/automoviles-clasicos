@@ -28,8 +28,9 @@ public class ClasicosFrontOfficeController extends HttpServlet {
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 		String encabezado = "";
 
-		String validados = request.getParameter("validados"); // Recogida de parámetros de office-navbar-usuario.jsp
-		
+		// Recogida de parámetros de office-navbar-usuario.jsp
+		String validados = request.getParameter("validados"); 
+		String total = request.getParameter("total");
 		
 		// LOG.trace("Leer fichero de texto.");
 		// LOG.trace("Abrir una conexión con la BBDDD.");
@@ -90,14 +91,31 @@ public class ClasicosFrontOfficeController extends HttpServlet {
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 			int idUsuario = usuario.getId();
 
-			if (validados == null) {
-				encabezado = "Clásicos publicados";
-				clasicos = dao.getAllByUser(idUsuario, true);
-
-			} else {
+			if (validados != null && total != null) {
 				encabezado = "Clásicos pendientes de aprobación";
-				clasicos = dao.getAllByUser(idUsuario, false);
+				clasicos = dao.getAllByUserValidation(idUsuario, false);
+				request.setAttribute("validados", validados);
+					
+			} else if (validados == null && total != null) {
+				encabezado = "Clásicos publicados";
+				clasicos = dao.getAllByUserValidation(idUsuario, true);
+				
+			} else {
+				encabezado = "Total de clásicos";
+				clasicos = dao.getAllByUser(idUsuario);
 			}
+			
+			
+//			if (validados == null) {
+//				encabezado = "Clásicos publicados";
+//				clasicos = dao.getAllByUser(idUsuario, true);
+//
+//			} else {
+//				encabezado = "Clásicos pendientes de aprobación";
+//				clasicos = dao.getAllByUser(idUsuario, false);
+//			}
+			
+			
 
 		} catch (Exception e) {
 			LOG.error(e);
@@ -105,7 +123,7 @@ public class ClasicosFrontOfficeController extends HttpServlet {
 		} finally {
 			request.setAttribute("clasicos", clasicos);
 			request.setAttribute("encabezado", encabezado);
-			request.getRequestDispatcher("clasicos.jsp").forward(request, response);
+			request.getRequestDispatcher("clasicos.jsp").forward(request, response); // frontoffice/clasicos.jsp
 		}
 
 	} // doGet
