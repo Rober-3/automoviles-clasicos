@@ -2,20 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:include page="../../includes/office-header.jsp">
-	<jsp:param name="pagina" value="Clasicos americanos" />
-	<jsp:param name="title" value="Clasicos americanos" />
+	<jsp:param name="pagina" value="Clasicos" />
+	<jsp:param name="title" value="Clasicos" />
 </jsp:include>
 <jsp:include page="../../includes/office-navbar-usuario.jsp" />
 
 <main class="container">
 	<div class="container my-5">
-		<!-- ClasicosFrontOfficeController -->
-		<h1 class="text-center mt-5">${encabezado}</h1>
+		
+		<h1 class="text-center mt-5">${encabezado}</h1> <!-- ClasicosFrontOfficeController -->
 		
 		<img src="img/encabezado-americanos.png" class="mx-auto my-5 d-block">
 
 		<!-- Tabla -->
-		<table class="table table-striped mt-3 tabla">
+		<table class="tabla table table-striped mt-3">
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">Id</th>
@@ -27,30 +27,25 @@
 				</tr>
 			</thead>
 			<tbody>
-
-				<!-- ClasicosFrontOfficeController. -->
-				<c:forEach items="${clasicos}" var="c">
+				<c:forEach items="${clasicos}" var="c"> <!-- ClasicosFrontOfficeController. -->
 					<tr>
-						<td class="align-middle">${c.id}</td>
-						<td class="align-middle">${c.modelo}</td>
-						<td class="align-middle">${c.marca.marca}</td><!-- Accede al atributo marca del objeto Marca. -->
-						<td class="align-middle">${c.anio}</td>
-						<td class="align-middle">
-							<img src="${c.foto}"class="img-thumbnail" alt="foto">
-						</td>
+						<td>${c.id}</td>
+						<td>${c.modelo}</td>
+						<td>${c.marca.marca}</td> <!-- Accede al atributo marca del objeto Marca. -->
+						<td>${c.anio}</td>
+						<td> <img src="${c.foto}" class="miniatura img-thumbnail" alt="foto"></td>
 
 						<td class="align-middle">
+						
 							<% // Se pasa el id del clásico a editar o eliminar como parámetro en la URL. %>
-							
 							<a href="views/frontoffice/insertar?id=${c.id}">
-							<i class="fas fa-edit fa-1x mx-2 align-middle" title="Editar"></i></a> 
+							<i class="fas fa-edit fa-1x mx-2 align-middle" title="Editar"></i></a>
 							
-							<!-- EliminarFrontOfficeController -->
+							<!-- EliminarFrontOfficeController custom-office.js -->
 							<!-- El evento confirmar ejecuta un script de JavaScript para confirmar la eliminación de un modelo. -->
 							<a href="views/frontoffice/eliminar?id=${c.id}" onclick="confirmar('${c.modelo}')">
 							<i class="fas fa-trash fa-1x mx-2" title="Eliminar"></i></a>
 						</td>
-
 					</tr>
 				</c:forEach>
 			</tbody>
