@@ -7,12 +7,14 @@ import robert.bermudez.rodriguez.modelo.pojo.Marca;
 
 public interface MarcaDAO extends CrudAble<Marca>{
 	
+	public ArrayList<Marca> getAllValidadas() throws Exception;
+	
+	public ArrayList<Marca> getAllSinValidar() throws Exception;
+	
 	/**
 	 * Obtiene todas las marcas con sus clásicos asociados.
 	 * @return ArrayList de marcas ordenadas alfabéticamente.
 	 */
-	
-	// Método para hacer el hashmap de clásicos.
-	public ArrayList<Marca> getAllWithClassics();
+	public ArrayList<Marca> getAllWithClassics(); // Método para hacer el hashmap de clásicos.
 
 }

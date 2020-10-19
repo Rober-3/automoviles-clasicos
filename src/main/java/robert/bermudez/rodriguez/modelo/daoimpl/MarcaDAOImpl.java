@@ -37,9 +37,6 @@ public class MarcaDAOImpl implements MarcaDAO {
 	}
 	
 	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
 	// DAO
 	
 	// QUERYS
@@ -47,22 +44,21 @@ public class MarcaDAOImpl implements MarcaDAO {
 	// executeQuery devuelve un ResultSet.
 	private static final String SQL_GET_BY_ID =				"SELECT id, marca FROM marcas WHERE id = ?;";
 	private static final String SQL_GET_ALL =				"SELECT id, marca FROM marcas ORDER BY marca ASC;";
+	private static final String SQL_GET_ALL_VALIDADAS =		"SELECT id, marca FROM marcas WHERE fecha_aprobacion IS NOT NULL ORDER BY marca ASC;";
+	private static final String SQL_GET_ALL_SIN_VALIDAR =	"SELECT id, marca FROM marcas WHERE fecha_aprobacion IS NULL ORDER BY marca ASC;";
 	private static final String SQL_GET_ALL_WITH_CLASSICS = "SELECT m.id 'id_marca', marca, c.id 'id_modelo', modelo, anio, foto, u.id 'id_usuario', u.nombre 'nombre_usuario' " +
 															"FROM marcas m, clasicos c, usuarios u " + 
 															"WHERE m.id = id_marca " +
-															"AND u.id = id_usuario " +
+															"AND u.id = m.id_usuario " +
 															"AND c.fecha_validacion IS NOT NULL " +
-															"ORDER BY modelo ASC";
+															"ORDER BY marca ASC";
 	
 	// executeUpdate devuelve un int que representa el número de filas afectadas.
 	private static final String SQL_INSERT =				"INSERT INTO marcas (id, marca) VALUES (?,?);";
 	private static final String SQL_UPDATE =				"UPDATE marcas SET marca = ? WHERE id = ?;";
-	private static final String SQL_DELETE =				"DELETE FROM marcas WHERE id = ?;";
-	
 	
 			
 	// MÉTODOS
-	
 	
 	@Override
 	public Marca getById(int id) throws Exception {
@@ -113,8 +109,50 @@ public class MarcaDAOImpl implements MarcaDAO {
 		return marcas;
 		
 	} // getAll
+	
+	
+	public ArrayList<Marca> getAllValidadas() throws Exception {
+		
+		ArrayList<Marca> marcas = new ArrayList<Marca>();
+
+		try (	Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_ALL_VALIDADAS);
+				ResultSet rs = pst.executeQuery();
+				) {
+
+			LOG.debug(pst);
+
+			while (rs.next()) {
+				marcas.add(mapper(rs));	
+			}
+
+		} // try
+
+		return marcas;
+		
+	} // getAllValidadas
 
 	
+	public ArrayList<Marca> getAllSinValidar() throws Exception {
+		
+		ArrayList<Marca> marcas = new ArrayList<Marca>();
+
+		try (	Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_ALL_SIN_VALIDAR);
+				ResultSet rs = pst.executeQuery();
+				) {
+
+			LOG.debug(pst);
+
+			while (rs.next()) {
+				marcas.add(mapper(rs));	
+			}
+
+		} // try
+
+		return marcas;
+	} // getAllSinValidar
+
 	
 	@Override
 	public ArrayList<Marca> getAllWithClassics() {
@@ -170,8 +208,8 @@ public class MarcaDAOImpl implements MarcaDAO {
 			
 		} // try-catch
 		
-		// Como hay que devolver un ArrayList y se tiene un HashMap hay que hacer una conversión al devolver marcas (de
-		// no hacerlo dará un error en el return). De un HashMap se pueden conseguir sus keys y sus values.
+		// Como hay que devolver un ArrayList y se tiene un HashMap hay que hacer una conversión al devolver marcas.
+		// Si no se hacer dará un error en el return. De un HashMap se pueden conseguir sus keys y sus values.
 		return new ArrayList<Marca>(marcas.values());
 		
 	} // getAllWithClassics
@@ -180,7 +218,6 @@ public class MarcaDAOImpl implements MarcaDAO {
 	
 	@Override
 	public Marca insert(Marca pojo) throws Exception {
-		//"INSERT INTO marcas (id, marca) VALUES (?,?);";
 		
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_INSERT,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -226,11 +263,9 @@ public class MarcaDAOImpl implements MarcaDAO {
 
 	@Override
 	public Marca delete(int id) throws Exception {
-		//"DELETE FROM marcas WHERE id = ?;";
-		Marca marca = new Marca();
-		
-		return marca;
-		
+		// Las marcas no deben borrarse, porque aunque se eliminen todos sus
+		// clásicos deben estar siempre disponibles para nuevos modelos.
+		return null;
 	} // delete
 	
 	
@@ -238,20 +273,10 @@ public class MarcaDAOImpl implements MarcaDAO {
 	public Marca mapper(ResultSet rs) throws SQLException {
 		
 		Marca marca = new Marca();
-		
 		marca.setId(rs.getInt("id"));
 		marca.setMarca(rs.getString("marca"));
-		
 		return marca;
 		
 	} // mapper
-	
-	
-	
-	private Marca mapperWithClassics(ResultSet rs) {
-		
-		return null;
-		
-	} // mapperWithClassics
 
 } // class
