@@ -1,0 +1,20 @@
+.tabla {
+ width: 1000px;
+ }
+ 
+.miniatura {
+	max-width: 7rem;
+}
+
+.numero {
+	font-size: 3rem;
+	position: absolute;
+	bottom: 2rem;
+	right: 0.5rem;
+}
+
+.formularioclasicos {
+	height: 600px;
+	width: 500px;
+}
+
