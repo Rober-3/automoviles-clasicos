@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<jsp:include page="../includes/header.jsp">
+<jsp:include page="../../includes/header.jsp">
 	<jsp:param name="pagina" value="login" />
 	<jsp:param name="title" value="login" />
 </jsp:include>
@@ -8,9 +8,7 @@
 <main>
 	<div class="container my-5 formulario">
 		<h3 class="text-center">Registro de usuario</h3>
-
 		<form action="registro" method="post" class="mt-3"> <!-- RegistroUsuarioController -->
-			
 			<div class="form-group">
 				<label for="nombre">Nombre de usuario</label>
 				<!-- Etiqueta que emplea Bootstrap para mostrar mensajes en pequeño. Se
@@ -53,5 +51,4 @@
 		</form>
 	</div>
 </main>
-
-<%@include file="../includes/footer.jsp"%>
+<%@include file="../../includes/footer.jsp"%>
