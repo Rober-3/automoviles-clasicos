@@ -1,5 +1,4 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -10,10 +9,8 @@
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-
 <!-- CSS personalizado -->
 <link rel="stylesheet" href="css/styles.css?d=<%=System.currentTimeMillis()%>">
 
@@ -37,7 +34,6 @@
 						   class="form-control"
 						   placeholder="Introduce tu nombre de usuario">
 				</div>
-
 				<!-- value="${sessionScope.usuario.contrasena}" -->
 				<div class="form-group">
 					<label for="contrasena">Contraseña</label>
@@ -46,16 +42,16 @@
 						   name="contrasena"
 						   class="form-control"
 						   placeholder="Introduce tu contraseña">
-
+						   
 					<!-- Muestra u oculta la contraseña al pulsar el icono del ojo en el formulario. -->
 					<i class="fas fa-eye" onclick="showHidePass('contrasena')"></i>
 				</div>
-				
 				<button type="submit" class="btn btn-primary">Iniciar sesión</button>
+				<!-- onClick sacado de internet. -->
+				<button type="button" class="btn btn-danger" onClick="window.parent.location='inicio'">Cancelar</button>
 			</form>
-			<p class="mt-3"><a href="views/registro.jsp" class="mt-3">Registro de usuario</a></p>
+			<p class="mt-3"><a href="views/public/registro.jsp" class="mt-3">Registro de usuario</a></p>
 			<!-- <a href="usuario?id=0">Registro de usuario</a> -->
 		</div>
 	</main>
-
-<%@include file="../includes/footer.jsp"%>
+<%@include file="../../includes/footer.jsp"%>
