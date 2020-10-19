@@ -1,7 +1,5 @@
 package robert.bermudez.rodriguez.modelo.dao;
 
-import java.sql.SQLException;
-
 // TODO Notas: interface que extiende de CrudAble y que contiene métodos adicionales a los métodos CRUD básicos.
 //			   En esta interface la C de CrudAble, que es una clase genérica, se ha sustituido por la clase Clasico.
 
@@ -9,6 +7,8 @@ import java.util.ArrayList;
 
 import robert.bermudez.rodriguez.interfaces.CrudAble;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
+import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
+import robert.bermudez.rodriguez.modelo.pojo.EstadisticasMarca;
 import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
 
 
@@ -21,8 +21,7 @@ import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
  */
 public interface ClasicoDAO extends CrudAble<Clasico>  {
 	
-	
-	ArrayList<Clasico> getAllSinValidar() throws Exception;
+	ArrayList<Clasico> getAllValidation(boolean validado) throws Exception;
 	
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) con un nombre determinado.
@@ -51,6 +50,8 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	ArrayList<Clasico> getLast (int numReg);
 	
+	ArrayList<Clasico> getAleatory() throws Exception;
+	
 	/**
 	 * Obtiene de la base de datos datos estadisticos de un usuario determinado.
 	 * 
@@ -59,9 +60,9 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	ResumenUsuario getResumenUsuario (int idUsuario);
 	
+	EstadisticasClasico getAllEstadisticasClasicos ();
 	
-	ArrayList<Clasico> getThree() throws Exception;
-	
+	EstadisticasMarca getAllEstadisticasMarcas();
 	
 	/**
 	 * Permite al administrador aprobar un modelo (objeto de tipo Clasico) registrado por un usuario, añadiendo
@@ -69,7 +70,7 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * 
 	 * @param idModelo (int) Id del modelo a aprobar.
 	 */
-	void validar (int idModelo);
+	void validate (int idModelo);
 	
 	
 	
@@ -92,6 +93,8 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	Clasico getByIdByUser (int idModelo, int idUsuario) throws SeguridadException, Exception;
 	
+	ArrayList<Clasico> getAllByUser (int idUsuario) throws Exception;
+	
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) que han sido registrados por
 	 * un usuario, por medio del id de dicho usuario y estén aprobados o no por el administrador.
@@ -101,7 +104,7 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * los pendientes de aprobación.
 	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
-	ArrayList<Clasico> getAllByUser (int idUsuario, boolean validado);
+	ArrayList<Clasico> getAllByUserValidation (int idUsuario, boolean validado);
 	
 	Clasico updateByUser (Clasico pojo) throws SeguridadException, Exception;
 	
