@@ -17,7 +17,7 @@ import javax.servlet.annotation.WebListener;
 
 import org.apache.log4j.Logger;
 
-import robert.bermudez.rodriguez.controller.Alerta;
+import robert.bermudez.rodriguez.controller.publico.Alerta;
 import robert.bermudez.rodriguez.modelo.daoimpl.MarcaDAOImpl;
 
 /**

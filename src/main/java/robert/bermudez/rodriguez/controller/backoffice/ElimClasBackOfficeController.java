@@ -10,17 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import robert.bermudez.rodriguez.controller.Alerta;
+import robert.bermudez.rodriguez.controller.publico.Alerta;
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 
-@WebServlet("/views/backoffice/eliminar")
-public class EliminarBackOfficeController extends HttpServlet {
+@WebServlet("/views/backoffice/eliminar-clasico")
+public class ElimClasBackOfficeController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(EliminarBackOfficeController.class);
+	private static final Logger LOG = Logger.getLogger(ElimClasBackOfficeController.class);
 	private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

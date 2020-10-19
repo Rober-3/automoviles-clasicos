@@ -15,12 +15,12 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.log4j.Logger;
 
+import robert.bermudez.rodriguez.controller.publico.Alerta;
 import robert.bermudez.rodriguez.modelo.dao.SeguridadException;
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.Marca;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
-import robert.bermudez.rodriguez.controller.Alerta;
 
 @WebServlet("/views/frontoffice/insertar")
 public class InsertarFrontOfficeController extends HttpServlet {

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import robert.bermudez.rodriguez.controller.Alerta;
+import robert.bermudez.rodriguez.controller.publico.Alerta;
 import robert.bermudez.rodriguez.modelo.dao.SeguridadException;
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
