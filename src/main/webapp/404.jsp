@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isErrorPage="true"%> <!-- Directiva para indicar que es una página de error. -->
 
-<jsp:include page="includes/header.jsp">
+<jsp:include page="includes/head.jsp">
 	<jsp:param name="pagina" value="404" />
 	<jsp:param name="title" value="404" />
 </jsp:include>

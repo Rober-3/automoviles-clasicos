@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<jsp:include page="../../includes/header.jsp">
+<jsp:include page="../../includes/head.jsp">
 	<jsp:param name="pagina" value="login" />
 	<jsp:param name="title" value="login" />
 </jsp:include>

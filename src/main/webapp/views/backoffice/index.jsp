@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="../../includes/office-header.jsp">
+<jsp:include page="../../includes/office-head.jsp">
 	<jsp:param name="pagina" value="Indice backoffice" />
 	<jsp:param name="title" value="Indice backoffice" />
 </jsp:include>
