@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import robert.bermudez.rodriguez.controller.frontoffice.InicioFrontOfficeController;
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.modelo.daoimpl.MarcaDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasMarca;
 
@@ -25,7 +26,8 @@ public class InicioBackOfficeController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(InicioFrontOfficeController.class);
-    private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
+    private static final ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
+    private static final MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
 
 	/**
 	 * Dirige a la pantalla de inicio del backoffice.
@@ -37,8 +39,9 @@ public class InicioBackOfficeController extends HttpServlet {
 
 		LOG.trace("Panel de inicio.");
 		
-		EstadisticasClasico estadisticasClasicos = dao.getAllEstadisticasClasicos();
-		EstadisticasMarca estadisticasMarcas = dao.getAllEstadisticasMarcas();
+		EstadisticasClasico estadisticasClasicos = daoClasico.getAllEstadisticasClasicos();
+		EstadisticasMarca estadisticasMarcas = daoMarca.getBrandStatistics();
+		String encabezado = "Mi panel";
 		
 		// Cuidado con la URL del servlet ("/views/frontoffice/inicio") ya que al hacer forward se sustitituye la última
 		// parte (inicio) por la variable pagina (ver más abajo).
@@ -50,6 +53,7 @@ public class InicioBackOfficeController extends HttpServlet {
 
 		request.setAttribute("estadisticasClasicos", estadisticasClasicos);
 		request.setAttribute("estadisticasMarcas", estadisticasMarcas);
+		request.setAttribute("encabezado", encabezado );
 		request.getRequestDispatcher(pagina).forward(request, response);
 
 	} // doGet
