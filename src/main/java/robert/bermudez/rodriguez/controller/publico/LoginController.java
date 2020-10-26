@@ -80,11 +80,11 @@ public class LoginController extends HttpServlet {
 
 			// En función del valor del atributo de Rol(ADMINISTRADOR o USUARIO) redirige al backoffice o al frontoffice.
 			if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
-				ruta = "views/backoffice/inicio";
+				ruta = "views/backoffice/inicio"; // InicioBackOfficeController
 
 			} else {
 				// ruta = "views/frontoffice/index.jsp"; // Si inicia sesión un usuario normal tiene que pasar por un controlador
-				ruta = "views/frontoffice/inicio";
+				ruta = "views/frontoffice/inicio"; // InicioFrontOfficeController
 			}
 
 			request.setAttribute("alerta", alerta);
