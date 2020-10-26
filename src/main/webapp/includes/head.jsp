@@ -2,41 +2,40 @@
 <%@page import="java.util.ArrayList"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html lang="es">
 
-<!-- Si en una de las páginas hay un enlace css de más, incluirlo en la cabecera aunque las demás páginas
-	 no lo usen. Es mucho más práctico hacerlo así que hacer una cabecera específica para cada página.-->
+	<!-- Si en una de las páginas hay un enlace css de más, incluirlo en la cabecera aunque las demás páginas
+		 no lo usen. Es mucho más práctico hacerlo así que hacer una cabecera específica para cada página.-->
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Todas las rutas relativas que se carguen en el front comenzarán por el href indicado, es decir, 
-    el nombre del proyecto. Haciendo este cambio no será necesario el ../../ para salta carpetas. Todas
-    las rutas se compondrán de la raíz del proyecto hacia delante.-->
-<!-- <base href="http://localhost:8080/automoviles-clasicos/" /> -->
+		<!-- Todas las rutas relativas que se carguen en el front comenzarán por el href indicado, es decir,
+		     el nombre del proyecto. Haciendo este cambio no será necesario el ../../ para saltar carpetas.
+		     Todas las rutas se compondrán de la raíz del proyecto hacia delante.-->
+		<!-- <base href="http://localhost:8080/automoviles-clasicos/" /> -->
 
-<!-- Si se cambia la ruta del proyecto lo anterior no funciona, así que para hacerlo dinámico habrá que
-    usar esta línea. Así, todas las URL del proyecto comenzarán con contextPath. El valor de éste será el 
-    contexto o nombre de la aplicación, que en este caso será automoviles-clasicos. -->
-<base href="${pageContext.request.contextPath}/" />
+		<!-- Si se cambia la ruta del proyecto lo anterior no funciona, así que para hacerlo dinámico habrá que
+		     usar esta línea. Así, todas las URL del proyecto comenzarán con contextPath. El valor de éste será
+		     el contexto o nombre de la aplicación, que en este caso será automoviles-clasicos. -->
+		<base href="${pageContext.request.contextPath}/" />
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-<!-- Datatables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<!-- CSS personalizado -->
-<!-- <link rel="stylesheet" href="css/styles.css"> -->
-<!-- System.currentTimeMillis()% obliga a cargar siempre el CSS. -->
-<link rel="stylesheet" href="css/styles.css?d=<%=System.currentTimeMillis()%>">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+		<!-- Datatables CSS -->
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+		<!-- CSS personalizado -->
+		<!-- <link rel="stylesheet" href="css/styles.css"> -->
+		<!-- System.currentTimeMillis()% obliga a cargar siempre el CSS. -->
+		<link rel="stylesheet" href="css/my-styles.css?d=<%=System.currentTimeMillis()%>">
 
-<!-- <title>title%></title> Para presentar el título de esta manera hay que utilizar el include sin parámetros.  -->
-<title>${param.title}</title>
-</head>
+		<!-- <title>title%></title> Para presentar el título de esta manera hay que utilizar el include sin parámetros.  -->
+		<title>${param.title}</title>
+		</head>
 <body>
 	<header>
 		<!-- Barra de navegación -->
