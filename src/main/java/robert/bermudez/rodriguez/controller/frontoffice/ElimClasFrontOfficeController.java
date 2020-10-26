@@ -16,21 +16,14 @@ import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
-/**
- * Servlet implementation class EliminarFrontOfficeController
- */
-@WebServlet("/views/frontoffice/eliminar")
-public class EliminarFrontOfficeController extends HttpServlet {
+@WebServlet("/views/frontoffice/eliminar-clasico")
+public class ElimClasFrontOfficeController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(EliminarFrontOfficeController.class);
+	private static final Logger LOG = Logger.getLogger(ElimClasFrontOfficeController.class);
 	private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
        
 	
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Clasico clasico = new Clasico();
@@ -68,15 +61,5 @@ public class EliminarFrontOfficeController extends HttpServlet {
 		} // try-catch-finally
 		
 	} // doGet
-
-	
-	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
-	}
 
 } // class
