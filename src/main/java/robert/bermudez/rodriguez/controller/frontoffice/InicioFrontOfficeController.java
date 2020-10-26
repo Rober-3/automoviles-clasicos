@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
-import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
+import robert.bermudez.rodriguez.modelo.pojo.ClasicosUsuario;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 /**
@@ -22,7 +22,7 @@ public class InicioFrontOfficeController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(InicioFrontOfficeController.class);
-    private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
+    private static final ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
 	
 	
 	/**
@@ -50,7 +50,7 @@ public class InicioFrontOfficeController extends HttpServlet {
 		
 		
 		// Recuperar los datos del usuario (clásicos totales, validados y pendientes de aprobación) usando vistas.
-		ResumenUsuario resumenUsuario = dao.getResumenUsuario(idUsuario);
+		ClasicosUsuario resumenUsuario = daoClasico.getUserSummary(idUsuario);
 		
 		// Establecer el atributo de index.jsp del frontoffice.
 		request.setAttribute("resumenUsuario", resumenUsuario);
