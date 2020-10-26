@@ -92,7 +92,7 @@ public class ClasicosFrontOfficeController extends HttpServlet {
 			int idUsuario = usuario.getId();
 
 			if (validados != null && total != null) {
-				encabezado = "Clásicos pendientes de aprobación";
+				encabezado = "Clásicos sin validar";
 				clasicos = dao.getAllByUserValidation(idUsuario, false);
 				request.setAttribute("validados", validados);
 					
