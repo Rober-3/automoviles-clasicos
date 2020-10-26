@@ -1,31 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <jsp:include page="../../includes/office-head.jsp">
-	<jsp:param name="pagina" value="Mi panel" />
-	<jsp:param name="title" value="Mi panel" />
+	<jsp:param name="pagina" value="Indice frontoffice" />
+	<jsp:param name="title" value="Indice frontoffice" />
 </jsp:include>
 <jsp:include page="../../includes/office-navbar-usuario.jsp" />
-
 <!-- Contenido principal -->
 <div id="layoutSidenav_content">
 	<main>
+		<h3 class="text-center">Estadísticas</h3>
 		<div class="container-fluid pt-3">
-			<h3>Mis clásicos</h3>
+			<ol class="breadcrumb mb-3">
+				<li class="breadcrumb-item active">Mis clásicos</li>
+			</ol>
 			<div class="row">
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-info text-white mb-4">
 						<div class="card-body">Total de clásicos: 
-						
-							<!--InicioFrontOfficeController -->
-							<span class="numero">${resumenUsuario.clasicosTotales}</span>
+							<span class="numero">${resumenUsuario.clasicosTotal}</span> <!--InicioFrontOfficeController -->
 						</div>
 						<div class="card-footer d-flex align-items-center justify-content-between">
-							
-							<!-- ClasicosFrontOfficeController -->
-							<a class="small text-white stretched-link"
-							   href="views/frontoffice/clasicos">Ver detalles</a>
-							   
+							<a class="small text-white stretched-link" href="views/frontoffice/clasicos">Ver detalles</a> <!-- ClasicosFrontOfficeController -->
 							<div class="small text-white">
 								<i class="fas fa-angle-right"></i>
 							</div>
@@ -35,15 +30,10 @@
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-success text-white mb-4">
 						<div class="card-body">Clásicos publicados:
-						
-							<!--InicioFrontOfficeController -->
-							<span class="numero">${resumenUsuario.clasicosAprobados}</span>
+							<span class="numero">${resumenUsuario.clasicosAprobados}</span> <!--InicioFrontOfficeController -->
 						</div>
-						<div class="card-footer d-flex align-items-center justify-content-between">
-							
-							<!-- ClasicosFrontOfficeController -->
-							<a class="small text-white stretched-link"
-							   href="views/frontoffice/clasicos?total=no">Ver detalles</a>
+						<div class="card-footer d-flex align-items-center justify-content-between">	
+							<a class="small text-white stretched-link" href="views/frontoffice/clasicos?total=no">Ver detalles</a> <!-- ClasicosFrontOfficeController -->
 							<div class="small text-white">
 								<i class="fas fa-angle-right"></i>
 							</div>
@@ -52,16 +42,11 @@
 				</div>
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-warning text-white mb-4">
-						<div class="card-body">Clásicos pendientes de aprobar:
-						
-							<!--InicioFrontOfficeController -->
-							<span class="numero">${resumenUsuario.clasicosPendientes}</span>
+						<div class="card-body">Clásicos pendientes de aprobar:	
+							<span class="numero">${resumenUsuario.clasicosPendientes}</span> <!--InicioFrontOfficeController -->
 						</div>
-						<div class="card-footer d-flex align-items-center justify-content-between">
-							
-							<!-- ClasicosFrontOfficeController -->
-							<a class="small text-white stretched-link"
-							   href="views/frontoffice/clasicos?validados=no&total=no">Ver detalles</a>
+						<div class="card-footer d-flex align-items-center justify-content-between">			
+							<a class="small text-white stretched-link" href="views/frontoffice/clasicos?validados=no&total=no">Ver detalles</a> <!-- ClasicosFrontOfficeController -->
 							<div class="small text-white">
 								<i class="fas fa-angle-right"></i>
 							</div>
@@ -69,11 +54,35 @@
 					</div>
 				</div>
 			</div>
-			<h3>Mi perfil</h3>
-			<div class="row"> <!-- LoginController -->
-				Nombre de usuario: ${usuario.nombre}<br>
-				Contraseña: ${usuario.contrasena}<br>
-				Foto de perfil: ${usuario.imagen}
+			
+			<ol class="breadcrumb mb-3">
+				<li class="breadcrumb-item active">Mis marcas</li>
+			</ol>
+			
+			<div class="row mt-5">
+				<h3 class="col text-center">Mi perfil</h3>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="table-responsive">
+						<table class="table" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<th>Nombre</th>
+									<th>Contraseña</th>
+									<th>Foto</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr> <!-- LoginController -->
+									<td>${usuario.nombre}</td>
+									<td>${usuario.contrasena}</td>
+									<td>${usuario.imagen}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>
