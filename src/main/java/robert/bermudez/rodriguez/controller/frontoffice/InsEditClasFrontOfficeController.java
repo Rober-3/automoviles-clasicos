@@ -22,11 +22,11 @@ import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.Marca;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
-@WebServlet("/views/frontoffice/insertar")
-public class InsertarFrontOfficeController extends HttpServlet {
+@WebServlet("/views/frontoffice/insertar-editar-clasico")
+public class InsEditClasFrontOfficeController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(InsertarFrontOfficeController.class);
+	private static final Logger LOG = Logger.getLogger(InsEditClasFrontOfficeController.class);
 	private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	private static Validator validator = factory.getValidator();
@@ -34,10 +34,10 @@ public class InsertarFrontOfficeController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String id = request.getParameter("id"); // Recogida de parámetros de clasicos.jsp del frontoffice.
 		Clasico clasico = new Clasico();
 		Usuario usuario = new Usuario();
 		Alerta alerta = new Alerta();
+		String id = request.getParameter("id"); // Recogida de parámetros de clasicos.jsp del frontoffice.
 		
 		try {
 			
