@@ -24,34 +24,16 @@ public class MarcasBackOfficeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     	ArrayList<Marca> marcas = new ArrayList<Marca>();
-		String encabezado = "";
-		
-		// Recogida de parámetros de office-navbar-admin.jsp
-		String validadas = request.getParameter("validadas");
-		String total = request.getParameter("total");
 		
 		try {
-			
-			if (validadas != null && total != null) {
-				encabezado = "Marcas pendientes de aprobar";
-				marcas = dao.getAllSinValidar();
-				request.setAttribute("validadas", validadas);
-					
-			} else if (validadas == null && total != null) {
-				encabezado = "Marcas aprobadas";
-				marcas = dao.getAllValidadas();
-				
-			} else {
-				encabezado = "Total de marcas";
-				marcas = dao.getAll();
-			}
+			marcas = dao.getAll();
 			
 		} catch (Exception e) {
 			LOG.error(e);
 			
 		} finally {
 			request.setAttribute("marcas", marcas);
-			request.setAttribute("encabezado", encabezado);
+			request.setAttribute("encabezado", "Total de marcas");
 			request.getRequestDispatcher("marcas.jsp").forward(request, response); // backoffice/marcas.jsp
 		}
 		
