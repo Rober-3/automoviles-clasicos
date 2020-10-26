@@ -26,7 +26,7 @@ public class ElimClasBackOfficeController extends HttpServlet {
 		Clasico clasico = new Clasico();
 		Alerta alerta = new Alerta();
 
-		String id = request.getParameter("id"); // backoffice/clasicos.jsp
+		String id = request.getParameter("id"); // views/backoffice/clasicos.jsp
 
 		try {
 
