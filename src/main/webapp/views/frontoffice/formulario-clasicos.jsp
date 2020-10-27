@@ -6,17 +6,17 @@
 </jsp:include>
 <jsp:include page="../../includes/office-navbar-usuario.jsp" />
 <main class="container mt-2">
-	<div class="formularioclasicos">
-		<h3 class="my-5 text-center">Nuevo clásico / Editar clásico</h3>
+	<div class="formulario container shadow-lg p-3 mb-5 bg-white rounded">
+		<h3 class="my-3 text-center">${encabezado}</h3> <!-- InsEditClasFrontOfficeController -->
 		<!-- Formulario -->
-		<form action="views/frontoffice/insertar-editar-clasico" method="post" class="mt-3 font-weight-bold"> <!-- InsEditClasFrontOfficeController -->
+		<form action="views/frontoffice/insertar-editar-clasico" method="post" class="mt-3 px-3 font-weight-bold"> <!-- InsEditClasFrontOfficeController -->
 			<div class="form-group">
 				<label for="id">Id:</label>
 				<input type="text" 
 					   id="id"
 					   name="id"
 					   value="${clasico.id}"
-					   class="form-control form-control-sm"
+					   class="form-control"
 					   readonly>
 			</div>
 			<div class="form-group">
@@ -25,7 +25,7 @@
 					   id="modelo"
 					   name="modelo"
 					   value="${clasico.modelo}" 
-					   class="form-control form-control-sm"
+					   class="form-control"
 					   placeholder="El modelo debe tener entre 3 y 50 caracteres y no estar repetido.">
 			</div>
 			<div class="form-group">
@@ -46,7 +46,7 @@
 					   id="anio"
 					   name="anio"
 					   value="${clasico.anio}"
-					   class="form-control form-control-sm">
+					   class="form-control">
 			</div>
 			<div class="form-group">
 				<label for="foto">Foto:</label>
@@ -54,11 +54,11 @@
 					   id="foto"
 					   name="foto"
 					   value="${clasico.foto}"
-					   class="form-control form-control-sm"
+					   class="form-control"
 					   placeholder="Introduce la URL de la foto.">
 			</div>
-			<div >
-				<button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+			<div class="form-group d-flex align-items-center justify-content-end pt-3">
+				<button type="submit" class="btn btn-success">Guardar</button>
 			</div>
 		</form>
 	</div>
