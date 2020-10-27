@@ -24,7 +24,7 @@
 						<td class="align-middle">
 							<a href="/views/backoffice/insertar-editar-marca?id=${m.id}"> <!-- InsEditMarcaBackOfficeController -->
 							<i class="fas fa-edit fa-1x mx-2 align-middle" title="Editar"></i></a>
-							<a href="views/backoffice/eliminar-marca?id=${m.id}" onclick="confirmar('${m.marca}')"> <!-- ElimMarcaBackOfficeController -->
+							<a href="/views/backoffice/eliminar-marca?id=${m.id}" onclick="confirmar('${m.marca}')"> <!-- ElimMarcaBackOfficeController -->
 							<i class="fas fa-trash fa-1x mx-2" title="Eliminar"></i></a>
 						</td>
 					</tr>

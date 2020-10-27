@@ -30,7 +30,7 @@
 						<td class="align-middle"><img src="${c.foto}"class="miniatura img-thumbnail" alt="foto"></td>
 						<td class="align-middle">
 							<% // Se pasa el id del clásico a editar, eliminar o validar como parámetro en la URL. %>
-							<a href="/views/backoffice/insertar-editar-clasico?id=${c.id}"> <!-- InsEditClasBackOfficeController -->
+							<a href="views/backoffice/insertar-editar-clasico?id=${c.id}"> <!-- InsEditClasBackOfficeController -->
 							<i class="fas fa-edit fa-1x mx-2 align-middle" title="Editar"></i></a>
 							<!-- El evento confirmar ejecuta un script de JavaScript para confirmar la eliminación de un modelo. custom-office.js -->
 							<a href="views/backoffice/eliminar-clasico?id=${c.id}" onclick="confirmar('${c.modelo}')"> <!-- ElimClasBackOfficeController -->
