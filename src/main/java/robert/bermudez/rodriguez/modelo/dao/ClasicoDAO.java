@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import robert.bermudez.rodriguez.interfaces.CrudAble;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
-import robert.bermudez.rodriguez.modelo.pojo.EstadisticasMarca;
-import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
+import robert.bermudez.rodriguez.modelo.pojo.ClasicosUsuario;
 
 
 /**
@@ -21,7 +20,7 @@ import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
  */
 public interface ClasicoDAO extends CrudAble<Clasico>  {
 	
-	ArrayList<Clasico> getAllValidation(boolean validado) throws Exception;
+	ArrayList<Clasico> getAllValidation(boolean validados) throws Exception;
 	
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) con un nombre determinado.
@@ -58,11 +57,9 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @param idUsuario (int) Id del usuario.
 	 * @return ResumenUsuario (Objeto ResumenUsuario) Datos del usuario.
 	 */
-	ResumenUsuario getResumenUsuario (int idUsuario);
+	ClasicosUsuario getUserSummary(int idUsuario);
 	
 	EstadisticasClasico getAllEstadisticasClasicos ();
-	
-	EstadisticasMarca getAllEstadisticasMarcas();
 	
 	/**
 	 * Permite al administrador aprobar un modelo (objeto de tipo Clasico) registrado por un usuario, añadiendo
@@ -104,7 +101,7 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * los pendientes de aprobación.
 	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
-	ArrayList<Clasico> getAllByUserValidation (int idUsuario, boolean validado);
+	ArrayList<Clasico> getAllByUserValidation (int idUsuario, boolean validados);
 	
 	Clasico updateByUser (Clasico pojo) throws SeguridadException, Exception;
 	

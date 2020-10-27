@@ -17,9 +17,8 @@ import robert.bermudez.rodriguez.modelo.dao.ClasicoDAO;
 import robert.bermudez.rodriguez.modelo.dao.SeguridadException;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
-import robert.bermudez.rodriguez.modelo.pojo.EstadisticasMarca;
 import robert.bermudez.rodriguez.modelo.pojo.Marca;
-import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
+import robert.bermudez.rodriguez.modelo.pojo.ClasicosUsuario;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 /**
@@ -94,8 +93,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 	private static final String SQL_GET_RESUMEN_USUARIO = "SELECT id_usuario, total, aprobados, pendientes FROM v_clasicos_usuario WHERE id_usuario = ?;";
 	private static final String SQL_GET_ALL_ESTADISTICAS_CLASICOS = "SELECT total, aprobados, pendientes FROM v_estadisticas_clasicos;";
-	private static final String SQL_GET_ALL_ESTADISTICAS_MARCAS = "SELECT total, aprobadas, pendientes FROM v_estadisticas_marcas;";
-
+	
 	// executeUpdate devuelve un int que representa el número de filas afectadas.
 	private static final String SQL_INSERT =	     "INSERT INTO clasicos (modelo, id_marca, anio, foto, id_usuario) VALUES (?, ?, ?, ?, ?);";
 	private static final String SQL_UPDATE =		 "UPDATE clasicos SET modelo = ?, id_marca = ?, anio = ?, foto = ? WHERE id = ?;";
@@ -210,10 +208,10 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
 	@Override
-	public ArrayList<Clasico> getAllValidation(boolean validado) throws Exception {
+	public ArrayList<Clasico> getAllValidation(boolean validados) throws Exception {
 
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
-		String query = validado ? SQL_GET_ALL_VALIDADOS : SQL_GET_ALL_SIN_VALIDAR;
+		String query = validados ? SQL_GET_ALL_VALIDADOS : SQL_GET_ALL_SIN_VALIDAR;
 
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(query);
@@ -258,10 +256,10 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 
 	@Override
-	public ArrayList<Clasico> getAllByUserValidation(int idUsuario, boolean validado) {
+	public ArrayList<Clasico> getAllByUserValidation(int idUsuario, boolean validados) {
 
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
-		String query = validado ? SQL_GET_ALL_BY_USER_VALIDADOS : SQL_GET_ALL_BY_USER_SIN_VALIDAR;
+		String query = validados ? SQL_GET_ALL_BY_USER_VALIDADOS : SQL_GET_ALL_BY_USER_SIN_VALIDAR;
 
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(query);
@@ -400,9 +398,9 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 
 	@Override
-	public ResumenUsuario getResumenUsuario(int idUsuario) {
+	public ClasicosUsuario getUserSummary(int idUsuario) {
 
-		ResumenUsuario resumenUsuario = new ResumenUsuario();
+		ClasicosUsuario resumenUsuario = new ClasicosUsuario();
 
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_GET_RESUMEN_USUARIO);
@@ -454,33 +452,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		}
 
 		return estadisticasClasicos;
-
-	} // getAllEstadisticasClasicos
-
-
-	@Override
-	public EstadisticasMarca getAllEstadisticasMarcas() {
-
-		EstadisticasMarca estadisticasMarcas = new EstadisticasMarca();
-
-		try (	Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_GET_ALL_ESTADISTICAS_MARCAS);
-				ResultSet rs = pst.executeQuery()
-				) {
-
-			LOG.debug(pst);
-
-			while (rs.next()) { 
-				estadisticasMarcas.setTotal(rs.getInt("total"));
-				estadisticasMarcas.setAprobadas(rs.getInt("aprobadas"));
-				estadisticasMarcas.setPendientes(rs.getInt("pendientes"));
-			}
-
-		} catch (Exception e) {
-			LOG.error(e);	
-		}
-
-		return estadisticasMarcas;
 
 	} // getAllEstadisticasClasicos
 
