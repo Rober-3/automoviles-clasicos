@@ -19,8 +19,7 @@ public class Clasico {
 	@NotEmpty(message = ": este campo no puede quedar vacío")
 	private String foto;
 	
-	// Usuario que ha registrado el clásico.
-	private Usuario usuario;
+	private Usuario usuario; // Usuario que ha registrado el clásico.
 
 	public Clasico() {
 		this.id = 0;
