@@ -51,7 +51,7 @@ public class MarcaDAOImpl implements MarcaDAO {
 															"AND u.id = m.id_usuario " +
 															"AND c.fecha_validacion IS NOT NULL " +
 															"ORDER BY marca ASC";
-	private static final String SQL_GET_BRAND_STATISTICS =	"SELECT total, aprobadas, pendientes FROM v_estadisticas_marcas;";
+	private static final String SQL_GET_BRAND_STATISTICS =	"SELECT total FROM v_estadisticas_marcas;";
 
 	
 	// executeUpdate devuelve un int que representa el número de filas afectadas.
@@ -191,8 +191,6 @@ public class MarcaDAOImpl implements MarcaDAO {
 
 			while (rs.next()) { 
 				estadisticasMarcas.setTotal(rs.getInt("total"));
-				estadisticasMarcas.setAprobadas(rs.getInt("aprobadas"));
-				estadisticasMarcas.setPendientes(rs.getInt("pendientes"));
 			}
 
 		} catch (Exception e) {
