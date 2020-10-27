@@ -52,7 +52,7 @@
 						<div class="collapse" id="collapseClasicos" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
 								<!-- ClasicosBackOfficeController -->
-								<a class="nav-link" href="views/backoffice/clasicos">Total</a>
+								<a class="nav-link" href="views/backoffice/clasicos">Lista</a>
 								<a class="nav-link" href="views/backoffice/clasicos?validados=no&total=no">Pendientes</a>
 								<a class="nav-link" href="views/backoffice/clasicos?total=no">Publicados</a>
 							</nav>
@@ -69,7 +69,7 @@
 							aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
 								<!-- MarcasBackOfficeController -->
-								<a class="nav-link" href="views/backoffice/marcas">Total</a>
+								<a class="nav-link" href="views/backoffice/marcas">Lista</a>
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
@@ -85,6 +85,16 @@
 								<a class="nav-link" href="views/backoffice/usuarios">Lista</a> <!-- UsuariosBackOfficeController -->
 							</nav>
 						</div>
+						<a class="nav-link" href="views/backoffice/insertar-editar-clasico?id=0"> <!-- InsEditClasBackOfficeController -->
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-plus"></i>
+							</div> Insertar clásico
+						</a>
+						<a class="nav-link" href="views/backoffice/insertar-editar-marca"> <!-- InsEditMarcaBackOfficeController -->
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-plus"></i>
+							</div> Insertar marca
+						</a>
 						<!-- Eliminado por carecer de utilidad.
 						<a class="nav-link" href="views/backoffice/migracion">  MigracionBackOfficeController 
 							<div class="sb-nav-link-icon">
