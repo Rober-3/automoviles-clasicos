@@ -65,6 +65,7 @@ public class InicioAppListener implements ServletContextListener {
 		
 		try {
 			contextoAplicación.setAttribute("marcas", marcaDao.getAll());
+			LOG.info("Cargadas las marcas.");
 			
 		} catch (Exception e) {
 			LOG.fatal(e);
