@@ -3,11 +3,12 @@
 	<jsp:param name="pagina" value="Formulario marcas" />
 	<jsp:param name="title" value="Formulario marcas" />
 </jsp:include>
-<main>
-	<div class="container my-5 bg-light formulariomarcas">
-		<h3 class="my-5 text-center">Nueva marca / Editar marca</h3>
+<jsp:include page="../../includes/office-navbar-admin.jsp" />
+<main class="container mt-2">
+	<div class="formulario container shadow-lg p-3 mb-5 bg-white rounded">
+		<h3 class="my-3 text-center">${encabezado}</h3> <!-- InsEditMarcaBackOfficeController -->
 		<!-- Formulario -->
-		<form action="views/backoffice/insertar-editar-marca" method="post" class="mt-3 font-weight-bold"> <!-- InsEditMarcaBackOfficeController -->
+		<form action="views/backoffice/insertar-editar-marca" method="post" class="mt-3 px-3 font-weight-bold"> <!-- InsEditMarcaBackOfficeController -->
 			<div class="form-group">
 				<label for="id">Id:</label>
 				<input type="text" 
@@ -26,8 +27,8 @@
 					   class="form-control"
 					   placeholder="Introduce el nombre de la marca.">
 			</div>
-			<div >
-				<button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+			<div class="form-group d-flex align-items-center justify-content-end pt-3">
+				<button type="submit" class="btn btn-success">Guardar</button>
 			</div>
 		</form>
 	</div>
