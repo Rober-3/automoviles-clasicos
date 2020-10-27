@@ -1,20 +1,20 @@
 package robert.bermudez.rodriguez.interfaces;
 
 // TODO Notas: Crudable, interface que contiene los métodos CRUD básicos.
-// C es una clase genérica que puede ser sustituída por cualquier otra.
+// P es una clase genérica que puede ser sustituída por cualquier otra.
 
 import java.util.ArrayList;
 
-public interface CrudAble<C> {
+public interface CrudAble<P> {
 	
-	C getById(int idModelo) throws Exception;
+	P getById(int idPojo) throws Exception;
 	
-	ArrayList<C> getAll() throws Exception;
+	ArrayList<P> getAll() throws Exception;
 	
-	C insert(C pojo) throws Exception;
+	P insert(P pojo) throws Exception;
 	
-	C update(C pojo) throws Exception;
+	P update(P pojo) throws Exception;
 	
-	C delete(int idModelo) throws Exception;
+	P delete(int idPojo) throws Exception;
 
 }
