@@ -101,7 +101,7 @@ public class ClasicosFrontOfficeController extends HttpServlet {
 				clasicos = dao.getAllByUserValidation(idUsuario, true);
 				
 			} else {
-				encabezado = "Total de clásicos";
+				encabezado = "Lista";
 				clasicos = dao.getAllByUser(idUsuario);
 			}
 			
