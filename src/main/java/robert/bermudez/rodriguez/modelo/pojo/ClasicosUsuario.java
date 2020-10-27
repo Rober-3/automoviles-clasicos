@@ -10,14 +10,14 @@ package robert.bermudez.rodriguez.modelo.pojo;
  * - clásicos pendientes de aprobación<br><br>
  * Los consigue mediante una consulta a la base de datos.
  */
-public class ResumenUsuario {
+public class ClasicosUsuario {
 	
 	private int idUsuario;
-	private int clasicosTotales;
+	private int clasicosTotal;
 	private int clasicosAprobados;
 	private int clasicosPendientes;
 	
-	public ResumenUsuario() {
+	public ClasicosUsuario() {
 		super();
 	}
 
@@ -29,12 +29,12 @@ public class ResumenUsuario {
 		this.idUsuario = idUsuario;
 	}
 
-	public int getClasicosTotales() {
-		return clasicosTotales;
+	public int getClasicosTotal() {
+		return clasicosTotal;
 	}
 
-	public void setClasicosTotal(int clasicosTotales) {
-		this.clasicosTotales = clasicosTotales;
+	public void setClasicosTotal(int clasicosTotal) {
+		this.clasicosTotal = clasicosTotal;
 	}
 
 	public int getClasicosAprobados() {
@@ -55,7 +55,7 @@ public class ResumenUsuario {
 
 	@Override
 	public String toString() {
-		return "ResumenUsuario [idUsuario=" + idUsuario + ", clasicosTotales=" + clasicosTotales + ", clasicosAprobados="
+		return "ClasicosUsuario [idUsuario=" + idUsuario + ", clasicosTotal=" + clasicosTotal + ", clasicosAprobados="
 				+ clasicosAprobados + ", clasicosPendientes=" + clasicosPendientes + "]";
 	}
 
