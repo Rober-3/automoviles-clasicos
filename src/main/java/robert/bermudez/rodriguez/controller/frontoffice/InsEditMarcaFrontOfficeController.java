@@ -15,7 +15,6 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.log4j.Logger;
 
-import robert.bermudez.rodriguez.controller.backoffice.InsEditMarcaBackOfficeController;
 import robert.bermudez.rodriguez.controller.publico.Alerta;
 import robert.bermudez.rodriguez.modelo.daoimpl.MarcaDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Marca;
@@ -33,6 +32,7 @@ public class InsEditMarcaFrontOfficeController extends HttpServlet {
 		
 		Marca marca = new Marca();
 		Alerta alerta = new Alerta();
+		String encabezado = "Nueva marca";
 
 		String id = request.getParameter("id"); // views/frontoffice/marcas.jsp
 
@@ -43,6 +43,7 @@ public class InsEditMarcaFrontOfficeController extends HttpServlet {
 			if (idMarca != 0) {
 				marca = dao.getById(idMarca);
 				alerta = new Alerta("warning", "Modifica los datos de la marca.");
+				encabezado = "Editar marca";
 			}
 
 		} catch (Exception e) {
@@ -51,7 +52,8 @@ public class InsEditMarcaFrontOfficeController extends HttpServlet {
 		} finally {
 			request.setAttribute("marca", marca);
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("views/frontoffice/formulario-marcas.jsp").forward(request, response);
+			request.setAttribute("encabezado", encabezado);
+			request.getRequestDispatcher("formulario-marcas.jsp").forward(request, response);
 		}
 		
 	} // doGet
@@ -112,7 +114,7 @@ public class InsEditMarcaFrontOfficeController extends HttpServlet {
 		} finally {
 			request.setAttribute("marca", marca);
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("views/frontoffice/formulario-marcas.jsp").forward(request, response);
+			request.getRequestDispatcher("formulario-marcas.jsp").forward(request, response);
 		}
 		
 	} // doPost

@@ -31,7 +31,8 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Marca marca = new Marca();
-		Alerta alerta = new Alerta();
+		Alerta alerta = null;
+		String encabezado = "Nueva marca";
 
 		String id = request.getParameter("id"); // views/backoffice/marcas.jsp
 
@@ -42,6 +43,7 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
 			if (idMarca != 0) {
 				marca = dao.getById(idMarca);
 				alerta = new Alerta("warning", "Modifica los datos de la marca.");
+				encabezado = "Editar marca";
 			}
 
 		} catch (Exception e) {
@@ -50,7 +52,8 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
 		} finally {
 			request.setAttribute("marca", marca);
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("views/backoffice/formulario-marcas.jsp").forward(request, response);
+			request.setAttribute("encabezado", encabezado);
+			request.getRequestDispatcher("formulario-marcas.jsp").forward(request, response);
 		}
 
 	} // doGet
@@ -59,7 +62,7 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     	Marca marca = new Marca();
-		Alerta alerta = new Alerta();
+		Alerta alerta = null;
 		
 		// views/backoffice/formulario-marcas.jsp
 		String paramIdMarca = request.getParameter("id");
@@ -107,12 +110,12 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
 
 		} catch (Exception e) {
 			LOG.error(e);
-			alerta = new Alerta ("danger", e.getMessage());
+			alerta = new Alerta ("danger", "Ha habido un problema al guardar la marca.");
 
 		} finally {
 			request.setAttribute("marca", marca);
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("views/backoffice/formulario-marcas.jsp").forward(request, response);
+			request.getRequestDispatcher("formulario-marcas.jsp").forward(request, response);
 		}
 
 	} // doPost

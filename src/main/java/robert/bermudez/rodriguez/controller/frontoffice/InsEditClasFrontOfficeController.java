@@ -36,12 +36,12 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 
 		Clasico clasico = new Clasico();
 		Usuario usuario = new Usuario();
-		Alerta alerta = new Alerta();
-		String id = request.getParameter("id"); // Recogida de parámetros de clasicos.jsp del frontoffice.
+		Alerta alerta = null;
+		String encabezado = "Nuevo clásico";
+		
+		//String id = request.getParameter("id"); // Recogida de parámetros de clasicos.jsp del frontoffice.
 		
 		try {
-			
-			int idModelo = Integer.parseInt(id);
 			
 			usuario = (Usuario) request.getSession().getAttribute("usuario"); // Recuperar el usuario de la sesión.
 			
@@ -53,14 +53,18 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 			
 			int idUsuario = usuario.getId();
 			
-			if (idModelo != 0) {
-				clasico = dao.getByIdByUser(idUsuario, idModelo);
-				alerta = new Alerta("warning", "Modifica los datos del clásico.");
-			}
+//			int idModelo = Integer.parseInt(id);
+//			
+//			if (idModelo != 0) {
+//				
+//				clasico = dao.getByIdByUser(idUsuario, idModelo);
+//				alerta = new Alerta("warning", "Modifica los datos del clásico.");
+//				encabezado = "Editar clásico";
+//			}
 			
 			
-		} catch (SeguridadException e) {
-			LOG.error("Un usuario ha intentado modificar un clásico que no ha registrado: " + usuario);
+//		} catch (SeguridadException e) {
+//			LOG.error("Un usuario ha intentado modificar un clásico que no ha registrado: " + usuario);
 			
 		} catch (Exception e) {
 			LOG.error(e);
@@ -68,6 +72,7 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 		} finally {
 			request.setAttribute("clasico", clasico);
 			request.setAttribute("alerta", alerta);
+			request.setAttribute("encabezado", encabezado);
 			request.getRequestDispatcher("formulario-clasicos.jsp").forward(request, response);
 		}
 		
