@@ -45,7 +45,7 @@ CREATE TABLE `clasicos` (
   KEY `FK_id_usuario` (`id_usuario`),
   CONSTRAINT `FK_id_marca` FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`id`),
   CONSTRAINT `FK_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `clasicos` (
 
 LOCK TABLES `clasicos` WRITE;
 /*!40000 ALTER TABLE `clasicos` DISABLE KEYS */;
-INSERT INTO `clasicos` VALUES (1,'Mustang Fastback',4,1967,'img/FordMustangFastback.jpg','2020-07-13 12:28:38','2020-07-13 12:45:00',1),(2,'Bel Air',1,1957,'img/ChevroletBelAir.JPG','2020-07-13 12:28:38','2020-07-13 12:45:00',1),(3,'Cobra',5,1965,'img/ShelbyCobra.jpg','2020-07-13 12:28:38','2020-07-13 12:45:00',1),(4,'Mercury',4,1951,'img/FordMercury.jpg','2020-07-13 12:28:38','2020-10-08 12:34:09',3),(5,'Fairlane 500 Skyliner',4,1957,'img/FordFairlane500Skyliner.jpg','2020-07-13 12:28:38',NULL,3),(6,'Gran Torino',4,1975,'img/FordGranTorino.JPG','2020-07-13 12:28:38',NULL,3),(7,'Charger 500',3,1970,'img/DodgeCharger500.jpg','2020-07-13 12:28:38','2020-07-13 13:03:14',3),(10,'DMC-12',2,1981,'img/DeLoreanDMC-12.jpg','2020-07-13 12:28:38',NULL,1),(15,'Corvette',1,1980,'aaa','2020-07-13 12:28:38',NULL,3);
+INSERT INTO `clasicos` VALUES (1,'Mustang Fastback',4,1967,'img/FordMustangFastback.jpg','2020-07-13 12:28:38','2020-07-13 12:45:00',1),(2,'Bel Air',1,1957,'img/ChevroletBelAir.JPG','2020-07-13 12:28:38','2020-07-13 12:45:00',1),(3,'Cobra',5,1965,'img/ShelbyCobra.jpg','2020-07-13 12:28:38','2020-07-13 12:45:00',1),(4,'Mercury',4,1951,'img/FordMercury.jpg','2020-07-13 12:28:38','2020-10-08 12:34:09',3),(5,'Fairlane 500 Skyliner',4,1957,'img/FordFairlane500Skyliner.jpg','2020-07-13 12:28:38',NULL,3),(6,'Gran Torino',4,1975,'img/FordGranTorino.JPG','2020-07-13 12:28:38',NULL,3),(7,'Charger 500',3,1970,'img/DodgeCharger500.jpg','2020-07-13 12:28:38','2020-07-13 13:03:14',3),(10,'DMC-12',2,1981,'img/DeLoreanDMC-12.jpg','2020-07-13 12:28:38',NULL,1),(15,'Corvette',1,1980,'aaa','2020-07-13 12:28:38',NULL,3),(16,'Modelo desconocido',3,1970,'aaa','2020-10-27 20:27:02',NULL,4);
 /*!40000 ALTER TABLE `clasicos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +70,7 @@ CREATE TABLE `marcas` (
   `marca` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `marca` (`marca`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `marcas` (
 
 LOCK TABLES `marcas` WRITE;
 /*!40000 ALTER TABLE `marcas` DISABLE KEYS */;
-INSERT INTO `marcas` VALUES (1,'Chevrolet'),(2,'DeLorean Motor Company'),(3,'Dodge'),(4,'Ford'),(5,'Shelby');
+INSERT INTO `marcas` VALUES (1,'Chevrolet'),(2,'DeLorean Motor Company'),(3,'Dodge'),(4,'Ford'),(7,'Marca desconocida'),(5,'Shelby');
 /*!40000 ALTER TABLE `marcas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuarios` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `contrasena` varchar(25) NOT NULL,
   `imagen` varchar(150) NOT NULL,
@@ -154,6 +154,36 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `v_estadisticas_clasicos`
+--
+
+DROP TABLE IF EXISTS `v_estadisticas_clasicos`;
+/*!50001 DROP VIEW IF EXISTS `v_estadisticas_clasicos`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_estadisticas_clasicos` AS SELECT 
+ 1 AS `total`,
+ 1 AS `aprobados`,
+ 1 AS `pendientes`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_estadisticas_marcas`
+--
+
+DROP TABLE IF EXISTS `v_estadisticas_marcas`;
+/*!50001 DROP VIEW IF EXISTS `v_estadisticas_marcas`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_estadisticas_marcas` AS SELECT 
+ 1 AS `total`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping routines for database 'automoviles_clasicos'
+--
+
+--
 -- Current Database: `automoviles_clasicos`
 --
 
@@ -176,6 +206,42 @@ USE `automoviles_clasicos`;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_estadisticas_clasicos`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_estadisticas_clasicos`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`debian-sys-maint`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_estadisticas_clasicos` AS select count(`clasicos`.`id`) AS `total`,count(`clasicos`.`fecha_validacion`) AS `aprobados`,sum(isnull(`clasicos`.`fecha_validacion`)) AS `pendientes` from `clasicos` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_estadisticas_marcas`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_estadisticas_marcas`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`debian-sys-maint`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_estadisticas_marcas` AS select count(`marcas`.`id`) AS `total` from `marcas` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -186,4 +252,4 @@ USE `automoviles_clasicos`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-12 23:11:25
+-- Dump completed on 2020-10-27 22:15:47
