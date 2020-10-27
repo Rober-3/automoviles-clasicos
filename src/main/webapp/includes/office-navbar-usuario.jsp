@@ -56,34 +56,21 @@
 								validar (validados) y otro que indica si se mostrarán todos o sólo los publicados (total). Los nombres y
 								los valores de dichos parámetros pueden ser cualesquiera, el controlador simplemente los recoge y los 
 								evalúa para mostrar unos clásicos u otros.-->
-								<a class="nav-link" href="views/frontoffice/clasicos">Total</a>
+								<a class="nav-link" href="views/frontoffice/clasicos">Lista</a>
 								<a class="nav-link" href="views/frontoffice/clasicos?validados=no&total=no">Pendientes</a>
 								<a class="nav-link" href="views/frontoffice/clasicos?total=no">Publicados</a>
-								<a class="nav-link" href="views/frontoffice/insertar"> <!--  InsertarFrontOfficeController -->
-									<div class="sb-nav-link-icon">
-										<i class="fas fa-plus"></i>
-									</div> Insertar clásico
-								</a>
 							</nav>
 						</div>
-						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMarcas" aria-expanded="false" aria-controls="collapseMarcas">
+						<a class="nav-link" href="views/frontoffice/insertar-editar-clasico"> <!-- InsEditClasFrontOfficeController -->
 							<div class="sb-nav-link-icon">
-								<i class="fas fa-book-open"></i>
-							</div>Marcas
-							<div class="sb-sidenav-collapse-arrow">
-								<i class="fas fa-angle-down"></i>
-							</div>
+								<i class="fas fa-plus"></i>
+							</div> Insertar clásico
 						</a>
-						<div class="collapse" id="collapseMarcas"
-							aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="views/frontoffice/insertar"> <!--  InsertarFrontOfficeController -->
-									<div class="sb-nav-link-icon">
-										<i class="fas fa-plus"></i>
-									</div> Insertar marca
-								</a>
-							</nav>
-						</div>
+						<a class="nav-link" href="views/frontoffice/insertar-editar-marca"> <!-- InsEditMarcaFrontOfficeController -->
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-plus"></i>
+							</div> Insertar marca
+						</a>
 					</div>
 				</div>
 			</nav>
