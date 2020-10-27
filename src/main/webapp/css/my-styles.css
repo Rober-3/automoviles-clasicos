@@ -2,13 +2,8 @@
 	background: linear-gradient(#0B610B, #0B3B0B);
 }
 
-.formularioclasicos {
-	height: 600px;
-	width: 500px;
-}
-
-.formulariomarcas {
-	height: 350px;
+.formulario {
+	height: auto;
 	width: 500px;
 }
 
