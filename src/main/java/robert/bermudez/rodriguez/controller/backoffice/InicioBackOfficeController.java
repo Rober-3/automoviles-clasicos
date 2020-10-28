@@ -39,7 +39,7 @@ public class InicioBackOfficeController extends HttpServlet {
 
 		LOG.trace("Panel de inicio.");
 		
-		EstadisticasClasico estadisticasClasicos = daoClasico.getAllEstadisticasClasicos();
+		EstadisticasClasico estadisticasClasicos = daoClasico.getClassicStatistics();
 		EstadisticasMarca estadisticasMarcas = daoMarca.getBrandStatistics();
 		String encabezado = "Mi panel";
 		

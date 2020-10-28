@@ -10,14 +10,14 @@ package robert.bermudez.rodriguez.modelo.pojo;
  * - clásicos pendientes de aprobación<br><br>
  * Los consigue mediante una consulta a la base de datos.
  */
-public class ClasicosUsuario {
+public class ResumenUsuario {
 	
 	private int idUsuario;
 	private int clasicosTotal;
 	private int clasicosAprobados;
 	private int clasicosPendientes;
 	
-	public ClasicosUsuario() {
+	public ResumenUsuario() {
 		super();
 	}
 
