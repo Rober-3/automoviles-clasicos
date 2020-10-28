@@ -35,7 +35,7 @@ public class UsuarioRestController extends HttpServlet {
 		String nombre = request.getParameter("nombre");
 		boolean nombreExiste;
 
-		nombreExiste = dao.buscarPorNombre(nombre);
+		nombreExiste = dao.searchByName(nombre);
 
 		if (nombreExiste) {
 			response.setStatus( HttpServletResponse.SC_OK );

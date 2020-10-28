@@ -46,7 +46,7 @@ public class InicioControllerCopia extends HttpServlet {
 			} else { // Si se reciben parámetros, muestra la marca correspondiente al idMarca.
 				
 				int idMarca = Integer.parseInt(paramId);
-				ArrayList<Clasico> clasicos = clasicoDao.getAllByMarca(idMarca, 10);
+				ArrayList<Clasico> clasicos = clasicoDao.getAllByBrand(idMarca, 10);
 				
 				request.setAttribute("clasicos", clasicos);
 				request.setAttribute("marca", marca); // La envía para mostrarla en pantalla.

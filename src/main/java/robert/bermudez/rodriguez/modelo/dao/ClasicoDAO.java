@@ -28,7 +28,7 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @param modelo (objeto Modelo) Nombre del modelo que se quiere buscar.
 	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
-	ArrayList<Clasico> getAllByModelo (String modelo);
+	ArrayList<Clasico> getAllByModel (String modelo);
 	
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, todos los modelos (objetos de tipo Clasico) pertenecientes a una marca,
@@ -38,7 +38,7 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @param numReg (int) Número de registros a mostrar.
 	 * @return {@code ArrayList<Clasicos>} Lista con los modelos.
 	 */
-	ArrayList<Clasico> getAllByMarca (int idMarca, int numReg);
+	ArrayList<Clasico> getAllByBrand (int idMarca, int numReg);
 	
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, los últimos modelos (objetos de tipo Clasico) registrados, ordenados por

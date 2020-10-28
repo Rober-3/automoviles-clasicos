@@ -19,6 +19,7 @@ import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
 import robert.bermudez.rodriguez.modelo.pojo.Marca;
 import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
+import robert.bermudez.rodriguez.modelo.pojo.Rol;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 /**
@@ -284,7 +285,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 
 	@Override
-	public ArrayList<Clasico> getAllByModelo(String modelo) {
+	public ArrayList<Clasico> getAllByModel(String modelo) {
 
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 
@@ -314,7 +315,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 
 	@Override
-	public ArrayList<Clasico> getAllByMarca(int idMarca, int numReg) {
+	public ArrayList<Clasico> getAllByBrand(int idMarca, int numReg) {
 
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 
@@ -520,7 +521,41 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
 				) {
+			
+			// Comprueba el rol del usuario antes de hacer update: si es el del administrador
+			// modifica el registro, en caso contrario lanza una SeguridadException.
+			int rol = pojo.getUsuario().getRol().getId();
+			if (rol == Rol.ADMINISTRADOR) {
+				
+				pst.setString(1, pojo.getModelo());
+				pst.setInt(2, pojo.getMarca().getId());
+				pst.setString(3, pojo.getAnio());
+				pst.setString(4, pojo.getFoto());
+				pst.setInt(5, pojo.getId());
+				LOG.debug(pst);
 
+				int affectedRows = pst.executeUpdate();
+				if (affectedRows != 1) {
+					throw new Exception("No se han actualizado correctamente los datos del clásico " + pojo + ".");
+				}
+				
+			} else {
+				throw new SeguridadException();
+			}
+			
+		} // try
+
+		return pojo;
+
+	} // update
+	
+	/*
+	 * @Override
+	public Clasico update(Clasico pojo) throws Exception {
+
+		try (	Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
+				) {
 
 
 			//TODO antes de modificar comprobar el ROL del usuario
@@ -546,6 +581,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		return pojo;
 
 	} // update
+	 */
 
 
 	@Override
@@ -559,7 +595,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			int idUsuario = pojo.getUsuario().getId();
 
 			getByIdByUser(idUsuario, idModelo);
-			//UPDATE clasicos SET modelo = ?, id_marca = ?, anio = ?, foto = ?, fecha_validacion = NULL WHERE id = ? AND id_usuario = ?;
 			pst.setString(1, pojo.getModelo());
 			pst.setInt(2, pojo.getMarca().getId());
 			pst.setString(3, pojo.getAnio());
