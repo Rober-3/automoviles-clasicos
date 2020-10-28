@@ -18,7 +18,7 @@ import robert.bermudez.rodriguez.modelo.dao.SeguridadException;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
 import robert.bermudez.rodriguez.modelo.pojo.Marca;
-import robert.bermudez.rodriguez.modelo.pojo.ClasicosUsuario;
+import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 /**
@@ -65,25 +65,25 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	// executeQuery devuelve un ResultSet.
 
 	private static final String SQL_SELECT_FROM_WHERE =	"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto, " +
-			"u.id 'id_usuario', u.nombre 'nombre_usuario' " +
-			"FROM clasicos c, marcas m, usuarios u " +
-			"WHERE id_marca = m.id AND c.id_usuario = u.id ";
-	private static final String SQL_AND_IS_NOT_NULL = "AND fecha_validacion IS NOT NULL ";
-	private static final String SQL_AND_IS_NULL =	  "AND fecha_validacion IS NULL ";
-	private static final String SQL_AND_U_ID =		  "AND u.id = ? ";
-	private static final String SQL_AND_C_ID =		  "AND c.id = ?;";
-	private static final String SQL_ORDER_BY =		  "ORDER BY c.id DESC LIMIT 500;";
+														"u.id 'id_usuario', u.nombre 'nombre_usuario' " +
+														"FROM clasicos c, marcas m, usuarios u " +
+														"WHERE id_marca = m.id AND c.id_usuario = u.id ";
+	private static final String SQL_AND_IS_NOT_NULL =	"AND fecha_validacion IS NOT NULL ";
+	private static final String SQL_AND_IS_NULL =	  	"AND fecha_validacion IS NULL ";
+	private static final String SQL_AND_U_ID =		 	"AND u.id = ? ";
+	private static final String SQL_AND_C_ID =		  	"AND c.id = ?;";
+	private static final String SQL_ORDER_BY =		  	"ORDER BY c.id DESC LIMIT 500;";
 
 	private static final String SQL_GET_BY_ID = SQL_SELECT_FROM_WHERE + SQL_AND_C_ID;
 	private static final String SQL_GET_BY_ID_BY_USER = SQL_SELECT_FROM_WHERE + SQL_AND_U_ID + SQL_AND_C_ID;
 
 	private static final String SQL_GET_ALL = SQL_SELECT_FROM_WHERE + SQL_ORDER_BY;
-	private static final String SQL_GET_ALL_VALIDADOS = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + SQL_ORDER_BY;
-	private static final String SQL_GET_ALL_SIN_VALIDAR = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NULL + SQL_ORDER_BY;
+	private static final String SQL_GET_ALL_VALIDATED = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + SQL_ORDER_BY;
+	private static final String SQL_GET_ALL_NOT_VALIDATED = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NULL + SQL_ORDER_BY;
 
 	private static final String SQL_GET_ALL_BY_USER = SQL_SELECT_FROM_WHERE + SQL_AND_U_ID + SQL_ORDER_BY;
-	private static final String SQL_GET_ALL_BY_USER_VALIDADOS = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + SQL_AND_U_ID + SQL_ORDER_BY;
-	private static final String SQL_GET_ALL_BY_USER_SIN_VALIDAR = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NULL + SQL_AND_U_ID + SQL_ORDER_BY;
+	private static final String SQL_GET_ALL_BY_USER_VALIDATED = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + SQL_AND_U_ID + SQL_ORDER_BY;
+	private static final String SQL_GET_ALL_BY_USER_NOT_VALIDATED = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NULL + SQL_AND_U_ID + SQL_ORDER_BY;
 
 	private static final String SQL_GET_ALL_BY_MODELO = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "AND modelo LIKE ? " + SQL_ORDER_BY;
 	private static final String SQL_GET_ALL_BY_MARCA = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "AND m.id = ? " + SQL_ORDER_BY;
@@ -91,16 +91,16 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	private static final String SQL_GET_LAST = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "ORDER BY c.id DESC LIMIT ?;";
 	private static final String SQL_GET_ALEATORY = SQL_SELECT_FROM_WHERE + SQL_AND_IS_NOT_NULL + "ORDER BY RAND() LIMIT 3;";
 
-	private static final String SQL_GET_RESUMEN_USUARIO = "SELECT id_usuario, total, aprobados, pendientes FROM v_clasicos_usuario WHERE id_usuario = ?;";
-	private static final String SQL_GET_ALL_ESTADISTICAS_CLASICOS = "SELECT total, aprobados, pendientes FROM v_estadisticas_clasicos;";
-	
+	private static final String SQL_GET_USER_SUMMARY = "SELECT id_usuario, total, aprobados, pendientes FROM v_clasicos_usuario WHERE id_usuario = ?;";
+	private static final String SQL_GET_CLASSIC_STATISTICS = "SELECT total, aprobados, pendientes FROM v_estadisticas_clasicos;";
+
 	// executeUpdate devuelve un int que representa el número de filas afectadas.
 	private static final String SQL_INSERT =	     "INSERT INTO clasicos (modelo, id_marca, anio, foto, id_usuario) VALUES (?, ?, ?, ?, ?);";
 	private static final String SQL_UPDATE =		 "UPDATE clasicos SET modelo = ?, id_marca = ?, anio = ?, foto = ? WHERE id = ?;";
 	private static final String SQL_UPDATE_BY_USER = "UPDATE clasicos SET modelo = ?, id_marca = ?, anio = ?, foto = ?, fecha_validacion = NULL WHERE id = ? AND id_usuario = ?;";
 	private static final String SQL_DELETE =		 "DELETE FROM clasicos WHERE id = ?;";
 	private static final String SQL_DELETE_BY_USER = "DELETE FROM clasicos WHERE id = ? AND id_usuario = ?;";
-	private static final String SQL_VALIDAR =		 "UPDATE clasicos SET fecha_validacion = NOW() WHERE id = ?;";
+	private static final String SQL_VALIDATE =		 "UPDATE clasicos SET fecha_validacion = NOW() WHERE id = ?;";
 
 
 
@@ -211,7 +211,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	public ArrayList<Clasico> getAllValidation(boolean validados) throws Exception {
 
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
-		String query = validados ? SQL_GET_ALL_VALIDADOS : SQL_GET_ALL_SIN_VALIDAR;
+		String query = validados ? SQL_GET_ALL_VALIDATED : SQL_GET_ALL_NOT_VALIDATED;
 
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(query);
@@ -259,7 +259,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	public ArrayList<Clasico> getAllByUserValidation(int idUsuario, boolean validados) {
 
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
-		String query = validados ? SQL_GET_ALL_BY_USER_VALIDADOS : SQL_GET_ALL_BY_USER_SIN_VALIDAR;
+		String query = validados ? SQL_GET_ALL_BY_USER_VALIDATED : SQL_GET_ALL_BY_USER_NOT_VALIDATED;
 
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(query);
@@ -398,12 +398,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 
 	@Override
-	public ClasicosUsuario getUserSummary(int idUsuario) {
+	public ResumenUsuario getUserSummary(int idUsuario) {
 
-		ClasicosUsuario resumenUsuario = new ClasicosUsuario();
+		ResumenUsuario resumenUsuario = new ResumenUsuario();
 
 		try (	Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_GET_RESUMEN_USUARIO);
+				PreparedStatement pst = con.prepareStatement(SQL_GET_USER_SUMMARY);
 				) {
 
 			pst.setInt(1, idUsuario);
@@ -430,12 +430,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 
 	@Override
-	public EstadisticasClasico getAllEstadisticasClasicos() {
+	public EstadisticasClasico getClassicStatistics() {
 
 		EstadisticasClasico estadisticasClasicos = new EstadisticasClasico();
 
 		try (	Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_GET_ALL_ESTADISTICAS_CLASICOS);
+				PreparedStatement pst = con.prepareStatement(SQL_GET_CLASSIC_STATISTICS);
 				ResultSet rs = pst.executeQuery()
 				) {
 
@@ -645,7 +645,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	public void validate(int idModelo) {
 
 		try (	Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_VALIDAR);
+				PreparedStatement pst = con.prepareStatement(SQL_VALIDATE);
 				) {
 
 			pst.setInt(1, idModelo);

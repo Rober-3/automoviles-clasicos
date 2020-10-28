@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import robert.bermudez.rodriguez.interfaces.CrudAble;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
-import robert.bermudez.rodriguez.modelo.pojo.ClasicosUsuario;
+import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
 
 
 /**
@@ -57,9 +57,9 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 * @param idUsuario (int) Id del usuario.
 	 * @return ResumenUsuario (Objeto ResumenUsuario) Datos del usuario.
 	 */
-	ClasicosUsuario getUserSummary(int idUsuario);
+	ResumenUsuario getUserSummary(int idUsuario);
 	
-	EstadisticasClasico getAllEstadisticasClasicos ();
+	EstadisticasClasico getClassicStatistics ();
 	
 	/**
 	 * Permite al administrador aprobar un modelo (objeto de tipo Clasico) registrado por un usuario, añadiendo
