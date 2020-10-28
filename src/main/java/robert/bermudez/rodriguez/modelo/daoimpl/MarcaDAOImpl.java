@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
-import robert.bermudez.rodriguez.conexion.ConnectionManager;
+import robert.bermudez.rodriguez.connection.ConnectionManager;
 import robert.bermudez.rodriguez.modelo.dao.MarcaDAO;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasMarca;

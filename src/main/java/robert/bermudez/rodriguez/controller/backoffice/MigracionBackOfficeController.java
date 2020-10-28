@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import robert.bermudez.rodriguez.conexion.ConnectionManager;
+import robert.bermudez.rodriguez.connection.ConnectionManager;
 
 /**
  * Realiza la migración de un fichero de texto a la base de datos. Lee un .txt con 100 registros y los inserta.

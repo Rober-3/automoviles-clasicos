@@ -1,4 +1,4 @@
-package robert.bermudez.rodriguez.conexion;
+package robert.bermudez.rodriguez.connection;
 
 // TODO Notas: Clase que se usará con todas aquellas clases que quieran establecer una conexión con una BBDD.
 
