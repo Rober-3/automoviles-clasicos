@@ -23,8 +23,7 @@ public class ElimClasFrontOfficeController extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(ElimClasFrontOfficeController.class);
 	private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
        
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Clasico clasico = new Clasico();
 		Usuario usuario = new Usuario();
@@ -36,7 +35,7 @@ public class ElimClasFrontOfficeController extends HttpServlet {
 			
 			int idModelo = Integer.parseInt(id);
 			
-			// Recuperar el usuario de la sesión y obtener su id para verificar que ha registrado el clásico que va a eliminar.
+			// Recupera el usuario de la sesión y obtiene su id para verificar que ha registrado el clásico que eliminará.
 			usuario = (Usuario)request.getSession().getAttribute("usuario");
 			int idUsuario = usuario.getId();
 			
@@ -56,9 +55,8 @@ public class ElimClasFrontOfficeController extends HttpServlet {
 		} finally {
 			request.setAttribute("clasico", clasico);
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("formulario-clasicos.jsp").forward(request, response);
-			
-		} // try-catch-finally
+			request.getRequestDispatcher("formulario-clasicos.jsp").forward(request, response);	
+		}
 		
 	} // doGet
 
