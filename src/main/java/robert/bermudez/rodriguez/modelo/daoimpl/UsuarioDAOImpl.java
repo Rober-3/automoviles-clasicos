@@ -45,13 +45,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	// QUERYS
 
 	private static final String SQL_SELECT_FROM_WHERE = "SELECT u.id, nombre, contrasena, imagen, id_rol, rol " +
-			"FROM usuarios u, roles r " +
-			"WHERE id_rol = r.id ";
+														"FROM usuarios u, roles r " +
+														"WHERE id_rol = r.id ";
 
 	private static final String SQL_GET_BY_ID =			SQL_SELECT_FROM_WHERE + "AND u.id = ?:";
 	private static final String SQL_GET_ALL =			SQL_SELECT_FROM_WHERE + "ORDER BY u.id LIMIT 500;";
 	private static final String SQL_EXISTS =			SQL_SELECT_FROM_WHERE + "AND nombre = ? AND contrasena = ?;";
-	private static final String SQL_BUSCAR_POR_NOMBRE =	"SELECT id FROM usuarios WHERE nombre = ?;";
+	private static final String SQL_SEARCH_BY_NAME =	"SELECT id FROM usuarios WHERE nombre = ?;";
 
 	private static final String SQL_INSERT =			"INSERT INTO usuarios (nombre, contrasena, imagen, id_rol) VALUES (?,?,?,?);";
 	private static final String SQL_UPDATE =			"UPDATE usuarios SET nombre = ?, contrasena = ?, imagen = ?, id_rol = ? WHERE id = ?";
@@ -128,13 +128,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 
 	@Override
-	public boolean buscarPorNombre (String nombre) {
+	public boolean searchByName (String nombre) {
 
 		boolean nombreExiste = false;
 
 		try (	
 				Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_BUSCAR_POR_NOMBRE);
+				PreparedStatement pst = con.prepareStatement(SQL_SEARCH_BY_NAME);
 
 				) {
 

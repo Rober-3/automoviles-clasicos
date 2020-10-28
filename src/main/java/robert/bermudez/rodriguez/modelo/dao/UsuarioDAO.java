@@ -24,6 +24,6 @@ public interface UsuarioDAO extends CrudAble<Usuario> {
 	 * @param nombre (String) Nombre a buscar.
 	 * @return boolean true si encuentra el usuario, false si no lo encuentra.
 	 */
-	boolean buscarPorNombre (String nombre);
+	boolean searchByName (String nombre);
 
 }
