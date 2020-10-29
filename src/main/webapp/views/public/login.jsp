@@ -46,9 +46,10 @@
                                                 	   id="contrasena"
                                                 	   name="contrasena"
                                                 	   type="password"
+                                                	   value="admin"
                                                 	   placeholder="Introduce tu contraseña" />
                                             </div>
-                                            <div class="form-group d-flex align-items-center justify-content-end mt-4 mb-0">
+                                            <div class="form-group d-flex align-items-center justify-content-end my-3 mb-0">
                                                 <button type="submit" class="btn btn-primary">Iniciar sesión</button>
                                                 <!-- onClick sacado de internet. -->
 												<button type="button" class="btn btn-danger ml-3" onClick="window.parent.location='inicio'">Cancelar</button>
