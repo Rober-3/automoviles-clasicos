@@ -37,9 +37,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	} // getInstance
 
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 	// DAO
 
 	// QUERYS
@@ -155,8 +152,20 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 		return nombreExiste;
 
-	} // buscarPorNombre
+	} // searchByName
 
+	
+	@Override
+	public boolean checkRole (Usuario usuario) {
+		
+		if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
+			return true;
+			
+		} else {
+			return false;
+		}
+		
+	} // checkRole
 
 
 	@Override
