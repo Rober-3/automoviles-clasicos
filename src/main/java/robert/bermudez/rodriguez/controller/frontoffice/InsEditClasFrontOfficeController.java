@@ -146,7 +146,7 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 			
 		} catch (Exception e) {
 			LOG.error(e);
-			alerta = new Alerta ("danger", e.getMessage());
+			alerta = new Alerta ("danger", "Ha habido un problema al intentar guardar el clásico.");
 
 		} finally {
 			request.setAttribute("clasico", clasico);
