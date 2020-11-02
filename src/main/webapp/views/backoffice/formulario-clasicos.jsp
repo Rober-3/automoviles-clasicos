@@ -16,7 +16,7 @@
 					   id="id"
 					   name="id"
 					   value="${clasico.id}"
-					   class="form-control form-control-sm"
+					   class="form-control"
 					   readonly>
 			</div>	
 			<div class="form-group">
@@ -25,7 +25,7 @@
 					   id="modelo"
 					   name="modelo"
 					   value="${clasico.modelo}" 
-					   class="form-control form-control-sm"
+					   class="form-control"
 					   placeholder="El modelo debe tener entre 3 y 50 caracteres y no estar repetido.">
 			</div>
 			<div class="form-group">
@@ -33,7 +33,7 @@
 				<select id="marca"
 						name="id_marca"
 						class="custom-select">
-					<option selected>Selecciona una marca</option>
+					<option>Selecciona una marca</option>
 					<c:forEach items="${marcas}" var="m">
 						<!-- El operador ternario hace que al editar un clásico aparezca seleccionada su marca. -->
 						<option value="${m.id}" ${ (m.id eq clasico.marca.id) ?"selected" :"" }>${m.marca}</option>
@@ -46,7 +46,7 @@
 					   id="anio"
 					   name="anio"
 					   value="${clasico.anio}"
-					   class="form-control form-control-sm">
+					   class="form-control">
 			</div>
 			<div class="form-group">
 				<label for="foto">Foto:</label>
@@ -54,7 +54,7 @@
 					   id="foto"
 					   name="foto"
 					   value="${clasico.foto}"
-					   class="form-control form-control-sm"
+					   class="form-control"
 					   placeholder="Introduce la URL de la foto.">
 			</div>
 			<div class="form-group d-flex align-items-center justify-content-end pt-3">
