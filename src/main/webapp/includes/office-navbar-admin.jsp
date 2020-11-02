@@ -68,8 +68,7 @@
 						<div class="collapse" id="collapseMarcas"
 							aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<!-- MarcasBackOfficeController -->
-								<a class="nav-link" href="views/backoffice/marcas">Lista</a>
+								<a class="nav-link" href="views/backoffice/marcas">Lista</a> <!-- MarcasBackOfficeController -->
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
