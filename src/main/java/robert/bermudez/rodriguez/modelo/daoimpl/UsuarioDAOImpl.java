@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import robert.bermudez.rodriguez.connection.ConnectionManager;
 import robert.bermudez.rodriguez.modelo.dao.UsuarioDAO;
+import robert.bermudez.rodriguez.modelo.pojo.EstadisticasUsuario;
 import robert.bermudez.rodriguez.modelo.pojo.Rol;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
@@ -41,18 +42,19 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	// QUERYS
 
-	private static final String SQL_SELECT_FROM_WHERE = "SELECT u.id, nombre, contrasena, imagen, id_rol, rol " +
-														"FROM usuarios u, roles r " +
-														"WHERE id_rol = r.id ";
+	private static final String SQL_SELECT_FROM_WHERE =	  "SELECT u.id, nombre, contrasena, imagen, id_rol, rol " +
+														  "FROM usuarios u, roles r " +
+														  "WHERE id_rol = r.id ";
 
-	private static final String SQL_GET_BY_ID =			SQL_SELECT_FROM_WHERE + "AND u.id = ?:";
-	private static final String SQL_GET_ALL =			SQL_SELECT_FROM_WHERE + "ORDER BY u.id LIMIT 500;";
-	private static final String SQL_EXISTS =			SQL_SELECT_FROM_WHERE + "AND nombre = ? AND contrasena = ?;";
-	private static final String SQL_SEARCH_BY_NAME =	"SELECT id FROM usuarios WHERE nombre = ?;";
+	private static final String SQL_GET_BY_ID =			  SQL_SELECT_FROM_WHERE + "AND u.id = ?:";
+	private static final String SQL_GET_ALL =			  SQL_SELECT_FROM_WHERE + "ORDER BY u.id LIMIT 500;";
+	private static final String SQL_EXISTS =			  SQL_SELECT_FROM_WHERE + "AND nombre = ? AND contrasena = ?;";
+	private static final String SQL_SEARCH_BY_NAME =	  "SELECT id FROM usuarios WHERE nombre = ?;";
+	private static final String SQL_GET_USER_STATISTICS = "SELECT total FROM v_estadisticas_usuarios;";
 
-	private static final String SQL_INSERT =			"INSERT INTO usuarios (nombre, contrasena, imagen, id_rol) VALUES (?,?,?,?);";
-	private static final String SQL_UPDATE =			"UPDATE usuarios SET nombre = ?, contrasena = ?, imagen = ?, id_rol = ? WHERE id = ?";
-	private static final String SQL_DELETE =			"DELETE FROM usuarios WHERE id = ?;";
+	private static final String SQL_INSERT =			  "INSERT INTO usuarios (nombre, contrasena, imagen, id_rol) VALUES (?,?,?,?);";
+	private static final String SQL_UPDATE =			  "UPDATE usuarios SET nombre = ?, contrasena = ?, imagen = ?, id_rol = ? WHERE id = ?";
+	private static final String SQL_DELETE =			  "DELETE FROM usuarios WHERE id = ?;";
 
 
 
@@ -166,6 +168,31 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		}
 		
 	} // checkRole
+	
+	
+	@Override
+	public EstadisticasUsuario getUserStatistics() {
+
+		EstadisticasUsuario estadisticasUsuarios = new EstadisticasUsuario();
+
+		try (	Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_USER_STATISTICS);
+				ResultSet rs = pst.executeQuery()
+				) {
+
+			LOG.debug(pst);
+
+			while (rs.next()) { 
+				estadisticasUsuarios.setTotal(rs.getInt("total"));
+			}
+
+		} catch (Exception e) {
+			LOG.error(e);	
+		}
+
+		return estadisticasUsuarios;
+
+	} // getAllEstadisticasMarcas
 
 
 	@Override

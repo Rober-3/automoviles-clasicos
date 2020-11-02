@@ -1,6 +1,7 @@
 package robert.bermudez.rodriguez.modelo.dao;
 
 import robert.bermudez.rodriguez.interfaces.CrudAble;
+import robert.bermudez.rodriguez.modelo.pojo.EstadisticasUsuario;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 public interface UsuarioDAO extends CrudAble<Usuario> {
@@ -27,5 +28,7 @@ public interface UsuarioDAO extends CrudAble<Usuario> {
 	boolean searchByName (String nombre);
 	
 	boolean checkRole (Usuario usuario);
+
+	EstadisticasUsuario getUserStatistics();
 
 }
