@@ -12,8 +12,10 @@ import org.apache.log4j.Logger;
 import robert.bermudez.rodriguez.controller.frontoffice.InicioFrontOfficeController;
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.daoimpl.MarcaDAOImpl;
+import robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasMarca;
+import robert.bermudez.rodriguez.modelo.pojo.EstadisticasUsuario;
 
 /**
  * Dirige a la pantalla de inicio del backoffice.
@@ -28,6 +30,7 @@ public class InicioBackOfficeController extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(InicioFrontOfficeController.class);
     private static final ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
     private static final MarcaDAOImpl daoMarca = MarcaDAOImpl.getInstance();
+    private static final UsuarioDAOImpl daoUsuario = UsuarioDAOImpl.getInstance();
 
 	/**
 	 * Dirige a la pantalla de inicio del backoffice.
@@ -41,6 +44,7 @@ public class InicioBackOfficeController extends HttpServlet {
 		
 		EstadisticasClasico estadisticasClasicos = daoClasico.getClassicStatistics();
 		EstadisticasMarca estadisticasMarcas = daoMarca.getBrandStatistics();
+		EstadisticasUsuario estadisticasUsuarios = daoUsuario.getUserStatistics();
 		String encabezado = "Mi panel";
 		
 		// Cuidado con la URL del servlet ("/views/frontoffice/inicio") ya que al hacer forward se sustitituye la última
@@ -53,13 +57,14 @@ public class InicioBackOfficeController extends HttpServlet {
 
 		request.setAttribute("estadisticasClasicos", estadisticasClasicos);
 		request.setAttribute("estadisticasMarcas", estadisticasMarcas);
+		request.setAttribute("estadisticasUsuarios", estadisticasUsuarios);
 		request.setAttribute("encabezado", encabezado );
 		request.getRequestDispatcher(pagina).forward(request, response);
 
 	} // doGet
 
-	// Si se elimina este método, al iniciar sesión en el backoffice dará un error 405.
-	// HTTP Status 405 – Method Not Allowed HTTP method POST is not supported by this URL
+	// Si se elimina este método, al iniciar sesión en el backoffice dará un error 405:
+	// "HTTP Status 405 – Method Not Allowed HTTP method POST is not supported by this URL"
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
