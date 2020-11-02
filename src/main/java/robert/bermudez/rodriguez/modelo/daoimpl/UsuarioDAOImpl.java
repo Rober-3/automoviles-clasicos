@@ -158,19 +158,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	
 	@Override
-	public boolean checkRole (Usuario usuario) {
-		
-		if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
-			return true;
-			
-		} else {
-			return false;
-		}
-		
-	} // checkRole
-	
-	
-	@Override
 	public EstadisticasUsuario getUserStatistics() {
 
 		EstadisticasUsuario estadisticasUsuarios = new EstadisticasUsuario();
