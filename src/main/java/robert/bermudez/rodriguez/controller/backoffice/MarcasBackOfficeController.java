@@ -33,7 +33,7 @@ public class MarcasBackOfficeController extends HttpServlet {
 			
 		} finally {
 			request.setAttribute("marcas", marcas);
-			request.setAttribute("encabezado", "Total de marcas");
+			request.setAttribute("encabezado", "Lista");
 			request.getRequestDispatcher("marcas.jsp").forward(request, response); // backoffice/marcas.jsp
 		}
 		

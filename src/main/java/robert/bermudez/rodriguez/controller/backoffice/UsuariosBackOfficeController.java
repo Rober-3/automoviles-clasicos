@@ -40,7 +40,6 @@ public class UsuariosBackOfficeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-		String encabezado = "Lista de usuarios";
 		
 		try {
 			usuarios = dao.getAll();
@@ -50,7 +49,7 @@ public class UsuariosBackOfficeController extends HttpServlet {
 		}
 		
 		request.setAttribute("usuarios", usuarios);
-		request.setAttribute("encabezado", encabezado );
+		request.setAttribute("encabezado", "Lista" );
 		request.getRequestDispatcher("usuarios.jsp").forward(request, response);
 		
 	} // doGet
