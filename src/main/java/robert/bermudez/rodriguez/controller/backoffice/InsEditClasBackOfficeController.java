@@ -16,49 +16,61 @@ import javax.validation.ValidatorFactory;
 import org.apache.log4j.Logger;
 
 import robert.bermudez.rodriguez.controller.publico.Alerta;
+import robert.bermudez.rodriguez.modelo.dao.SeguridadException;
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
+import robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.Marca;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 @WebServlet("/views/backoffice/insertar-editar-clasico")
 public class InsEditClasBackOfficeController extends HttpServlet {
-	
+
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(InsEditClasBackOfficeController.class);
-	private static final ClasicoDAOImpl dao = ClasicoDAOImpl.getInstance();
+	private static final ClasicoDAOImpl daoClasico = ClasicoDAOImpl.getInstance();
+	private static final UsuarioDAOImpl daoUsuario = UsuarioDAOImpl.getInstance();
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	private static Validator validator = factory.getValidator();
-       
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
-    	Clasico clasico = new Clasico();
-    	Alerta alerta = null;
-    	String ruta = "";
-    	
-    	// views/backoffice/clasicos.jsp
-    	String id = request.getParameter("id");
-    	String validado = request.getParameter("validado");
-    	
-    	try {
-    		
-    		int idModelo = Integer.parseInt(id);
-    		
-    		if (idModelo != 0) {
-    			
-    			clasico = dao.getById(idModelo);
-				alerta = new Alerta("warning", "Modifica los datos del clásico.");
-				ruta = "formulario-clasicos.jsp";
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		Clasico clasico = new Clasico();
+		Usuario usuario = new Usuario();
+		Alerta alerta = null;
+		String ruta = "";
+
+		// views/backoffice/clasicos.jsp
+		String id = request.getParameter("id");
+		String validado = request.getParameter("validado");
+
+		try {
+
+			int idModelo = Integer.parseInt(id);
+			usuario = (Usuario)request.getSession().getAttribute("usuario");
+
+			// Comprueba que sea el administrador quien inserta el clásico.
+			if (daoUsuario.checkRole(usuario)) {
 				
-			} else if (idModelo != 0  && validado != null) {
-				dao.validate(idModelo);
-				alerta = new Alerta("success", "Clásico validado con éxito.");
-				ruta = "index.jsp";
+				if (idModelo != 0) {
+
+					clasico = daoClasico.getById(idModelo);
+					alerta = new Alerta("warning", "Modifica los datos del clásico.");
+					ruta = "formulario-clasicos.jsp";
+
+				} else if (idModelo != 0  && validado != null) {
+					daoClasico.validate(idModelo);
+					alerta = new Alerta("success",  clasico.getMarca().getMarca() + " " + clasico.getModelo() + " validado con éxito.");
+					ruta = "index.jsp";
+
+				} else {
+					ruta = "formulario-clasicos.jsp";
+				}
 				
 			} else {
-				ruta = "formulario-clasicos.jsp";
+				throw new SeguridadException();
 			}
-    		
+			
 		} catch (Exception e) {
 			LOG.error(e);
 
@@ -67,16 +79,16 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 			request.setAttribute("alerta", alerta);
 			request.getRequestDispatcher(ruta).forward(request, response);
 		}
-    	
+
 	} // doGet
 
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Clasico clasico = new Clasico();
 		Usuario usuario = new Usuario();
-		Alerta alerta = new Alerta();
-		
+		Alerta alerta = null;
+
 		// views/backoffice/formulario-clasicos.jsp
 		String paramIdModelo = request.getParameter("id");
 		String modelo = request.getParameter("modelo");
@@ -94,10 +106,10 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 			usuario = (Usuario) request.getSession().getAttribute("usuario"); // Recuperar el usuario de la sesión.
 
 			if (idModelo != 0) {
-				clasico = dao.getById(idModelo);
+				clasico = daoClasico.getById(idModelo);
 				alerta = new Alerta("warning", "Introduce los datos del clásico.");
 			}
-			
+
 			clasico.setId(idModelo);
 			clasico.setModelo(modelo);
 			clasico.setMarca(marca);
@@ -111,12 +123,12 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 			if (violations.isEmpty()) {
 
 				if (idModelo == 0) {
-					dao.insert(clasico);
-					alerta = new Alerta("success", "Clásico registrado.");
+					daoClasico.insert(clasico);
+					alerta = new Alerta("success", clasico.getMarca().getMarca() + " " + clasico.getModelo() + " guardado con éxito.");
 
 				} else {
-					dao.update(clasico);
-					alerta = new Alerta("success", "Clásico actualizado.");	
+					daoClasico .update(clasico);
+					alerta = new Alerta("success",  clasico.getMarca().getMarca() + " " + clasico.getModelo() + " actualizado con éxito.");	
 				}
 
 			} else {
@@ -140,5 +152,5 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 		}
 
 	} // doPost
-    
+
 } // class
