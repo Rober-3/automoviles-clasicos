@@ -19,7 +19,6 @@ import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 import robert.bermudez.rodriguez.modelo.pojo.EstadisticasClasico;
 import robert.bermudez.rodriguez.modelo.pojo.Marca;
 import robert.bermudez.rodriguez.modelo.pojo.ResumenUsuario;
-import robert.bermudez.rodriguez.modelo.pojo.Rol;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 /**
@@ -66,9 +65,9 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	// executeQuery devuelve un ResultSet.
 
 	private static final String SQL_SELECT_FROM_WHERE =	"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto, " +
-														"u.id 'id_usuario', u.nombre 'nombre_usuario' " +
-														"FROM clasicos c, marcas m, usuarios u " +
-														"WHERE id_marca = m.id AND c.id_usuario = u.id ";
+			"u.id 'id_usuario', u.nombre 'nombre_usuario' " +
+			"FROM clasicos c, marcas m, usuarios u " +
+			"WHERE id_marca = m.id AND c.id_usuario = u.id ";
 	private static final String SQL_AND_IS_NOT_NULL =	"AND fecha_validacion IS NOT NULL ";
 	private static final String SQL_AND_IS_NULL =	  	"AND fecha_validacion IS NULL ";
 	private static final String SQL_AND_U_ID =		 	"AND u.id = ? ";
@@ -515,18 +514,19 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	 * @param pojo (Objeto Clasico) Modelo a actualizar.
 	 * @return Clasico (Objeto Clasico) Modelo actualizado.
 	 */
-	@Override
-	public Clasico update(Clasico pojo) throws Exception {
+	/*@Override
+	public Clasico update(Clasico pojo) throws SeguridadException, Exception {
 
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
 				) {
-			
+
 			// Comprueba el rol del usuario antes de hacer update: si es el del administrador
 			// modifica el registro, en caso contrario lanza una SeguridadException.
 			int rol = pojo.getUsuario().getRol().getId();
+
 			if (rol == Rol.ADMINISTRADOR) {
-				
+
 				pst.setString(1, pojo.getModelo());
 				pst.setInt(2, pojo.getMarca().getId());
 				pst.setString(3, pojo.getAnio());
@@ -538,19 +538,19 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				if (affectedRows != 1) {
 					throw new Exception("No se han actualizado correctamente los datos del clásico " + pojo + ".");
 				}
-				
+
 			} else {
+				LOG.error("Un usuario ha intentado eliminar un clásico que no ha registrado: " + pojo.getUsuario());
 				throw new SeguridadException();
 			}
-			
+
 		} // try
 
 		return pojo;
 
-	} // update
-	
-	/*
-	 * @Override
+	} // update*/
+
+	@Override
 	public Clasico update(Clasico pojo) throws Exception {
 
 		try (	Connection con = ConnectionManager.getConnection();
@@ -581,7 +581,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		return pojo;
 
 	} // update
-	 */
 
 
 	@Override
@@ -622,7 +621,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	 * @return Clasico (Objeto Clasico) Modelo borrado.
 	 */
 	@Override
-	public Clasico delete(int idModelo) throws Exception {
+	public Clasico delete(int idModelo) throws SeguridadException, Exception {
 
 		// Clasico clasico = new Clasico(); -> Erróneo: hay que obtener el clásico antes de eliminarlo.
 		Clasico clasico = getById(idModelo);
@@ -688,7 +687,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 			int affectedRows = pst.executeUpdate();
 			if (affectedRows != 1) {
-				throw new Exception("No se han actualizado correctamente los datos del clásico con el id  " + idModelo + ".");
+				throw new Exception("No se han actualizado correctamente los datos del clásico con el id " + idModelo + ".");
 			}
 
 		} catch (Exception e) {
