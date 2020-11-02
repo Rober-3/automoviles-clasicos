@@ -19,9 +19,6 @@ import robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Rol;
 import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
-/**
- * Servlet implementation class RegistrarUsuarioController
- */
 @WebServlet("/registro")
 public class RegistrarUsuarioController extends HttpServlet {
 	
@@ -32,9 +29,6 @@ public class RegistrarUsuarioController extends HttpServlet {
 	private static Validator validator = factory.getValidator();
 	
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		LOG.trace("iniciando registro");
@@ -43,7 +37,7 @@ public class RegistrarUsuarioController extends HttpServlet {
 		boolean isError = true;
 		
 		String nombre = request.getParameter("nombre");
-		String fecha = request.getParameter("fecha");
+		// String fecha = request.getParameter("fecha");
 		String contrasena = request.getParameter("contrasena");
 		String confirmar = request.getParameter("confirmar");
 		
@@ -95,18 +89,17 @@ public class RegistrarUsuarioController extends HttpServlet {
 			
 		} finally {
 			
+			// Si se guarda una alerta en una request, al hacer sendRedirect se perderá. La solución está en guardarla en la sesión.
+			request.getSession().setAttribute("alerta", alerta);
+			
 			if (isError) {
 				// Envia de nuevo el nombre para evitar que el usuario tenga que escribirlo de nuevo.
-				request.setAttribute("nombre", nombre); 
-				request.getRequestDispatcher("views/registro.jsp").forward(request, response);
+				request.setAttribute("nombre", nombre);
+				request.getRequestDispatcher("views/public/registro.jsp").forward(request, response);
 				
 			} else {
-				response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+				response.sendRedirect(request.getContextPath() + "views/public/login.jsp");
 			}
-			
-			// Si se guarda una alerta en una request, al hacer sendRedirect
-			// se perderá. La solución está en guardarla en la sesión.
-			request.getSession().setAttribute("alerta", alerta);
 			
 		} // try-catch-finally
 		
