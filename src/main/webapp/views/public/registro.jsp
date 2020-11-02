@@ -1,54 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <jsp:include page="../../includes/head.jsp">
-	<jsp:param name="pagina" value="login" />
-	<jsp:param name="title" value="login" />
+	<jsp:param name="pagina" value="Registro de usuario" />
+	<jsp:param name="title" value="Registro de usuario" />
 </jsp:include>
-
-<main>
-	<div class="container my-5 formulario">
-		<h3 class="text-center">Registro de usuario</h3>
-		<form action="registro" method="post" class="mt-3"> <!-- RegistroUsuarioController -->
-			<div class="form-group">
-				<label for="nombre">Nombre de usuario</label>
-				<!-- Etiqueta que emplea Bootstrap para mostrar mensajes en pequeño. Se
-						 usará para indicar si el nombre de usuario está o no disponible. -->
-				<small id="nombreHelp" class="form-text"></small>
-				<input type="text"
-					   id="nombre"
-					   name="nombre"
-					   onkeyup="buscarUsuario(event)"
-					   value="${nombre}"
-					   class="form-control"
-					   placeholder="Introduce tu nombre de usuario">
+<main class="container mt-2">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-5">
+				<div class="card shadow-lg border-0 rounded-lg mt-5">
+					<div class="card-header">
+						<h3 class="text-center font-weight-light my-4">Registro de usuario</h3>
+					</div>
+					<div class="card-body">
+						<form action="registro" method="post" class="mt-3"> <!-- RegistroUsuarioController -->
+							<div class="form-group">
+								<label class="mb-1" for="nombre">Nombre de usuario</label>
+								<!-- Etiqueta que emplea Bootstrap para mostrar mensajes en pequeño encima de un
+						 			 campo. Se usará para indicar si el nombre de usuario está o no disponible. -->
+								<small id="nombreHelp" class="form-text"></small>
+								<input class="form-control py-4"
+									   type="text"
+									   id="nombre"
+									   name="nombre"
+									   onkeyup="buscarUsuario(event)"
+									   value="${nombre}"
+									   placeholder="Introduce tu nombre de usuario" />
+							</div>
+							<div class="form-group">
+								<label class="mb-1" for="contrasena">Contraseña</label>
+								<input class="form-control py-4"
+									   type="password"
+									   id="contrasena"
+									   name="contrasena"
+									   placeholder="Introduce la contraseña" />
+							</div>
+							<div class="form-group">
+								<label class="mb-1" for="confirmar">Confirmar contraseña</label>
+								<input class="form-control py-4"
+									   type="password"
+						   			   id="confirmar"
+									   name="confirmar"
+									   placeholder="Confirma la contraseña">
+							</div>
+							<div class="form-group d-flex align-items-center justify-content-end my-3 mb-0">
+								<button type="submit" class="btn btn-primary">Registrarse</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
-			<div class="form-group">
-				<label for="fecha">Fecha de nacimiento</label>
-				<input type="date"
-					   id="fecha"
-					   name="fecha"
-					   value="${fecha}"
-					   class="form-control"
-					   placeholder="Introduce tu fecha de nacimiento">
-			</div>
-			<div class="form-group">
-				<label for="contrasena">Contraseña</label>
-				<input type="password"
-					   id="contrasena"
-					   name="contrasena"
-					   class="form-control"
-					   placeholder="Introduce la contraseña">
-			</div>
-			<div class="form-group">
-				<label for="confirmar">Confirmar contraseña</label>
-				<input type="password"
-					   id="confirmar"
-					   name="confirmar"
-					   class="form-control"
-					   placeholder="Confirma la contraseña">
-			</div>
-			<button type="submit" class="btn btn-primary btn-sm">Registrarse</button>
-		</form>
+		</div>
 	</div>
 </main>
 <%@include file="../../includes/footer.jsp"%>
