@@ -61,7 +61,7 @@
 					<!-- Esta parte sólo se muestra si un usuario ha iniciado sesión. -->
 					<c:if test="${not empty sessionScope.usuario}">
 						<li class="nav-item font-weight-bold">
-							<a class="nav-link text-white" href="doc/index.html">API JavaDoc</a>
+							<a class="nav-link text-white" href="doc/index.html" target="_blank">API JavaDoc</a>
 						</li>
 					</c:if>
 					<li class="nav-item font-weight-bold">
