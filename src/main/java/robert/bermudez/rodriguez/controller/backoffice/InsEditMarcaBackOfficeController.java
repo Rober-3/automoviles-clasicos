@@ -89,11 +89,11 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
 
 				if (idMarca == 0) {
 					dao.insert(marca);
-					alerta = new Alerta("success", "Marca guardada con éxito.");
+					alerta = new Alerta("success", "<b>" + marca + "</b> guardada correctamente.");
 
 				} else {
 					dao.update(marca);
-					alerta = new Alerta("success", "Marca actualizada con éxito.");	
+					alerta = new Alerta("success", "<b>" + marca + "</b> actualizada correctamente.");
 				}
 
 			} else {
@@ -110,7 +110,7 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
 
 		} catch (Exception e) {
 			LOG.error(e);
-			alerta = new Alerta ("danger", "Ha habido un problema al guardar la marca.");
+			alerta = new Alerta ("danger", "Ha surgido un problema al intentar guardar <b>" + marca + "</  b>");
 
 		} finally {
 			request.setAttribute("marca", marca);

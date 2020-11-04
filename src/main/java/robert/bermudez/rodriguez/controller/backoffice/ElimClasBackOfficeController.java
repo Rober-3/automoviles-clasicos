@@ -32,7 +32,8 @@ public class ElimClasBackOfficeController extends HttpServlet {
 
 			int idModelo = Integer.parseInt(id);
 			clasico = dao.delete(idModelo);	
-			alerta = new Alerta("success",  clasico.getMarca().getMarca() + " " + clasico.getModelo() + " borrado con éxito.");
+			alerta = new Alerta("success", "<b>" + clasico.getMarca().getMarca() + " " + clasico.getModelo()
+			+ "</b> borrado correctamente.");
 
 		} catch (Exception e) {
 			LOG.error(e);

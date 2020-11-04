@@ -88,11 +88,11 @@ public class InsEditMarcaFrontOfficeController extends HttpServlet {
 
 				if (idMarca == 0) {
 					dao.insert(marca);
-					alerta = new Alerta("success", "Marca guardada con éxito.");
+					alerta = new Alerta("success", "<b>" + marca + "</b> guardada correctamente.");
 
 				} else {
 					dao.update(marca);
-					alerta = new Alerta("success", "Marca actualizada con éxito.");	
+					alerta = new Alerta("success", "<b>" + marca + "</b> actualizada correctamente.");
 				}
 
 			} else {

@@ -34,7 +34,6 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 
 		Clasico clasico = new Clasico();
 		Alerta alerta = null;
-		String ruta = "";
 
 		// views/backoffice/clasicos.jsp
 		String id = request.getParameter("id");
@@ -43,20 +42,14 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 		try {
 
 			int idModelo = Integer.parseInt(id);
+			clasico = dao.getById(idModelo);
 
-			if (idModelo != 0) {
-
-				clasico = dao.getById(idModelo);
-				alerta = new Alerta("warning", "Modifica los datos del clásico.");
-				ruta = "formulario-clasicos.jsp";
-
-			} else if (idModelo != 0  && validado != null) {
+			if (idModelo != 0 && validado != null) {
 				dao.validate(idModelo);
-				alerta = new Alerta("success",  clasico.getMarca().getMarca() + " " + clasico.getModelo() + " validado con éxito.");
-				ruta = "index.jsp";
+				alerta = new Alerta("success", "[" + clasico.getMarca().getMarca() + " " + clasico.getModelo() + "] validado correctamente.");	
 
 			} else {
-				ruta = "formulario-clasicos.jsp";
+				alerta = new Alerta("warning", "Modifica los datos del clásico.");
 			}
 
 		} catch (Exception e) {
@@ -65,7 +58,7 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 		} finally {
 			request.setAttribute("clasico", clasico);
 			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher(ruta).forward(request, response);
+			request.getRequestDispatcher("formulario-clasicos.jsp").forward(request, response);
 		}
 
 	} // doGet
@@ -112,11 +105,13 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 
 				if (idModelo == 0) {
 					dao.insert(clasico);
-					alerta = new Alerta("success", clasico.getMarca().getMarca() + " " + clasico.getModelo() + " guardado con éxito.");
+					alerta = new Alerta("success", "<b>" + clasico.getMarca().getMarca() + " " + clasico.getModelo()
+					+ "</b> guardado correctamente.");
 
 				} else {
 					dao .update(clasico);
-					alerta = new Alerta("success",  clasico.getMarca().getMarca() + " " + clasico.getModelo() + " actualizado con éxito.");	
+					alerta = new Alerta("success",   "<b>" + clasico.getMarca().getMarca() + " " + clasico.getModelo()
+					+ "</sb> actualizado correctamente.");	
 				}
 
 			} else {

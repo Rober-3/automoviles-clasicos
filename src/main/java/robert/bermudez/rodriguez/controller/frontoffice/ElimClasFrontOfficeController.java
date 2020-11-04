@@ -44,7 +44,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			}
 			
 			clasico = dao.delete(idModelo);	
-			alerta = new Alerta("success", "Clásico eliminado con éxito");
+			alerta = new Alerta("success",  "<b>" + clasico.getMarca().getMarca() + " " + clasico.getModelo()
+			+ "</b> borrado correctamente.");
 					
 		} catch (SeguridadException e) {
 			LOG.error("Un usuario ha intentado eliminar un clásico que no ha registrado: " + usuario);

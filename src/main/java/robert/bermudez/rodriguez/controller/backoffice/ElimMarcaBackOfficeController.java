@@ -33,7 +33,7 @@ public class ElimMarcaBackOfficeController extends HttpServlet {
 			int idMarca = Integer.parseInt(id);
 
 			marca = dao.delete(idMarca);	
-			alerta = new Alerta("success", marca + " eliminada con éxito.");
+			alerta = new Alerta("success",  "<b>" + marca + "</b> borrada correctamente.");
 
 		} catch (Exception e) {
 			LOG.error(e);
