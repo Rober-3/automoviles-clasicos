@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
-import robert.bermudez.rodriguez.modelo.pojo.Usuario;
 
 @WebServlet("/views/backoffice/clasicos")
 public class ClasicosBackOfficeController extends HttpServlet {
