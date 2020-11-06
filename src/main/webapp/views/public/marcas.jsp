@@ -19,7 +19,6 @@
 								<img src="${c.foto}" class="card-img-top" alt="Foto del clásico">
 								<div class="card-body">
 									<h5 class="card-title font-weight-bold text-center">${c.modelo}</h5>
-									<!-- <p class="card-text">Marca: <b>${c.marca.marca}</b></p> -->
 									<p class="card-text">Año: <b>${c.anio}</b></p>
 									<p class="card-text">Subido por: <b>${c.usuario.nombre}</b></p>
 									<a href="${c.foto}" target="_blank" class="card-link foto">Ver el clásico</a>
@@ -34,19 +33,24 @@
 		<c:if test="${not empty marca}">
 			<h2 class="text-center">${marca}</h2>
 			<div class="row mt-5">
-				<c:forEach items="${clasicos}" var="c">
-					<div class="card bg-light mb-5 mx-auto" style="max-width: 18rem;">
-						<img src="${c.foto}" class="card-img-top" alt="Foto del clásico">
-						<div class="card-body">
-							<h5 class="card-title font-weight-bold">${c.modelo}</h5>
-							<!-- <p class="card-text">Marca: <b>${c.marca.marca}</b></p> -->
-							<p class="card-text">Año: <b>${c.anio}</b></p>
-							<a href="${c.foto}" target="_blank" class="card-link foto">Ver el clásico</a></b>
-							<p class="card-text">Subido por: <b>${c.usuario.nombre}</b></p>
+				<c:if test="${not empty clasicos}">
+					<c:forEach items="${clasicos}" var="c">
+						<div class="card bg-light mb-5 mx-auto" style="max-width: 18rem;">
+							<img src="${c.foto}" class="card-img-top" alt="Foto del clásico">
+							<div class="card-body">
+								<h5 class="card-title font-weight-bold">${c.modelo}</h5>
+								<p class="card-text"> Año: <b>${c.anio}</b></p>
+								<a href="${c.foto}" target="_blank" class="card-link foto">Ver el clásico</a>
+								<p class="card-text">Subido por: <b>${c.usuario.nombre}</b>
+								</p>
+							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</c:if>
 			</div>
+				<c:if test="${empty clasicos}">
+					<h4 class="text-center">No hay modelos que mostrar.</h4>
+				</c:if>
 		</c:if>
 	</div>
 </main>
