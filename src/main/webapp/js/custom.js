@@ -1,10 +1,38 @@
 // Script necesario para ejecutar el plugin DataTables.
 $(document).ready(function() { // Ejecuta la funcion cuando todo el documento de HTML DOM esté listo y cargado.
-	// Selecciona el id de la tabla y ejecuta el plugin .DataTable().
-    // "#" puede ser id (#) o class(.) y tabla cualquier nombre. Hace referencia a la tabla.
-    $('.tabla').DataTable();
+	// $('#example').DataTable: Selecciona el id de la tabla y ejecuta el plugin .DataTable().
+	// "#" puede ser id (#) o class(.) y example cualquier nombre. Hace referencia a la tabla.
+	$('.tabla').DataTable({
+		language: {
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se han encontrado resultados",
+			"sEmptyTable":     "No hay datos disponibles",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Ordenar de manera ascendente",
+				"sSortDescending": ": Ordenar de manera descendente"
+			},
+			"buttons": {
+				"copy": "Copiar",
+				"colvis": "Visibilidad"
+			}
+		}
+	});
 });
-
 
 function init() {
 	console.log('Documento cargado y listo.');
