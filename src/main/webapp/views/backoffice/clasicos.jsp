@@ -12,11 +12,11 @@
 		<table class="tabla table table-striped mt-3">
 			<thead class="thead-light">
 				<tr>
-					<th scope="col" class="text-center">Id</th>
-					<th scope="col" class="text-center">Modelo</th>
-					<th scope="col" class="text-center">Marca</th>
-					<th scope="col" class="text-center">Año</th>
-					<th scope="col" class="text-center">Foto</th>
+					<th scope="col">Id</th>
+					<th scope="col">Modelo</th>
+					<th scope="col">Marca</th>
+					<th scope="col">Año</th>
+					<th scope="col">Foto</th>
 					<th scope="col"></th>
 				</tr>
 			</thead>
