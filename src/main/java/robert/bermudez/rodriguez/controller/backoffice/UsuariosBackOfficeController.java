@@ -49,7 +49,7 @@ public class UsuariosBackOfficeController extends HttpServlet {
 		}
 		
 		request.setAttribute("usuarios", usuarios);
-		request.setAttribute("encabezado", "Lista" );
+		request.setAttribute("encabezado", "Lista de usuarios" );
 		request.getRequestDispatcher("usuarios.jsp").forward(request, response);
 		
 	} // doGet

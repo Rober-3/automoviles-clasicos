@@ -43,7 +43,7 @@ public class ClasicosBackOfficeController extends HttpServlet {
 				clasicos = dao.getAllValidation(true);
 				
 			} else {
-				encabezado = "Lista";
+				encabezado = "Todos los clásicos";
 				clasicos = dao.getAll();
 			}
 			
