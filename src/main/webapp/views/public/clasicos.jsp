@@ -13,7 +13,7 @@
 %>
 
 <main>
-	<div class="tablaclasicos container my-5">
+	<div class="container my-5">
 		<img src="img/encabezado-americanos.png" class="mx-auto my-5 d-block">
 
 		<table class="tabla table table-striped mt-3">
@@ -38,7 +38,7 @@
 						<td class="align-middle">${c.anio}</td>
 						<td>
 							<img src="${c.foto}" class="img-thumbnail" alt="foto">
-							<a href="${c.foto}" target="_blank">Pulsa para ver</a>
+							<div><a href="${c.foto}" target="_blank">Ver  el clásico</a></div>
 						</td>
 						<!-- <td class="align-middle">
 						
