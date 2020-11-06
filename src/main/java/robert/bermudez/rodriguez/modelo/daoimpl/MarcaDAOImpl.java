@@ -48,9 +48,9 @@ public class MarcaDAOImpl implements MarcaDAO {
 	private static final String SQL_GET_ALL_WITH_CLASSICS = "SELECT m.id 'id_marca', marca, c.id 'id_modelo', modelo, anio, foto, u.id 'id_usuario', u.nombre 'nombre_usuario' " +
 															"FROM marcas m, clasicos c, usuarios u " + 
 															"WHERE m.id = id_marca " +
-															"AND u.id = m.id_usuario " +
+															"AND u.id = id_usuario " +
 															"AND c.fecha_validacion IS NOT NULL " +
-															"ORDER BY marca ASC";
+															"ORDER BY marca ASC;";
 	private static final String SQL_GET_BRAND_STATISTICS =	"SELECT total FROM v_estadisticas_marcas;";
 
 	
