@@ -4,11 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="es">
-
-	<!-- Si en una de las páginas hay un enlace css de más, incluirlo en la cabecera aunque las demás páginas
-		 no lo usen. Es mucho más práctico hacerlo así que hacer una cabecera específica para cada página.-->
-
-	<head>
+<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,18 +12,20 @@
 		     el nombre del proyecto. Haciendo este cambio no será necesario el ../../ para saltar carpetas.
 		     Todas las rutas se compondrán de la raíz del proyecto hacia delante.-->
 		<!-- <base href="http://localhost:8080/automoviles-clasicos/" /> -->
-
+		
 		<!-- Si se cambia la ruta del proyecto lo anterior no funciona, así que para hacerlo dinámico habrá que
 		     usar esta línea. Así, todas las URL del proyecto comenzarán con contextPath. El valor de éste será
 		     el contexto o nombre de la aplicación, que en este caso será automoviles-clasicos. -->
 		<base href="${pageContext.request.contextPath}/" />
 
+		<!-- Si en una de las páginas hay un enlace css de más, incluirlo en la cabecera aunque las demás páginas
+		 no lo usen. Es mucho más práctico hacerlo así que hacer una cabecera específica para cada página.-->
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 		<!-- Datatables CSS -->
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 		<!-- CSS personalizado -->
 		<!-- <link rel="stylesheet" href="css/styles.css"> -->
 		<!-- System.currentTimeMillis()% obliga a cargar siempre el CSS. -->
@@ -39,9 +37,8 @@
 <body>
 	<header>
 		<!-- Barra de navegación -->
-		<nav
-			class="barra text-light navbar navbar-expand-lg navbar-light bg-light py-4">
-			<a class="navbar-brand" href="#">Navbar</a>
+		<nav class="barra text-light navbar navbar-expand-lg navbar-light bg-light py-4">
+			<a  href="inicio"><img src="img/logo.png" class="logo mr-3" alt="logo"></a>
 			<button class="navbar-toggler"
 					type="button"
 					data-toggle="collapse"
@@ -58,12 +55,6 @@
 					<li class="nav-item active font-weight-bold">
 						<a class="nav-link text-white" href="inicio">Inicio <span class="sr-only">(current)</span></a>
 					</li>
-					<!-- Esta parte sólo se muestra si un usuario ha iniciado sesión. -->
-					<c:if test="${not empty sessionScope.usuario}">
-						<li class="nav-item font-weight-bold">
-							<a class="nav-link text-white" href="doc/index.html" target="_blank">API JavaDoc</a>
-						</li>
-					</c:if>
 					<li class="nav-item font-weight-bold">
 						<a class="nav-link text-white ${ ('Clasicos americanos' eq param.pagina ?'disabled' :'') }" 
 						   href="clasicos" tabindex="-1" aria-disabled="true"> Clásicos</a> <!-- ClasicosController -->
@@ -74,8 +65,8 @@
 					</li>
 					<li class="nav-item font-weight-bold">
 						<a class="nav-link text-white ${ ('Formulario marcas' eq param.pagina ?'disabled' :'') }"
-						   href="marcas">Nueva marca</a> -->
-					</li>
+						   href="marcas">Nueva marca</a>
+					</li> -->
 					<li class="nav-item">
 						<div class="dropdown">
 							<button class="btn dropdown-toggle bg-transparent font-weight-bold text-white"
@@ -110,6 +101,7 @@
 						<c:if test="${sessionScope.usuario.rol.rol == 'administrador'}">
 							<a class="nav-link text-white" href="views/backoffice/inicio">Mi panel</a>
 						</c:if>
+						<a class="nav-link text-white" href="doc/index.html" target="_blank">API JavaDoc</a>
 						<a class="nav-link text-white" href="logout">Cerrar sesión</a>
 					</c:if>
 				</span>

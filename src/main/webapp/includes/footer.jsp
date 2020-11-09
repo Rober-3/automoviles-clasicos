@@ -7,7 +7,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 <!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+<!-- Script para login.jsp -->
+<script src="js/scripts.js"></script>
 
 <!-- Javascript personalizado -->
 <script src="js/custom.js"></script>
