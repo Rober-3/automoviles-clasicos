@@ -27,7 +27,10 @@
 						<td class="align-middle">${c.modelo}</td>
 						<td class="align-middle">${c.marca.marca}</td> <!-- Accede al atributo marca del objeto Marca. -->
 						<td class="align-middle">${c.anio}</td>
-						<td class="align-middle"><img src="${c.foto}"class="miniatura img-thumbnail" alt="foto"></td>
+						<td class="align-middle">
+							<img src="${c.foto}"class="miniatura img-thumbnail" alt="foto">
+							<div><a href="${c.foto}" target="_blank">Ver  el clásico</a></div>
+						</td>
 						<td class="align-middle">
 							<% // Se pasa el id del clásico a editar, eliminar o validar como parámetro en la URL. %>
 							<a href="views/backoffice/insertar-editar-clasico?id=${c.id}"> <!-- InsEditClasBackOfficeController -->
