@@ -2,13 +2,22 @@
 	background: linear-gradient(#0B610B, #0B3B0B);
 }
 
+body {
+	background-image: url("../img/fondo.jpg");
+	background-repeat: repeat;
+}
+
+.logo {
+	max-width: 3rem;
+}
+
 .formulario {
 	height: auto;
 	width: 500px;
 }
 
 .img-thumbnail, .foto {
-	max-width: 10rem;
+	max-width: 6rem;
 	height: auto;
 }
 
