@@ -109,7 +109,7 @@ public class UsuariosLogueadosListener implements HttpSessionListener, HttpSessi
     		hm.put(idSesion, usuario); // Guarda el usuario en el HashMap usando su id de sesión
     		LOG.trace("Usuario guardado en el HashMap.");
     		
-    		ctx.setAttribute("usuariosLogueados", hm);  // Muestra el HashMap en el backoffice.
+    		ctx.setAttribute("usuariosLogueados", hm);  // Muestra el HashMap en views/backoffice/index.jsp
     		
     	} // if
     	
