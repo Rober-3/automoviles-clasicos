@@ -39,8 +39,12 @@ public class ElimMarcaBackOfficeController extends HttpServlet {
 			LOG.error(e);
 
 		} finally {
-			request.setAttribute("alerta", alerta);
-			request.getRequestDispatcher("marcas.jsp").forward(request, response);
+			request.getSession().setAttribute("alerta", alerta);
+			response.sendRedirect(request.getContextPath() + "/views/backoffice/marcas");
+			
+			
+			// request.setAttribute("alerta", alerta);
+			// request.getRequestDispatcher("marcas.jsp").forward(request, response);
 		}
 		
 	} // doGet
