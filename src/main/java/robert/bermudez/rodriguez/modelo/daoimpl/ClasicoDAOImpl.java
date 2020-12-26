@@ -1,9 +1,5 @@
 package robert.bermudez.rodriguez.modelo.daoimpl;
 
-// TODO Notas. Clase que emplea el patrón singleton y el patrón DAO. 
-//			   - Singleton consta de un constructor privado y un método getInstance().
-//			   - DAO implementa los métodos CRUD de de la interfaz (getByid, getAll, insert, update y delete).
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,17 +32,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 	private static final Logger LOG = Logger.getLogger(ClasicoDAOImpl.class);
 
-	// TODO Notas. Patrón singleton
-
 	private static ClasicoDAOImpl INSTANCE = null;
 
-	private ClasicoDAOImpl() { // Se declara el constructor como privado para evitar crear instancias con new.
+	private ClasicoDAOImpl() {
 		super();
 	}
 
-	// getInstance() obtiene una instancia ÚNICA de la clase. Las siguientes ocasiones en las que se intente
-	// crear instancias, como INSTANCE ya no será null el método devolverá la clase única creada anteriormente.
-	// synchronized evita que varios hilos o ejecuciones puedan entrar a la vez.
 	public static synchronized ClasicoDAOImpl getInstance() {
 
 		if (INSTANCE == null) {
@@ -56,13 +47,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 	} // getInstance()
 
-
-
-	// TODO Notas. Patrón DAO
-
-	// QUERYS
-
-	// executeQuery devuelve un ResultSet.
 
 	private static final String SQL_SELECT_FROM_WHERE =	"SELECT c.id 'id_modelo', modelo, m.id 'id_marca', marca, anio, foto, " +
 			"u.id 'id_usuario', u.nombre 'nombre_usuario' " +
@@ -94,7 +78,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	private static final String SQL_GET_USER_SUMMARY = "SELECT id_usuario, total, aprobados, pendientes FROM v_clasicos_usuario WHERE id_usuario = ?;";
 	private static final String SQL_GET_CLASSIC_STATISTICS = "SELECT total, aprobados, pendientes FROM v_estadisticas_clasicos;";
 
-	// executeUpdate devuelve un int que representa el número de filas afectadas.
+	
 	private static final String SQL_INSERT =	     "INSERT INTO clasicos (modelo, id_marca, anio, foto, id_usuario) VALUES (?, ?, ?, ?, ?);";
 	private static final String SQL_UPDATE =		 "UPDATE clasicos SET modelo = ?, id_marca = ?, anio = ?, foto = ? WHERE id = ?;";
 	private static final String SQL_UPDATE_BY_USER = "UPDATE clasicos SET modelo = ?, id_marca = ?, anio = ?, foto = ?, fecha_validacion = NULL WHERE id = ? AND id_usuario = ?;";
@@ -103,8 +87,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	private static final String SQL_VALIDATE =		 "UPDATE clasicos SET fecha_validacion = NOW() WHERE id = ?;";
 
 
-
-	// MÉTODOS.
 
 	/**
 	 * Obtiene de la base de datos, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id.
@@ -117,16 +99,16 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 		Clasico clasico = new Clasico();
 
-		try (	Connection con = ConnectionManager.getConnection(); // Obtener la conexión.
-				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_ID); // Preparar el Statement.
+		try (	Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_BY_ID);
 				) {
 
-			pst.setInt(1, idModelo); // Antes de ejecutar la query hay que sustituir todas las ? que contenga.
+			pst.setInt(1, idModelo);
 			LOG.debug(pst);
 
 			try (ResultSet rs = pst.executeQuery()) {
 
-				if (rs.next()) { // Si encuentra un resultado en el ResultSet...
+				if (rs.next()) {
 					clasico = mapper(rs);
 
 				} else {
@@ -190,7 +172,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 			LOG.debug(pst);
 
-			while (rs.next()) { // Mientras encuentre resultados en el ResultSet...
+			while (rs.next()) {
 				clasicos.add(mapper(rs));	
 			}
 
@@ -243,7 +225,7 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			LOG.debug(pst);
 
 			try (ResultSet rs = pst.executeQuery()) {
-				while (rs.next()) { // Mientras encuentre resultados en el ResultSet...
+				while (rs.next()) {
 					clasicos.add(mapper(rs));	
 				}
 			}
@@ -323,9 +305,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 				) {
 
 			pst.setInt(1, idMarca);
-			// Si se añade esta línea dará una excepción, ya que aunque el método 
-			// tiene dos parámetros en la query sólo hay que sustituir una ?.
-			// pst.setInt(2, numReg);
 			LOG.debug(pst);
 
 			try (ResultSet rs = pst.executeQuery()) {
@@ -466,19 +445,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	@Override
 	public Clasico insert(Clasico pojo) throws Exception {
 
-		// En la bbdd dentro de la tabla clasicos hay dos campos que no están en el pojo Clasico: fecha_creacion y fecha_validacion.
-		// fecha_creacion se añade automáticamente al insertar un clásico, ya que el valor por defecto de ese campo es CURRENT_TIMESTAMP.
-		// fecha_validacion se añade con el método validar y se anula con updateByUser.
-
-		// Clasico clasico = new Clasico(); // No es necesario declarar un clásico, con devolver el pojo que admite como argumento es suficiente.
-
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-				// RETURN_GENERATED_KEYS es una constante de una clase de Java que sirve para devolver la clave generada por la bbdd.
 				) {
 
 			pst.setString(1, pojo.getModelo());
-			pst.setInt(2, pojo.getMarca().getId()); // Marca es un objeto, por tanto hay que acceder a su atributo id.
+			pst.setInt(2, pojo.getMarca().getId());
 			pst.setString(3, pojo.getAnio());
 			pst.setString(4, pojo.getFoto());
 			pst.setInt(5, pojo.getUsuario().getId());
@@ -487,10 +459,10 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 			int affectedRows = pst.executeUpdate();
 			if (affectedRows == 1) {
 
-				try (ResultSet rsKeys = pst.getGeneratedKeys()) { // Obtiene el id generado por la bbdd.
+				try (ResultSet rsKeys = pst.getGeneratedKeys()) {
 
 					if (rsKeys.next()) {
-						int id = rsKeys.getInt(1); // Obtener el id generado automáticamente por la BBDD.
+						int id = rsKeys.getInt(1);
 						pojo.setId(id);
 					}
 
@@ -514,55 +486,12 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 	 * @param pojo (Objeto Clasico) Modelo a actualizar.
 	 * @return Clasico (Objeto Clasico) Modelo actualizado.
 	 */
-	/*@Override
-	public Clasico update(Clasico pojo) throws SeguridadException, Exception {
-
-		try (	Connection con = ConnectionManager.getConnection();
-				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
-				) {
-
-			// Comprueba el rol del usuario antes de hacer update: si es el del administrador
-			// modifica el registro, en caso contrario lanza una SeguridadException.
-			int rol = pojo.getUsuario().getRol().getId();
-
-			if (rol == Rol.ADMINISTRADOR) {
-
-				pst.setString(1, pojo.getModelo());
-				pst.setInt(2, pojo.getMarca().getId());
-				pst.setString(3, pojo.getAnio());
-				pst.setString(4, pojo.getFoto());
-				pst.setInt(5, pojo.getId());
-				LOG.debug(pst);
-
-				int affectedRows = pst.executeUpdate();
-				if (affectedRows != 1) {
-					throw new Exception("No se han actualizado correctamente los datos del clásico " + pojo + ".");
-				}
-
-			} else {
-				LOG.error("Un usuario ha intentado eliminar un clásico que no ha registrado: " + pojo.getUsuario());
-				throw new SeguridadException();
-			}
-
-		} // try
-
-		return pojo;
-
-	} // update*/
-
 	@Override
 	public Clasico update(Clasico pojo) throws Exception {
 
 		try (	Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);
 				) {
-
-
-			//TODO antes de modificar comprobar el ROL del usuario
-			// si es ADMIN hacer la update que tenemos abajo
-			// si es USER comprobar que le pertenezca ??
-
-			// throw new SeguridadException();
 
 			pst.setString(1, pojo.getModelo());
 			pst.setInt(2, pojo.getMarca().getId());
@@ -662,12 +591,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 
 			pst.executeUpdate();
 
-			// Como getById lanza una excepción si se intenta acceder a un clásico no autorizado, basta con hacer executeUpdate.
-			// int affectedRows = pst.executeUpdate(); 
-			// if (affectedRows != 1) {
-			//	 throw new SeguridadException();
-			// }
-
 		} // try
 
 		return clasico;
@@ -710,8 +633,6 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		marca.setId(rs.getInt("id_marca"));
 		marca.setMarca(rs.getString("marca"));
 
-		// Mostrar el nombre del usuario en una tabla de clásicos de su propio panel carece de utilidad. Sin embargo, en el
-		// backoffice o en la parte pública será útil mostrar los datos de este usuario.
 		Usuario usuario = new Usuario();
 		usuario.setId(rs.getInt("id_usuario"));
 		usuario.setNombre(rs.getString("nombre_usuario"));
@@ -727,37 +648,5 @@ public class ClasicoDAOImpl implements ClasicoDAO {
 		return clasico;
 
 	} // mapper
-
-
-	// Método para obtener los clásicos sin utilizar vistas.
-	//	@Override
-	//	public ArrayList<Clasico> getAllByUser(int idUsuario, boolean isValidado) {
-	//		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
-	//
-	//		String sql = ( isValidado ) ? SQL_GET_ALL_BY_USER_CLASICO_VALIDADO :  SQL_GET_ALL_BY_USER_CLASICO_SIN_VALIDAR;
-	//		
-	//		try (
-	//				Connection conexion = ConnectionManager.getConnection();
-	//				PreparedStatement pst = conexion.prepareStatement(sql);
-	//			) {
-	//			
-	//			// pst.setBoolean(1, isValidado); // Sustituye isValidado con un 1 o un 0 dependiendo de la query usada.
-	//			pst.setNull(1, java.sql.Types.NULL);
-	//			pst.setInt(1, idUsuario);
-	//			LOG.debug(pst);
-	//			
-	//			try( ResultSet rs = pst.executeQuery() ){				
-	//				while (rs.next()) {	
-	//					clasicos.add(mapper(rs));	
-	//				}
-	//			}	
-	//
-	//		} catch (Exception e) {
-	//			LOG.error(e);
-	//		}
-	//
-	//		return clasicos;
-	//		
-	//	} //  getAllByUser
 
 } // class

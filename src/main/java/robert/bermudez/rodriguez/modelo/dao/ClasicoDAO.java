@@ -1,8 +1,5 @@
 package robert.bermudez.rodriguez.modelo.dao;
 
-// TODO Notas: interface que extiende de CrudAble y que contiene métodos adicionales a los métodos CRUD básicos.
-//			   En esta interface la C de CrudAble, que es una clase genérica, se ha sustituido por la clase Clasico.
-
 import java.util.ArrayList;
 
 import robert.bermudez.rodriguez.interfaces.CrudAble;
@@ -69,15 +66,6 @@ public interface ClasicoDAO extends CrudAble<Clasico>  {
 	 */
 	void validate (int idModelo);
 	
-	
-	
-	// Estos métodos se declaran por seguridad, para evitar accesos por parte de un usuario a clásicos que no le
-	// pertenecen. Estos accesos no autorizados podrían realizarse introduciendo en las URL id de clásicos que no
-	// corresponden al usuario, o inspeccionando el código fuente y en los enlaces de editar o eliminar registros
-	// introducir esos mismos id. Para ello, antes de manipular registros se solicita el id del usuario, y en caso
-	// de ser un usuario no autorizado se lanza una excepción personalizada. Los métodos básicos getById y delete
-	// se mantienen para que un administrador, al tener privilegios totales, pueda hacer cualquier operación con
-	// cualquier registro.
 	
 	/**
 	 * Obtiene de la bbdd, tabla clasicos, un modelo (objeto de tipo Clasico) por medio de su id y comprobando que

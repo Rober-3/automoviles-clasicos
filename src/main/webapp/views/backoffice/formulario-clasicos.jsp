@@ -7,9 +7,8 @@
 <jsp:include page="../../includes/office-navbar-admin.jsp" />
 <main class="container mt-2">
 	<div class="formulario container shadow-lg p-3 mb-5 bg-white rounded">
-		<h3 class="my-3 text-center">${encabezado}</h3> <!-- InsEditClasBackOfficeController -->
-		<!-- Formulario -->
-		<form action="views/backoffice/insertar-editar-clasico" method="post" class="mt-3 px-3 font-weight-bold"> <!-- InsEditClasBackOfficeController -->
+		<h3 class="my-3 text-center">${encabezado}</h3>
+		<form action="views/backoffice/insertar-editar-clasico" method="post" class="mt-3 px-3 font-weight-bold">
 			<div class="form-group">
 				<label for="id">Id:</label>
 				<input type="text" 
@@ -35,7 +34,6 @@
 						class="custom-select">
 					<option>Selecciona una marca</option>
 					<c:forEach items="${marcas}" var="m">
-						<!-- El operador ternario hace que al editar un clásico aparezca seleccionada su marca. -->
 						<option value="${m.id}" ${ (m.id eq clasico.marca.id) ?"selected" :"" }>${m.marca}</option>
 					</c:forEach>
 				</select>

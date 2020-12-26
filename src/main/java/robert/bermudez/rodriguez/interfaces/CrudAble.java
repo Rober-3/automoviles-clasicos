@@ -1,8 +1,5 @@
 package robert.bermudez.rodriguez.interfaces;
 
-// TODO Notas: Crudable, interface que contiene los métodos CRUD básicos.
-// P es una clase genérica que puede ser sustituída por cualquier otra.
-
 import java.util.ArrayList;
 
 public interface CrudAble<P> {

@@ -47,12 +47,7 @@ public class InicioBackOfficeController extends HttpServlet {
 		EstadisticasUsuario estadisticasUsuarios = daoUsuario.getUserStatistics();
 		String encabezado = "Mi panel";
 		
-		// Cuidado con la URL del servlet ("/views/frontoffice/inicio") ya que al hacer forward se sustitituye la última
-		// parte (inicio) por la variable pagina (ver más abajo).
-
-		// El forward resuelve la URL de la siguiente manera:
-		// "/views/backOffice/inicio" + "index.jsp"  =  "/views/backOffice/index.jsp"
-		String pagina = "index.jsp"; // index.jsp de backoffice, no el index.jsp general.
+		String pagina = "index.jsp"; // backoffice/index.jsp
 		LOG.debug("forward: " + pagina);
 
 		request.setAttribute("estadisticasClasicos", estadisticasClasicos);
@@ -63,8 +58,7 @@ public class InicioBackOfficeController extends HttpServlet {
 
 	} // doGet
 
-	// Si se elimina este método, al iniciar sesión en el backoffice dará un error 405:
-	// "HTTP Status 405 – Method Not Allowed HTTP method POST is not supported by this URL"
+	// Si se elimina este método, al iniciar sesión en el backoffice dará un error 405.
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

@@ -12,11 +12,9 @@
 						<h3 class="text-center font-weight-light my-4">Registro de usuario</h3>
 					</div>
 					<div class="card-body">
-						<form action="registro" method="post" class="mt-3"> <!-- RegistroUsuarioController -->
+						<form action="registro" method="post" class="mt-3">
 							<div class="form-group">
 								<label class="mb-1" for="nombre">Nombre de usuario</label>
-								<!-- Etiqueta que emplea Bootstrap para mostrar mensajes en pequeño encima de un
-						 			 campo. Se usará para indicar si el nombre de usuario está o no disponible. -->
 								<small id="nombreHelp" class="form-text"></small>
 								<input class="form-control py-4"
 									   type="text"

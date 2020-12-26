@@ -27,7 +27,7 @@ public class ClasicosBackOfficeController extends HttpServlet {
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 		String encabezado = "";
 		
-		// Recogida de parámetros de office-navbar-admin.jsp
+		// office-navbar-admin.jsp
 		String validados = request.getParameter("validados");
 		String total = request.getParameter("total");
 		

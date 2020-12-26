@@ -34,7 +34,7 @@ public class InsEditMarcaFrontOfficeController extends HttpServlet {
 		Alerta alerta = new Alerta();
 		String encabezado = "Nueva marca";
 
-		String id = request.getParameter("id"); // views/frontoffice/marcas.jsp
+		String id = request.getParameter("id"); // frontoffice/marcas.jsp
 
 		try {
 
@@ -63,7 +63,7 @@ public class InsEditMarcaFrontOfficeController extends HttpServlet {
 		Marca marca = new Marca();
 		Alerta alerta = new Alerta();
 		
-		// views/frontoffice/formulario-marcas.jsp
+		// frontoffice/formulario-marcas.jsp
 		String paramIdMarca = request.getParameter("id");
 		String paramMarca = request.getParameter("marca");
 		

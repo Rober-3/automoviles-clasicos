@@ -19,8 +19,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	private static final Logger LOG = Logger.getLogger(UsuarioDAOImpl.class);
 
-	// Singleton
-
 	private static UsuarioDAOImpl INSTANCE = null;
 
 	private UsuarioDAOImpl() {
@@ -97,9 +95,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public ArrayList<Usuario> getAll() throws Exception {
-
-		// Acceder a getAll() de esta manera podría ocasionar un desbordamiento de la variable si la BBDD tuviese millones de registros.
-		// ArrayList<Usuario> usuarios = getAll();
 
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 		Usuario usuario;
@@ -312,37 +307,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		}
 
 		return usuario;
-
-//		Método antes de modificarlo. Lanzaba excepciones que debía recoger LoginController en el doPost.
-
-//		Usuario usuario = new Usuario();
-
-//		try(
-//				Connection con = ConnectionManager.getConnection();
-//				PreparedStatement pst = con.prepareStatement(SQL_EXISTS);
-//
-//				) {
-
-//			pst.setString(1, nombre);
-//			pst.setString(2, contrasena);
-
-//			try (ResultSet rs = pst.executeQuery()) {
-
-//				if (rs.next()) {
-//					usuario = mapper(rs);
-//
-//				} else {
-//					throw new Exception("No existen en la base de datos usuarios con el nombre " + nombre + " y la contrasena "
-//								+ contrasena + ".");
-//				}
-
-//			} // try
-
-//		} catch (Exception e) {
-//					e.printStackTrace();
-//		}
-
-//		return usuario;
 
 	} // exists
 

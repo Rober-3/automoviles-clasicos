@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <jsp:include page="../../includes/head.jsp">
 	<jsp:param name="pagina" value="Marcas" />
 	<jsp:param name="title" value="Marcas" />
 </jsp:include>
-
 <main>
 	<div class="container mt-5">
 		<c:if test="${empty marca}">

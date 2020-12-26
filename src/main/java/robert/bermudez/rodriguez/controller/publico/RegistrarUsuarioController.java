@@ -88,12 +88,9 @@ public class RegistrarUsuarioController extends HttpServlet {
 			LOG.error(e);
 			
 		} finally {
-			
-			// Si se guarda una alerta en una request, al hacer sendRedirect se perderá. La solución está en guardarla en la sesión.
 			request.getSession().setAttribute("alerta", alerta);
 			
 			if (isError) {
-				// Envia de nuevo el nombre para evitar que el usuario tenga que escribirlo de nuevo.
 				request.setAttribute("nombre", nombre);
 				request.getRequestDispatcher("views/public/registro.jsp").forward(request, response);
 				

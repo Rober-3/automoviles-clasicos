@@ -9,7 +9,6 @@
 	<name>automoviles-clasicos</name>
 
 
-	<!-- variables comunes para todo el POM -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>1.8</java-version>
@@ -19,15 +18,13 @@
 		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
 	</properties>
 
-	<!-- librerias que vamos a usar u otros proyectos maven -->
 	<dependencies>
 
-		<!-- Web Project 3.0 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${javax.servlet.api}</version>
-			<scope>provided</scope>  <!-- Nos lo provee el servidor de aplicaciones, no hace falta incluir la librería en el proyecto. -->
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -43,7 +40,6 @@
 			<version>${javax.servlet.jstl.version}</version>
 		</dependency>
 
-		<!-- libreria MySQL -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -56,7 +52,6 @@
 			<version>2.0.16</version>
 		</dependency>
 
-		<!-- Dependencia para usar el sistema de logs. -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -64,17 +59,12 @@
 		</dependency>
 
 
-		<!-- Validation API, Validation API Reference Implementation y Expression Language Dependencies:
-			 dependencias añadidas para hacer las validaciones de los campos del pojo. -->
-
-		<!-- Validation API -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>2.0.0.Final</version>
 		</dependency>
 		
-		<!-- Validation API Reference Implementation -->
 		<dependency>
     		<groupId>org.hibernate.validator</groupId>
     		<artifactId>hibernate-validator</artifactId>
@@ -87,7 +77,6 @@
     		<version>6.0.2.Final</version>
 		</dependency>
 
-		<!-- Expression Language Dependencies -->
 		<dependency>
     		<groupId>javax.el</groupId>
 			<artifactId>javax.el-api</artifactId>
@@ -101,19 +90,15 @@
 		</dependency>
 
 
-		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-			<scope>test</scope> <!-- solo se usa para Test, cuando se crea el projecto no se usa esta libreria (lo indica el scope).-->
+			<scope>test</scope>
 		</dependency>
 
 
-
 	</dependencies>
-
-
 
 
 	<build>

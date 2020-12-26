@@ -2,7 +2,6 @@ package robert.bermudez.rodriguez.modelo.pojo;
 
 public class Rol {
 	
-	// Constantes necesarias para acceder al backoffice o frontoffice desde LoginController.
 	public static final int ADMINISTRADOR = 2;
 	public static final int USUARIO = 1;
 	

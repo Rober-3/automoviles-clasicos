@@ -35,7 +35,7 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 		Clasico clasico = new Clasico();
 		Alerta alerta = null;
 
-		// views/backoffice/clasicos.jsp
+		// backoffice/clasicos.jsp
 		String id = request.getParameter("id");
 		String validado = request.getParameter("validado");
 
@@ -70,7 +70,7 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 		Usuario usuario = new Usuario();
 		Alerta alerta = null;
 
-		// views/backoffice/formulario-clasicos.jsp
+		// backoffice/formulario-clasicos.jsp
 		String paramIdModelo = request.getParameter("id");
 		String modelo = request.getParameter("modelo");
 		String paramIdMarca = request.getParameter("id_marca");
@@ -98,7 +98,6 @@ public class InsEditClasBackOfficeController extends HttpServlet {
 			clasico.setFoto(foto);
 			clasico.setUsuario(usuario);
 
-			// Comprueba si se han rellenado los campos requeridos. En caso contrario muestra mensajes de advertencia.
 			Set<ConstraintViolation<Clasico>> violations = validator.validate(clasico);
 
 			if (violations.isEmpty()) {

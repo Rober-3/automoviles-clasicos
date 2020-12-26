@@ -14,9 +14,6 @@ import org.apache.log4j.Logger;
 import robert.bermudez.rodriguez.modelo.daoimpl.ClasicoDAOImpl;
 import robert.bermudez.rodriguez.modelo.pojo.Clasico;
 
-/**
- * Servlet implementation class InicioController
- */
 @WebServlet("/inicio")
 public class InicioController extends HttpServlet {
 
@@ -29,10 +26,12 @@ public class InicioController extends HttpServlet {
 		ArrayList<Clasico> clasicos = new ArrayList<Clasico>();
 
 		try {
+			
 			clasicos = dao.getAleatory();
 			Clasico clasico1 = clasicos.get(0);
 			Clasico clasico2 = clasicos.get(1);
 			Clasico clasico3 = clasicos.get(2);
+			
 			request.setAttribute("clasico1", clasico1);
 			request.setAttribute("clasico2", clasico2);
 			request.setAttribute("clasico3", clasico3);
@@ -46,9 +45,7 @@ public class InicioController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		doGet(request, response);
-
-	} // doPost
+	}
 
 } // class

@@ -21,11 +21,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${clasicos}" var="c"> <!-- ClasicosBackOfficeController. -->
+				<c:forEach items="${clasicos}" var="c">
 					<tr>
 						<td class="align-middle">${c.id}</td>
 						<td class="align-middle">${c.modelo}</td>
-						<td class="align-middle">${c.marca.marca}</td> <!-- Accede al atributo marca del objeto Marca. -->
+						<td class="align-middle">${c.marca.marca}</td>
 						<td class="align-middle">${c.anio}</td>
 						<td class="align-middle">
 							<img src="${c.foto}"class="miniatura img-thumbnail" alt="foto">
@@ -33,13 +33,12 @@
 						</td>
 						<td class="align-middle">
 							<% // Se pasa el id del clásico a editar, eliminar o validar como parámetro en la URL. %>
-							<a href="views/backoffice/insertar-editar-clasico?id=${c.id}"> <!-- InsEditClasBackOfficeController -->
+							<a href="views/backoffice/insertar-editar-clasico?id=${c.id}">
 							<i class="fas fa-edit fa-1x mx-2 align-middle" title="Editar"></i></a>
-							<!-- El evento confirmar ejecuta un script de JavaScript para confirmar la eliminación de un modelo. custom-office.js -->
-							<a href="views/backoffice/eliminar-clasico?id=${c.id}" onclick="confirmar('${c.modelo}')"> <!-- ElimClasBackOfficeController -->
+							<a href="views/backoffice/eliminar-clasico?id=${c.id}" onclick="confirmar('${c.modelo}')">
 							<i class="fas fa-trash fa-1x mx-2" title="Eliminar"></i></a>
-							<c:if test="${validados=='no'}"> <!-- ClasicosBackOfficeController -->
-								<a href="views/backoffice/insertar-editar-clasico?id=${c.id}&validado=no"> <!-- InsEditClasBackOfficeController -->
+							<c:if test="${validados=='no'}">
+								<a href="views/backoffice/insertar-editar-clasico?id=${c.id}&validado=no">
 								<i class="fas fa-check-square" title="Validar"></i></a>
 							</c:if>
 						</td>

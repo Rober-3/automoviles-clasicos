@@ -1,8 +1,5 @@
 package robert.bermudez.rodriguez.modelo.pojo;
 
-// TODO Notas. Cuando se crea una vista en la BBDD hay que hacer una serie de cambios a nivel de Java:
-//			   Crear un	POJO para la vista y cambiar el DAO, DAOImpl, controlador y vista.
-
 /**
  * Pojo para guardar datos estadísticos del usuario:<br><br>
  * - clásicos totales del usuario<br>

@@ -32,37 +32,15 @@ public class InicioFrontOfficeController extends HttpServlet {
 		
 		LOG.trace("Panel de inicio.");
 		
-		// Recuperar el usuario de la sesión.
 		HttpSession session = request.getSession();
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		int idUsuario = usuario.getId();
 		
-		
-		// Si no se utilizara una vista en la BBDD, para recuperar los clásicos aprobados y los clásicos pendientes sería
-		// necesario usar dos querys diferentes en ClasicoDAOImpl, y que el método getAllByUser empleara como parámetros
-		// el id de usuario y un booleano que determinaría si el clásico está aprobado o no, para posteriormente obtener
-		// los clásicos en dos ArrayList diferentes y luego determinar su tamaño para conseguir los resultados buscados.
-		
-		// ArrayList<Producto> aprobados = daoProducto.getAllByUser( idUsuario, true);	
-		// ArrayList<Producto> pendientes = daoProducto.getAllByUser( idUsuario, false);
-		// request.setAttribute("productos_aprobados",  aprobados.size() );
-		// request.setAttribute("productos_pendientes", pendientes.size() );
-		
-		
-		// Recuperar los datos del usuario (clásicos totales, validados y pendientes de aprobación) usando vistas.
 		ResumenUsuario resumenUsuario = daoClasico.getUserSummary(idUsuario);
 		
-		// Establecer el atributo de index.jsp del frontoffice.
 		request.setAttribute("resumenUsuario", resumenUsuario);
 		
-		
-		// Cuidado con la URL del servlet ("/views/frontoffice/inicio") ya que al hacer forward se sustituye la última
-		// parte (inicio) por la variable pagina (ver más abajo).
-		
-		// El forward resuelve la URL de la siguiente manera:
-		// "/views/frontoffice/inicio" + "index.jsp"  =  "/views/frontoffice/index.jsp"
-		
-		String pagina = "index.jsp"; // index.jsp de frontoffice, no index.jsp público.
+		String pagina = "index.jsp"; // frontoffice/index.jsp
 		LOG.debug("forward: " + pagina);
 		
 		request.getRequestDispatcher(pagina).forward(request, response);
@@ -70,8 +48,6 @@ public class InicioFrontOfficeController extends HttpServlet {
 	} // doGet
 	
 
-	// Si se elimina este método, al iniciar sesión en el backoffice dará un error 405.
-	// HTTP Status 405 – Method Not Allowed HTTP method POST is not supported by this URL
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

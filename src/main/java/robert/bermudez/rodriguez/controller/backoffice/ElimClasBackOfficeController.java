@@ -41,11 +41,6 @@ public class ElimClasBackOfficeController extends HttpServlet {
 		} finally {
 			request.getSession().setAttribute("alerta", alerta);
 			response.sendRedirect(request.getContextPath() + "/views/backoffice/clasicos");
-
-			// Si se hace getRequestDispatcher no mostrará la lista con todos los clásicos. Hay
-			// que realizar una nueva petición para pasar por el controlador y recuperarlos.
-			// request.setAttribute("alerta", alerta);
-			// request.getRequestDispatcher("clasicos.jsp").forward(request, response);
 		}
 
 	} // doGet

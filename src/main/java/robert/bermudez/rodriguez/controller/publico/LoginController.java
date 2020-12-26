@@ -67,23 +67,14 @@ public class LoginController extends HttpServlet {
 
 		if (usuario != null) {
 
-			// request.setAttribute("usuario", usuario);
-
-			// Se invalida la sesión del usuario si está 5 minutos sin hacer peticiones.
-			// session.setMaxInactiveInterval( 60 * 5 );
-
-			// Aquí se ejecutará automáticamente el método attributeAdded del listener UsuariosLogueadosListener. Este
-			// atributo permitirá contar los usuarios registrados que han iniciado sesión.
 			session.setAttribute("usuario", usuario); // @see UsuarioLogueadosListener => attributeAdded
 
 			alerta = new Alerta("success", "Has iniciado sesión correctamente.");
 
-			// En función del valor del atributo de Rol(ADMINISTRADOR o USUARIO) redirige al backoffice o al frontoffice.
 			if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
 				ruta = "views/backoffice/inicio"; // InicioBackOfficeController
 
 			} else {
-				// ruta = "views/frontoffice/index.jsp"; // Si inicia sesión un usuario normal tiene que pasar por un controlador
 				ruta = "views/frontoffice/inicio"; // InicioFrontOfficeController
 			}
 

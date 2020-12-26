@@ -12,7 +12,7 @@ public interface MarcaDAO extends CrudAble<Marca>{
 	 * Obtiene todas las marcas con sus clásicos asociados.
 	 * @return ArrayList de marcas ordenadas alfabéticamente.
 	 */
-	ArrayList<Marca> getAllWithClassics(); // Método para hacer el hashmap de clásicos.
+	ArrayList<Marca> getAllWithClassics();
 	
 	EstadisticasMarca getBrandStatistics();
 }

@@ -12,10 +12,8 @@ public class Usuario {
 	@NotEmpty(message = ": este campo no puede quedar vacío.")
 	private String contrasena;
 	
-	//@NotEmpty(message = "no puede quedar vacía.")
 	private String imagen;
 	
-	// Atributo necesario para las autorizaciones y autentificaciones.
 	private Rol rol;
 	
 	public Usuario() {

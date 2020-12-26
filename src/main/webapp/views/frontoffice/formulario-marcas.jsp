@@ -6,9 +6,8 @@
 <jsp:include page="../../includes/office-navbar-usuario.jsp" />
 <main class="container mt-2">
 	<div class="formulario container shadow-lg p-3 mb-5 bg-white rounded">
-		<h3 class="my-3 text-center">${encabezado}</h3> <!-- InsEditMarcaFrontOfficeController -->
-		<!-- Formulario -->
-		<form action="views/frontoffice/insertar-editar-marca" method="post" class="mt-3 px-3 font-weight-bold"> <!-- InsEditMarcaFrontOfficeController -->
+		<h3 class="my-3 text-center">${encabezado}</h3>
+		<form action="views/frontoffice/insertar-editar-marca" method="post" class="mt-3 px-3 font-weight-bold">
 			<div class="form-group">
 				<label for="id">Id:</label>
 				<input type="text" 

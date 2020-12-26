@@ -11,10 +11,6 @@ public class Marca {
 	@NotEmpty(message = ": este campo no puede quedar vacío")
 	private String marca;
 	
-	// Atributo necesario para hacer un hashmap con clásicos. No se puede poner en el toString porque no arrancaría la aplicación:
-	// como el POJO "Clasico" tiene el atributo "Marca marca", haciendo toString de "ArrayList<Clasico> clasicos" entraría en la
-	// primera posición, iría a su atributo Marca, lo recorrería y a su vez entraría de nuevo en "clasicos", haciendo una y otra
-	// vez el mismo proceso y entrando en un bucle que originaría una redundancia cíclica que dejaría sin memoria el ordenador.
 	private ArrayList<Clasico> clasicos; 
 	
 	public Marca() {

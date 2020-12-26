@@ -29,13 +29,12 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		Usuario usuario = new Usuario();
 		Alerta alerta = new Alerta();
 		
-		String id = request.getParameter("id"); // Recogida de parámetros de clasicos.jsp del frontoffice.
+		String id = request.getParameter("id"); //  frontoffice/clasicos.jsp
 		
 		try {
 			
 			int idModelo = Integer.parseInt(id);
 			
-			// Recupera el usuario de la sesión y obtiene su id para verificar que ha registrado el clásico que eliminará.
 			usuario = (Usuario)request.getSession().getAttribute("usuario");
 			int idUsuario = usuario.getId();
 			

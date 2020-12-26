@@ -24,7 +24,7 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Inicio de sesión</h3></div>
                                     <div class="card-body">
-                                        <form action="login" method="post" class="mt-3"> <!-- LoginController -->
+                                        <form action="login" method="post" class="mt-3">
                                         	<!-- value="${sessionScope.usuario.nombre}" -->
                                             <div class="form-group">
                                                 <label class="mb-1" for="nombre">Nombre de usuario</label>
@@ -39,8 +39,7 @@
                                             <div class="form-group">
                                             	<div>
                                                 	<label class="mb-1" for="contrasena">Contraseña</label>
-                                                	<!-- Muestra u oculta la contraseña al pulsar el icono del ojo en el formulario. -->
-													<i class="far fa-eye" onclick="showHidePass('contrasena')"></i>
+                                                	<i class="far fa-eye" onclick="showHidePass('contrasena')"></i>
 												</div>
                                                 <input class="form-control py-4"
                                                 	   id="contrasena"
@@ -51,8 +50,7 @@
                                             </div>
                                             <div class="form-group d-flex align-items-center justify-content-end my-3 mb-0">
                                                 <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-                                                <!-- onClick sacado de internet. -->
-												<button type="button" class="btn btn-danger ml-3" onClick="window.parent.location='inicio'">Cancelar</button>
+                                                <button type="button" class="btn btn-danger ml-3" onClick="window.parent.location='inicio'">Cancelar</button>
                                             </div>
                                         </form>
                                     </div>

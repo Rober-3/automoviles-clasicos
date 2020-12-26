@@ -34,7 +34,7 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
 		Alerta alerta = null;
 		String encabezado = "Nueva marca";
 
-		String id = request.getParameter("id"); // views/backoffice/marcas.jsp
+		String id = request.getParameter("id"); // backoffice/marcas.jsp
 
 		try {
 
@@ -82,7 +82,6 @@ public class InsEditMarcaBackOfficeController extends HttpServlet {
 			marca.setId(idMarca);
 			marca.setMarca(paramMarca);
 
-			// Comprueba si se han rellenado los campos requeridos. En caso contrario muestra mensajes de advertencia.
 			Set<ConstraintViolation<Marca>> violations = validator.validate(marca);
 
 			if (violations.isEmpty()) {

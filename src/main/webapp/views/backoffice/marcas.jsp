@@ -7,7 +7,6 @@
 <jsp:include page="../../includes/office-navbar-admin.jsp" />
 <main class="container">
 	<div class="container my-5">
-		<!-- Tabla -->
 		<table class="tabla table table-striped mt-3">
 			<thead class="thead-light">
 				<tr>
@@ -17,14 +16,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${marcas}" var="m"> <!-- MarcasBackOfficeController. -->
+				<c:forEach items="${marcas}" var="m">
 					<tr>
 						<td class="align-middle">${m.id}</td>
 						<td class="align-middle">${m.marca}</td>
 						<td class="align-middle">
-							<a href="views/backoffice/insertar-editar-marca?id=${m.id}"> <!-- InsEditMarcaBackOfficeController -->
+							<a href="views/backoffice/insertar-editar-marca?id=${m.id}">
 							<i class="fas fa-edit fa-1x mx-2 align-middle" title="Editar"></i></a>
-							<a href="views/backoffice/eliminar-marca?id=${m.id}" onclick="confirmar('${m.marca}')"> <!-- ElimMarcaBackOfficeController -->
+							<a href="views/backoffice/eliminar-marca?id=${m.id}" onclick="confirmar('${m.marca}')">
 							<i class="fas fa-trash fa-1x mx-2" title="Eliminar"></i></a>
 						</td>
 					</tr>

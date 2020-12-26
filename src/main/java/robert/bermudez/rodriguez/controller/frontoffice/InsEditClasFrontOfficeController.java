@@ -31,7 +31,6 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	private static Validator validator = factory.getValidator();
 
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Clasico clasico = new Clasico();
@@ -39,32 +38,23 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 		Alerta alerta = null;
 		String encabezado = "Nuevo clásico";
 
-		//String id = request.getParameter("id"); // Recogida de parámetros de clasicos.jsp del frontoffice.
+		String id = request.getParameter("id"); // frontoffice/clasicos.jsp
 
 		try {
 
-			usuario = (Usuario) request.getSession().getAttribute("usuario"); // Recuperar el usuario de la sesión.
-
-			// Para evitar que usuarios no autorizados manipulen clásicos (a través de las URL o los enlaces para editar o 
-			// eliminar) que no han registrado, se comprueba por medio del método getByIdByUser, pasándole como parámetros
-			// el id del clásico y el id de usuario, que el clásico al que se intenta acceder pertenece a quien lo registró.
-			// Cuidado porque cuando un clásico se inicializa no pertenece a ningún usuario, y como su id = 0 si se ejecuta
-			// getByIdByUser se generará una excepción. Por tanto, sólo hay que recuperar un clásico si ya está en la BBDD.
+			usuario = (Usuario) request.getSession().getAttribute("usuario");
 
 			int idUsuario = usuario.getId();
+			int idModelo = Integer.parseInt(id);
+			
+			if (idModelo != 0) {
+				clasico = dao.getByIdByUser(idUsuario, idModelo);
+				alerta = new Alerta("warning", "Modifica los datos del clásico.");
+				encabezado = "Editar clásico";
+			}
 
-			//			int idModelo = Integer.parseInt(id);
-			//			
-			//			if (idModelo != 0) {
-			//				
-			//				clasico = dao.getByIdByUser(idUsuario, idModelo);
-			//				alerta = new Alerta("warning", "Modifica los datos del clásico.");
-			//				encabezado = "Editar clásico";
-			//			}
-
-
-			//		} catch (SeguridadException e) {
-			//			LOG.error("Un usuario ha intentado modificar un clásico que no ha registrado: " + usuario);
+		} catch (SeguridadException e) {
+			LOG.error("Un usuario ha intentado modificar un clásico que no ha registrado: " + usuario);
 
 		} catch (Exception e) {
 			LOG.error(e);
@@ -78,14 +68,14 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 
 	} // doGet
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		Clasico clasico = new Clasico();
 		Usuario usuario = new Usuario();
 		Alerta alerta = new Alerta();
 
-		// Recogida de parámetros de formulario-clasicos.jsp del frontoffice.
+		// frontoffice/formulario-clasicos.jsp
 		String id = request.getParameter("id");
 		String modelo = request.getParameter("modelo");
 		String paramIdMarca = request.getParameter("id_marca");
@@ -99,10 +89,8 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 
 			Marca marca = new Marca(idMarca);
 
-			// Recuperar el usuario de la sesión.
 			usuario = (Usuario) request.getSession().getAttribute("usuario");
 
-			// Comprobar que el clásico pertenece al usuario que lo registró.
 			int idUsuario = usuario.getId();
 
 			if (idModelo != 0) {
@@ -117,7 +105,6 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 			clasico.setFoto(foto);
 			clasico.setUsuario(usuario);
 
-			// Comprueba si se han rellenado los campos requeridos. En caso contrario muestra mensajes de advertencia.
 			Set<ConstraintViolation<Clasico>> violations = validator.validate(clasico);
 
 			if (violations.isEmpty()) {
@@ -125,21 +112,21 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 				if (idModelo == 0) {
 					dao.insert(clasico);
 					alerta = new Alerta("success", "<b>" + clasico.getMarca().getMarca() + " " + clasico.getModelo()
-					+ "</b> guardado en espera de la aprobación por parte del administrador.");
+							+ "</b> guardado en espera de la aprobación por parte del administrador.");
 
 				} else {
 					dao.updateByUser(clasico);
 					alerta = new Alerta("success", "<b>" + clasico.getMarca().getMarca() + " " + clasico.getModelo()
-					+ "</b> actualizado en espera de aprobación por parte del administrador.");	
+							+ "</b> actualizado en espera de aprobación por parte del administrador.");
 				}
 
 			} else {
 				String errores = "";
 
 				for (ConstraintViolation<Clasico> v : violations) {
-					errores += "<p> <b>" + v.getPropertyPath() + "</b>: "  + v.getMessage() + "</p>";
+					errores += "<p> <b>" + v.getPropertyPath() + "</b>: " + v.getMessage() + "</p>";
 				}
-				alerta = new Alerta ("warning", errores);
+				alerta = new Alerta("warning", errores);
 
 			} // if-else externo
 
@@ -148,8 +135,8 @@ public class InsEditClasFrontOfficeController extends HttpServlet {
 
 		} catch (Exception e) {
 			LOG.error(e);
-			alerta = new Alerta ("danger", "Ha surgido un problema al intentar guardar <b>"
-			+ clasico.getMarca().getMarca() + " " + clasico.getModelo() + "</b>");
+			alerta = new Alerta("danger", "Ha surgido un problema al intentar guardar <b>"
+					+ clasico.getMarca().getMarca() + " " + clasico.getModelo() + "</b>");
 
 		} finally {
 			request.setAttribute("clasico", clasico);

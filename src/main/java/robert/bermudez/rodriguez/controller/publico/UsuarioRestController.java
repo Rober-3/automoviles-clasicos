@@ -12,9 +12,6 @@ import org.apache.log4j.Logger;
 
 import robert.bermudez.rodriguez.modelo.daoimpl.UsuarioDAOImpl;
 
-/**
- * Servlet implementation class UsuarioRestController
- */
 @WebServlet("/api/usuario")
 public class UsuarioRestController extends HttpServlet {
 
@@ -22,9 +19,6 @@ public class UsuarioRestController extends HttpServlet {
 	private final static Logger LOG = Logger.getLogger(UsuarioRestController.class);  
 	private static UsuarioDAOImpl dao = UsuarioDAOImpl.getInstance();
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		LOG.debug("url pathInfo:" + request.getPathInfo() );

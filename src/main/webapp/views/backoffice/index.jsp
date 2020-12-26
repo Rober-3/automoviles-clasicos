@@ -5,7 +5,6 @@
 	<jsp:param name="title" value="Indice backoffice" />
 </jsp:include>
 <jsp:include page="../../includes/office-navbar-admin.jsp" />
-<!-- Contenido principal -->
 <div id="layoutSidenav_content">
 	<main>
 		<h3 class="text-center">Estadísticas</h3>
@@ -17,10 +16,10 @@
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-info text-white mb-5">
 						<div class="card-body">Total de clásicos:
-							<span class="numero">${estadisticasClasicos.total}</span> <!--InicioBackOfficeController -->
+							<span class="numero">${estadisticasClasicos.total}</span>
 						</div>
 						<div class="card-footer d-flex align-items-center justify-content-between">
-							<a class="small text-white stretched-link" href="views/backoffice/clasicos">Ver detalles</a> <!-- ClasicosBackOfficeController -->
+							<a class="small text-white stretched-link" href="views/backoffice/clasicos">Ver detalles</a>
 							<div class="small text-white">
 								<i class="fas fa-angle-right"></i>
 							</div>
@@ -30,10 +29,10 @@
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-success text-white mb-5">
 						<div class="card-body">Clásicos publicados:
-							<span class="numero">${estadisticasClasicos.aprobados}</span> <!--InicioBackOfficeController -->
+							<span class="numero">${estadisticasClasicos.aprobados}</span>
 						</div>
 						<div class="card-footer d-flex align-items-center justify-content-between">
-							<a class="small text-white stretched-link" href="views/backoffice/clasicos?total=no">Ver detalles</a> <!-- ClasicosBackOfficeController -->
+							<a class="small text-white stretched-link" href="views/backoffice/clasicos?total=no">Ver detalles</a>
 							<div class="small text-white">
 								<i class="fas fa-angle-right"></i>
 							</div>
@@ -43,10 +42,10 @@
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-warning text-white mb-5">
 						<div class="card-body">Clásicos pendientes:
-							<span class="numero">${estadisticasClasicos.pendientes}</span> <!--InicioBackOfficeController -->
+							<span class="numero">${estadisticasClasicos.pendientes}</span>
 						</div>
 						<div class="card-footer d-flex align-items-center justify-content-between">			
-							<a class="small text-white stretched-link" href="views/backoffice/clasicos?validados=no&total=no">Ver detalles</a> <!-- ClasicosBackOfficeController -->
+							<a class="small text-white stretched-link" href="views/backoffice/clasicos?validados=no&total=no">Ver detalles</a>
 							<div class="small text-white">
 								<i class="fas fa-angle-right"></i>
 							</div>
@@ -61,10 +60,10 @@
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-info text-white mb-5">
 						<div class="card-body">Total de marcas:
-							<span class="numero">${estadisticasMarcas.total}</span> <!--InicioBackOfficeController -->
+							<span class="numero">${estadisticasMarcas.total}</span>
 						</div>
 						<div class="card-footer d-flex align-items-center justify-content-between">
-							<a class="small text-white stretched-link" href="views/backoffice/marcas">Ver detalles</a> <!-- MarcasBackOfficeController -->
+							<a class="small text-white stretched-link" href="views/backoffice/marcas">Ver detalles</a>
 							<div class="small text-white">
 								<i class="fas fa-angle-right"></i>
 							</div>
@@ -79,7 +78,7 @@
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-info text-white mb-5">
 						<div class="card-body">Total de usuarios:
-							<span class="numero">${estadisticasUsuarios.total}</span> <!--InicioBackOfficeController -->
+							<span class="numero">${estadisticasUsuarios.total}</span>
 						</div>
 						<div class="card-footer d-flex align-items-center justify-content-between">
 							<a class="small text-white stretched-link" href="views/backoffice/usuarios">Ver detalles</a>
@@ -106,7 +105,7 @@
 							</thead>
 							<tbody>
 								<tr>
-									<c:forEach items="${usuariosLogueados}" var="ul"> <!-- UsuariosLogueadosListener -->
+									<c:forEach items="${usuariosLogueados}" var="ul">
 										<td>${ul.value.id}</td>
 										<td>${ul.value.nombre}</td>
 										<td>${ul.key}</td>

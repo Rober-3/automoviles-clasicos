@@ -29,24 +29,22 @@ public class MarcasController extends HttpServlet {
 		String paramId = request.getParameter("idMarca");
 		String marca = request.getParameter("marca");
 		
-		ArrayList<Marca> marcasConClasicos = new ArrayList<Marca>(); // HashMap de marcas.
+		ArrayList<Marca> marcasConClasicos = new ArrayList<Marca>();
 
 		try {
 			
-			// marcas = marcaDao.getAll(); Para llamar a este método no sería necesario el DAO de las marcas.
-			
-			if (paramId == null) { // Si no se reciben parámetros, se muestran todas las marcas ordenadas alfabéticamente.
+			if (paramId == null) {
 				
 				marcasConClasicos = marcaDao.getAllWithClassics();
 				request.setAttribute("marcasConClasicos", marcasConClasicos);
 				
-			} else { // Si se reciben parámetros, muestra la marca correspondiente al idMarca.
+			} else {
 				
 				int idMarca = Integer.parseInt(paramId);
 				ArrayList<Clasico> clasicos = clasicoDao.getAllByBrand(idMarca, 10);
 				
 				request.setAttribute("clasicos", clasicos);
-				request.setAttribute("marca", marca); // La envía para mostrarla en pantalla.
+				request.setAttribute("marca", marca);
 				
 			} // if-else
 
